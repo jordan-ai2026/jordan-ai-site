@@ -1,25 +1,32 @@
 const fs = require("fs")
 const path = require("path")
 
-async function createProductPage(name, description) {
-
-const slug = name
-.toLowerCase()
-.replace(/[^a-z0-9]+/g,"-")
-.replace(/^-|-$/g,"")
-
-const dir = path.join(__dirname,"products")
-
-if(!fs.existsSync(dir)){
-fs.mkdirSync(dir)
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true })
+  }
 }
 
-const file = path.join(dir,`${slug}.html`)
+async function createProductPage(name, description) {
 
-const html = `
+  try {
+
+    const slug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "-")
+      .replace(/-+/g, "-")
+
+    const productDir = path.join(__dirname, "website", "products")
+
+    ensureDir(productDir)
+
+    const filePath = path.join(productDir, `${slug}.html`)
+
+    const html = `
 <html>
 <head>
 <title>${name}</title>
+<meta name="description" content="${description}">
 </head>
 
 <body>
@@ -28,17 +35,24 @@ const html = `
 
 <p>${description}</p>
 
-<button>Buy Now</button>
+<a href="/">Back to Home</a>
 
 </body>
 </html>
 `
 
-fs.writeFileSync(file,html)
+    fs.writeFileSync(filePath, html)
 
-console.log("Product page created:",file)
+    console.log("Product page created:", filePath)
+
+  } catch (err) {
+
+    console.log("Website builder error:", err)
+
+  }
 
 }
 
-module.exports = { createProductPage }
-
+module.exports = {
+  createProductPage
+}
