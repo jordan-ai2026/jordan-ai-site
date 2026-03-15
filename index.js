@@ -1,236 +1,117 @@
 require("dotenv").config()
-require("./seoPublisher")
-require("./companyLoop")
 
 const { Client, GatewayIntentBits } = require("discord.js")
 const OpenAI = require("openai")
-const fs = require("fs")
 
+const { buildProductFromTopic } = require("./productBuilder")
 const { createProductPage } = require("./websiteBuilder")
-const { runSEO } = require("./seoPublisher")
-
-// CHANNEL IDS
-const TALK_CHANNEL = "1481760050581082112"
-const REPORT_CHANNEL = "1481759783177425059"
-const AGENT_CHANNEL = "1481760155484815451"
-const BUSINESS_CHANNEL = "1482428930341339419"
-const PLAN_CHANNEL = "1482429289134817431"
+const { publishSEOArticle } = require("./seoPublisher")
 
 const openai = new OpenAI({
-apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 })
 
 const client = new Client({
-intents:[
-GatewayIntentBits.Guilds,
-GatewayIntentBits.GuildMessages,
-GatewayIntentBits.MessageContent
-]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
 })
 
-let conversationHistory=[]
+async function sendLongMessage(channel, text) {
 
-function ensureFolder(path){
-if(!fs.existsSync(path)){
-fs.mkdirSync(path,{recursive:true})
-}
-}
+  const chunk = 1900
 
-async function sendLongMessage(channel,text){
-
-const chunk=1900
-
-for(let i=0;i<text.length;i+=chunk){
-await channel.send(text.substring(i,i+chunk))
-}
+  for (let i = 0; i < text.length; i += chunk) {
+    await channel.send(text.substring(i, i + chunk))
+  }
 
 }
 
-// AI PRODUCT BUILDER
-async function buildProduct(topic){
+async function createFullProductPipeline(topic) {
 
-const res = await openai.chat.completions.create({
-model:"gpt-4o-mini",
-messages:[
-{
-role:"system",
-content:"Create a short SaaS product description."
-},
-{
-role:"user",
-content:topic
-}
-]
-})
+  try {
 
-const desc=res.choices[0].message.content
+    console.log("Starting product build:", topic)
 
-await createProductPage(topic,desc)
+    const product = await buildProductFromTopic(topic)
 
-return desc
+    if (!product) {
+      console.log("Product builder returned nothing")
+      return
+    }
 
-}
+    console.log("Creating product page")
 
-// AGENT MARKET SCAN
-async function scanMarket(){
+    await createProductPage(product.name, product.description)
 
-const industries=[
-"roofers",
-"dentists",
-"law firms",
-"real estate",
-"gyms",
-"restaurants"
-]
+    console.log("Creating SEO article")
 
-const industry=industries[Math.floor(Math.random()*industries.length)]
+    await publishSEOArticle(product.name)
 
-const res=await openai.chat.completions.create({
-model:"gpt-4o-mini",
-messages:[
-{
-role:"system",
-content:"Find a profitable AI automation opportunity."
-},
-{
-role:"user",
-content:industry
-}
-]
-})
+    console.log("Pipeline finished")
 
-return res.choices[0].message.content
+  } catch (err) {
+
+    console.log("Pipeline error:", err)
+
+  }
 
 }
 
-// AUTONOMOUS AGENTS
-async function runAgents(){
+client.once("ready", () => {
 
-const channel=await client.channels.fetch(AGENT_CHANNEL)
-
-const opportunity=await scanMarket()
-
-await sendLongMessage(channel,
-`Jordan AI Market Scan
-
-${opportunity}`
-)
-
-}
-
-// HEARTBEAT LOOP
-function startHeartbeat(){
-
-setInterval(async()=>{
-
-try{
-
-await runAgents()
-
-const channel=await client.channels.fetch(REPORT_CHANNEL)
-
-const report=await openai.chat.completions.create({
-model:"gpt-4o-mini",
-messages:[
-{
-role:"system",
-content:"Write a short AI CEO report about business building progress."
-}
-]
-})
-
-await sendLongMessage(channel,
-`Jordan AI Report
-
-${report.choices[0].message.content}`
-)
-
-}catch(err){
-
-console.log("Heartbeat error",err)
-
-}
-
-},1800000)
-
-}
-
-// READY EVENT
-client.once("ready",()=>{
-
-console.log(`Jordan-AI online as ${client.user.tag}`)
-
-startHeartbeat()
+  console.log(`Jordan AI online as ${client.user.tag}`)
 
 })
 
-// MESSAGE HANDLER
-client.on("messageCreate",async message=>{
+client.on("messageCreate", async (message) => {
 
-if(message.author.bot) return
+  console.log("Discord message:", message.content)
 
-// PRODUCT COMMAND
-if(message.content.startsWith("!product")){
+  if (message.author.bot) return
 
-const topic=message.content.replace("!product","").trim()
+  const content = message.content.trim()
 
-if(!topic){
-message.reply("Give me a product idea after !product")
-return
-}
+  if (content.startsWith("!product")) {
 
-message.reply("Jordan AI is building your product...")
+    const topic = content.replace("!product", "").trim()
 
-try{
+    if (!topic) {
+      message.reply("Please provide a product idea")
+      return
+    }
 
-const desc = await buildProduct(topic)
+    await message.reply("Jordan AI building product...")
 
-message.reply(
-`Product created
+    await createFullProductPipeline(topic)
 
-Name: ${topic}
+    await message.reply("Product, website page, and blog article created")
 
-Description:
-${desc}
+    return
+  }
 
-Website page and checkout created.`
-)
+  try {
 
-}catch(err){
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: "You are Jordan AI, an autonomous business builder." },
+        { role: "user", content: content }
+      ]
+    })
 
-console.log(err)
-message.reply("Error building product.")
+    const reply = response.choices[0].message.content
 
-}
+    await sendLongMessage(message.channel, reply)
 
-return
-}
+  } catch (err) {
 
-// NORMAL AI CHAT
-if(message.channel.id===TALK_CHANNEL){
+    console.log("AI error:", err)
 
-conversationHistory.push({
-role:"user",
-content:message.content
-})
-
-const res=await openai.chat.completions.create({
-model:"gpt-4o-mini",
-messages:conversationHistory
-})
-
-const reply=res.choices[0].message.content
-
-conversationHistory.push({
-role:"assistant",
-content:reply
-})
-
-await sendLongMessage(message.channel,reply)
-
-}
+  }
 
 })
 
 client.login(process.env.DISCORD_TOKEN)
-
