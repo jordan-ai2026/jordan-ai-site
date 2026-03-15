@@ -1,54 +1,42 @@
 require("dotenv").config()
 
 const fs = require("fs")
+const path = require("path")
 const OpenAI = require("openai")
 
 const openai = new OpenAI({
-apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 })
 
 function slugify(text){
-
-return text
-.toLowerCase()
-.replace(/[^a-z0-9]+/g,"-")
-.replace(/^-|-$/g,"")
-
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"")
 }
 
-async function generateArticle(topic){
+async function publishBlog(topic, productSlug){
 
-const res = await openai.chat.completions.create({
+  const slug = slugify(topic)
 
-model:"gpt-4o-mini",
+  const res = await openai.chat.completions.create({
+    model:"gpt-4o-mini",
+    messages:[
+      {
+        role:"system",
+        content:"Write a helpful SEO blog article recommending an AI automation tool."
+      },
+      {
+        role:"user",
+        content:topic
+      }
+    ]
+  })
 
-messages:[
-{
-role:"system",
-content:"Write an SEO optimized blog article that promotes an AI product."
-},
-{
-role:"user",
-content:topic
-}
-]
+  const article = res.choices[0].message.content
 
-})
-
-return res.choices[0].message.content
-
-}
-
-async function publishBlog(topic,productSlug){
-
-const slug = slugify(topic)
-
-const article = await generateArticle(topic)
-
-const html = `
-
+  const html = `
 <html>
-
 <head>
 <title>${topic}</title>
 </head>
@@ -62,23 +50,30 @@ const html = `
 <h2>Recommended Tool</h2>
 
 <a href="/products/${productSlug}.html">
-
 Try this AI tool
-
 </a>
 
 </body>
-
 </html>
-
 `
 
-const path = `website/blog/${slug}.html`
+  // FORCE WEBSITE ROOT
+  const WEBSITE_ROOT = path.join(__dirname, "website")
 
-fs.writeFileSync(path,html)
+  const BLOG_DIR = path.join(WEBSITE_ROOT, "blog")
 
-console.log("Blog page created:",path)
+  // ensure blog folder exists
+  if(!fs.existsSync(BLOG_DIR)){
+    fs.mkdirSync(BLOG_DIR, { recursive:true })
+  }
+
+  const blogPath = path.join(BLOG_DIR, slug + ".html")
+
+  fs.writeFileSync(blogPath, html)
+
+  console.log("BLOG CREATED:", blogPath)
 
 }
 
+module.exports = { publishBlog }
 module.exports = { publishBlog }

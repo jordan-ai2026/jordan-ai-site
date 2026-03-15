@@ -3,87 +3,91 @@ require("dotenv").config()
 const fs = require("fs")
 const path = require("path")
 const OpenAI = require("openai")
-const { createProductPage } = require("./websiteBuilder")
+const { deploySite } = require("./githubDeploy")
 const { publishBlog } = require("./seoPublisher")
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
-function ensureFolder(folder) {
-
-  if (!fs.existsSync(folder)) {
-    fs.mkdirSync(folder, { recursive: true })
-  }
-
-}
-
-function slugify(text) {
-
+function slugify(text){
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "")
-
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"")
 }
 
-async function generateDescription(idea) {
+function ensureFolder(folder){
+  if(!fs.existsSync(folder)){
+    fs.mkdirSync(folder,{recursive:true})
+  }
+}
+
+async function buildProductFromTopic(topic){
+
+  const slug = slugify(topic)
 
   const res = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
+    model:"gpt-4o-mini",
+    messages:[
       {
-        role: "system",
-        content: "Write a short SaaS product description that sells the tool."
+        role:"system",
+        content:"Write a short landing page description for this AI product."
       },
       {
-        role: "user",
-        content: idea
+        role:"user",
+        content:topic
       }
     ]
   })
 
-  return res.choices[0].message.content
+  const description = res.choices[0].message.content
 
-}
+deploySite()
 
-async function buildProductFromTopic(topic) {
+  // WEBSITE ROOT
+  const WEBSITE_ROOT = path.join(__dirname,"website")
 
-  ensureFolder("products")
+  const PRODUCTS_DIR = path.join(WEBSITE_ROOT,"products")
+  const BLOG_DIR = path.join(WEBSITE_ROOT,"blog")
 
-  const slug = slugify(topic)
+  ensureFolder(PRODUCTS_DIR)
+  ensureFolder(BLOG_DIR)
 
-  const productPath = path.join("products", `${slug}.json`)
+  const productPath = path.join(PRODUCTS_DIR, slug + ".html")
 
-  const description = await generateDescription(topic)
+  const html = `
+<html>
 
-  const productData = {
-    name: topic,
-    slug: slug,
-    description: description,
-    price: 19,
-    created: new Date().toISOString()
-  }
+<head>
+<title>${topic}</title>
+</head>
 
-  fs.writeFileSync(
-    productPath,
-    JSON.stringify(productData, null, 2)
+<body>
+
+<h1>${topic}</h1>
+
+<p>${description}</p>
+
+<h2>AI Automation Tool</h2>
+
+<p>Price: $99</p>
+
+</body>
+
+</html>
+`
+
+  fs.writeFileSync(productPath, html)
+
+  console.log("Product page created:", productPath)
+
+  // CREATE SEO BLOG ARTICLE
+  await publishBlog(
+    "How " + topic + " helps businesses",
+    slug
   )
 
-  console.log("Product data saved:", productPath)
-
-  // Create website page
-  await createProductPage(topic, description)
-
-  return productData
-
 }
 
-await publishBlog(
-"How AI helps businesses automate tasks",
-slug
-)
-
-module.exports = {
-  buildProductFromTopic
-}
+module.exports = { buildProductFromTopic }
