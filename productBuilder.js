@@ -1,53 +1,89 @@
-const OpenAI = require("openai")
+require("dotenv").config()
+
 const fs = require("fs")
+const path = require("path")
+const OpenAI = require("openai")
+const { createProductPage } = require("./websiteBuilder")
+const { publishBlog } = require("./seoPublisher")
 
 const openai = new OpenAI({
-apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 })
 
-function ensureFolder(path){
-if(!fs.existsSync(path)){
-fs.mkdirSync(path,{recursive:true})
-}
-}
+function ensureFolder(folder) {
 
-async function buildProductFromTopic(topic){
-
-ensureFolder("products")
-
-const safe=topic.toLowerCase().replace(/[^a-z0-9]/g,"-").slice(0,50)
-
-const folder=`products/${safe}`
-
-ensureFolder(folder)
-
-const product=await openai.chat.completions.create({
-model:"gpt-4o-mini",
-messages:[
-{
-role:"system",
-content:"Create a digital AI automation product that businesses would pay for."
-},
-{
-role:"user",
-content:topic
-}
-]
-})
-
-const description=product.choices[0].message.content
-
-fs.writeFileSync(`${folder}/product.md`,description)
-
-console.log("Product created:",topic)
-
-return{
-name:topic,
-description:description
-}
+  if (!fs.existsSync(folder)) {
+    fs.mkdirSync(folder, { recursive: true })
+  }
 
 }
 
-module.exports={
-buildProductFromTopic
+function slugify(text) {
+
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+
+}
+
+async function generateDescription(idea) {
+
+  const res = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "system",
+        content: "Write a short SaaS product description that sells the tool."
+      },
+      {
+        role: "user",
+        content: idea
+      }
+    ]
+  })
+
+  return res.choices[0].message.content
+
+}
+
+async function buildProductFromTopic(topic) {
+
+  ensureFolder("products")
+
+  const slug = slugify(topic)
+
+  const productPath = path.join("products", `${slug}.json`)
+
+  const description = await generateDescription(topic)
+
+  const productData = {
+    name: topic,
+    slug: slug,
+    description: description,
+    price: 19,
+    created: new Date().toISOString()
+  }
+
+  fs.writeFileSync(
+    productPath,
+    JSON.stringify(productData, null, 2)
+  )
+
+  console.log("Product data saved:", productPath)
+
+  // Create website page
+  await createProductPage(topic, description)
+
+  return productData
+
+}
+
+await publishBlog(
+"How AI helps businesses automate tasks",
+slug
+)
+
+module.exports = {
+  buildProductFromTopic
 }

@@ -1,48 +1,84 @@
-const OpenAI = require("openai")
-const fs = require("fs")
+require("dotenv").config()
 
-const { createBlogPost } = require("./websiteBuilder")
+const fs = require("fs")
+const OpenAI = require("openai")
 
 const openai = new OpenAI({
 apiKey: process.env.OPENAI_API_KEY
 })
 
-function ensureFolder(path){
-if(!fs.existsSync(path)){
-fs.mkdirSync(path,{recursive:true})
+function slugify(text){
+
+return text
+.toLowerCase()
+.replace(/[^a-z0-9]+/g,"-")
+.replace(/^-|-$/g,"")
+
 }
-}
 
-async function runSEO(topic){
+async function generateArticle(topic){
 
-ensureFolder("articles")
+const res = await openai.chat.completions.create({
 
-const article=await openai.chat.completions.create({
 model:"gpt-4o-mini",
+
 messages:[
 {
 role:"system",
-content:"Write a long SEO blog article designed to rank on Google."
+content:"Write an SEO optimized blog article that promotes an AI product."
 },
 {
 role:"user",
 content:topic
 }
 ]
+
 })
 
-const content=article.choices[0].message.content
-
-const safe=topic.toLowerCase().replace(/[^a-z0-9]/g,"-")
-
-fs.writeFileSync(`articles/${safe}.md`,content)
-
-await createBlogPost(topic,content)
-
-console.log("SEO article created:",topic)
+return res.choices[0].message.content
 
 }
 
-module.exports={
-runSEO
+async function publishBlog(topic,productSlug){
+
+const slug = slugify(topic)
+
+const article = await generateArticle(topic)
+
+const html = `
+
+<html>
+
+<head>
+<title>${topic}</title>
+</head>
+
+<body>
+
+<h1>${topic}</h1>
+
+<p>${article}</p>
+
+<h2>Recommended Tool</h2>
+
+<a href="/products/${productSlug}.html">
+
+Try this AI tool
+
+</a>
+
+</body>
+
+</html>
+
+`
+
+const path = `website/blog/${slug}.html`
+
+fs.writeFileSync(path,html)
+
+console.log("Blog page created:",path)
+
 }
+
+module.exports = { publishBlog }
