@@ -1,0 +1,105 @@
+{
+  "skills": {
+    "market-research": {
+      "name": "Market Research",
+      "description": "Find market opportunities and validate ideas",
+      "prompt": "When doing market research:\n- Identify specific pain points people pay to solve\n- Find gaps competitors are missing\n- Estimate market size and demand\n- Be brutally honest about viability\n- Focus on AI/automation niche"
+    },
+    "competitor-analysis": {
+      "name": "Competitor Analysis",
+      "description": "Analyze competitors and find opportunities",
+      "prompt": "When analyzing competitors:\n- List direct and indirect competitors\n- Identify their strengths and weaknesses\n- Find gaps they're not serving\n- Suggest differentiation strategies"
+    },
+    "sales-copy": {
+      "name": "Sales Copywriting",
+      "description": "Write compelling sales pages that convert",
+      "prompt": "When writing sales copy:\n- Lead with the biggest pain point\n- Use specific benefits, not features\n- Include social proof elements\n- Create urgency without being sleazy\n- End with clear call to action"
+    },
+    "blog-writing": {
+      "name": "Blog Writing",
+      "description": "Write SEO-optimized blog posts",
+      "prompt": "When writing blog posts:\n- Use keyword-rich headlines\n- Write scannable content with subheadings\n- Include actionable takeaways\n- Naturally link to products\n- Optimize for featured snippets"
+    },
+    "tweet-writing": {
+      "name": "Tweet Writing",
+      "description": "Write engaging tweets that get clicks",
+      "prompt": "When writing tweets:\n- Hook in first line\n- Use line breaks for readability\n- End with engagement hook or CTA\n- No hashtag spam\n- Sound human, not corporate"
+    },
+    "email-sequences": {
+      "name": "Email Sequences",
+      "description": "Write email sequences that nurture and convert",
+      "prompt": "When writing email sequences:\n- Welcome email: deliver value immediately\n- Build trust before selling\n- Tell stories, not pitches\n- One CTA per email\n- Subject lines that get opens"
+    },
+    "customer-support": {
+      "name": "Customer Support",
+      "description": "Handle customer inquiries professionally",
+      "prompt": "When handling support:\n- Acknowledge the issue first\n- Be empathetic but efficient\n- Solve the problem, don't just apologize\n- Offer clear next steps\n- Know when to escalate"
+    },
+    "refund-handling": {
+      "name": "Refund Handling",
+      "description": "Process refunds while retaining customers",
+      "prompt": "When handling refunds:\n- Don't argue or be defensive\n- Ask what went wrong (for learning)\n- Process quickly if policy allows\n- Offer alternatives when appropriate\n- Thank them regardless"
+    },
+    "lead-qualification": {
+      "name": "Lead Qualification",
+      "description": "Identify and qualify hot prospects",
+      "prompt": "When qualifying leads:\n- Identify budget, authority, need, timeline\n- Score leads 1-10 on likelihood to buy\n- Flag high-priority opportunities\n- Suggest next actions for each"
+    },
+    "outreach-messages": {
+      "name": "Outreach Messages",
+      "description": "Write cold outreach that gets responses",
+      "prompt": "When writing outreach:\n- Personalize the first line\n- Show you understand their problem\n- Make the ask small and easy\n- No \"just checking in\" follow-ups\n- Provide value before asking"
+    },
+    "code-generation": {
+      "name": "Code Generation",
+      "description": "Write clean, working code",
+      "prompt": "When writing code:\n- Write production-ready code\n- Include error handling\n- Add helpful comments\n- Test logic mentally before output\n- Keep it simple and maintainable"
+    },
+    "debugging": {
+      "name": "Debugging",
+      "description": "Find and fix bugs efficiently",
+      "prompt": "When debugging:\n- Reproduce the issue first\n- Check the obvious things\n- Read error messages carefully\n- Fix root cause, not symptoms\n- Explain what was wrong"
+    },
+    "automation-building": {
+      "name": "Automation Building",
+      "description": "Build workflows and automations",
+      "prompt": "When building automations:\n- Map the full workflow first\n- Handle edge cases\n- Build in error recovery\n- Log important events\n- Make it maintainable"
+    },
+    "product-ideation": {
+      "name": "Product Ideation",
+      "description": "Generate viable product ideas",
+      "prompt": "When generating product ideas:\n- Focus on specific pain points\n- Consider build effort vs revenue potential\n- Target the AI/automation niche\n- Think digital products (low overhead)\n- Validate before building"
+    },
+    "pricing-strategy": {
+      "name": "Pricing Strategy",
+      "description": "Set optimal prices for products",
+      "prompt": "When setting prices:\n- Research competitor pricing\n- Consider perceived value, not cost\n- Test different price points\n- Use charm pricing ($97 vs $100)\n- Higher prices = higher perceived quality"
+    }
+  },
+  "assignments": {
+    "researcher": [
+      "market-research",
+      "competitor-analysis",
+      "product-ideation"
+    ],
+    "writer": [
+      "sales-copy",
+      "blog-writing",
+      "tweet-writing",
+      "email-sequences"
+    ],
+    "support": [
+      "customer-support",
+      "refund-handling"
+    ],
+    "sales": [
+      "lead-qualification",
+      "outreach-messages"
+    ],
+    "builder": [
+      "code-generation",
+      "debugging",
+      "automation-building"
+    ]
+  }
+}

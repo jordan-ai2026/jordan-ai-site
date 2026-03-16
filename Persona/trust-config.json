@@ -1,0 +1,29 @@
+{
+  "level": 2,
+  "actions": {
+    "read_messages": 1,
+    "read_files": 1,
+    "read_analytics": 1,
+    "draft_product": 2,
+    "draft_blog": 2,
+    "draft_tweet": 2,
+    "draft_email": 2,
+    "create_product": 3,
+    "publish_blog": 3,
+    "deploy_website": 3,
+    "post_tweet": 3,
+    "create_stripe_product": 4,
+    "send_email": 4,
+    "change_prices": 4,
+    "delete_product": 4,
+    "refund_customer": 4
+  },
+  "hardBoundaries": [
+    "Never send money without explicit approval",
+    "Never delete customer data",
+    "Never share private information",
+    "Never make claims about guaranteed results",
+    "Always disclose AI-generated content when asked"
+  ],
+  "history": []
+}

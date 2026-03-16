@@ -1,61 +1,108 @@
-require("dotenv").config()
-const axios = require("axios")
+// ============================================
+// CEO BRAIN - Jordan's Personality & Memory
+// ============================================
+
 const fs = require("fs")
+const path = require("path")
 
-const OPENAI_KEY = process.env.OPENAI_KEY
+const PERSONA_DIR = path.join(__dirname, "persona")
 
-async function generateBusinessIdea(){
-
-const prompt = `
-You are the CEO of an autonomous AI startup.
-
-Your goal is to build profitable AI tools for businesses.
-
-Generate ONE business opportunity with:
-
-Industry
-Problem
-AI Solution
-Revenue model
-Target customer
-`
-
-const res = await axios.post("https://api.openai.com/v1/chat/completions",{
-
-model:"gpt-4o-mini",
-
-messages:[
-{role:"system",content:"You are an AI founder building profitable startups."},
-{role:"user",content:prompt}
-]
-
-},{
-headers:{
-Authorization:`Bearer ${OPENAI_KEY}`
-}
-})
-
-return res.data.choices[0].message.content
+// ============================================
+// LOAD PERSONA FILES
+// ============================================
+function loadPersona() {
+  let soul = ""
+  let identity = ""
+  let memory = ""
+  
+  try {
+    const soulPath = path.join(PERSONA_DIR, "SOUL.md")
+    if (fs.existsSync(soulPath)) {
+      soul = fs.readFileSync(soulPath, "utf8")
+    }
+    
+    const identityPath = path.join(PERSONA_DIR, "IDENTITY.md")
+    if (fs.existsSync(identityPath)) {
+      identity = fs.readFileSync(identityPath, "utf8")
+    }
+    
+    const memoryPath = path.join(PERSONA_DIR, "MEMORY.md")
+    if (fs.existsSync(memoryPath)) {
+      memory = fs.readFileSync(memoryPath, "utf8")
+    }
+  } catch (err) {
+    console.log("Persona load error:", err.message)
+  }
+  
+  return { soul, identity, memory }
 }
 
-function saveProject(idea){
+// ============================================
+// BUILD SYSTEM PROMPT
+// ============================================
+function buildSystemPrompt() {
+  const persona = loadPersona()
+  
+  return `You are Jordan AI.
 
-const folder = `memory/projects/project-${Date.now()}`
+${persona.identity}
 
-fs.mkdirSync(folder,{recursive:true})
+${persona.soul}
 
-fs.writeFileSync(`${folder}/summary.md`,idea)
+## What You Remember
+${persona.memory}
 
-console.log("New project created:",folder)
+## Current Date
+${new Date().toLocaleDateString()}
 
+## How To Respond
+- Be direct and helpful
+- Think like a CEO building a business
+- Focus on actions that generate revenue
+- Keep responses concise unless detail is needed
+- Remember: the goal is $10k/month`
 }
 
-async function createNewProject(){
-
-const idea = await generateBusinessIdea()
-
-saveProject(idea)
-
+// ============================================
+// ADD TO MEMORY
+// ============================================
+function addMemory(fact, category = "Learned Patterns") {
+  try {
+    const memoryPath = path.join(PERSONA_DIR, "MEMORY.md")
+    
+    if (!fs.existsSync(memoryPath)) {
+      console.log("Memory file not found")
+      return false
+    }
+    
+    let memory = fs.readFileSync(memoryPath, "utf8")
+    
+    // Find the category section and add the fact
+    const date = new Date().toLocaleDateString()
+    const newLine = `\n- [${date}] ${fact}`
+    
+    if (memory.includes(`## ${category}`)) {
+      memory = memory.replace(
+        `## ${category}`,
+        `## ${category}${newLine}`
+      )
+      fs.writeFileSync(memoryPath, memory)
+      console.log(`Memory added: ${fact}`)
+      return true
+    }
+    
+    return false
+  } catch (err) {
+    console.log("Memory error:", err.message)
+    return false
+  }
 }
 
-module.exports = { createNewProject }
+// ============================================
+// EXPORTS
+// ============================================
+module.exports = {
+  loadPersona,
+  buildSystemPrompt,
+  addMemory
+}

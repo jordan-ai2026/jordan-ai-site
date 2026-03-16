@@ -542,12 +542,18 @@ async function createProductPage(name, description, options = {}) {
     const {
       price = 49,
       features = ["Instant access", "Lifetime updates", "Built by AI"],
-      emoji = "🚀"
+      emoji = "🚀",
+      paymentLink = null
     } = options
     
     const slug = slugify(name)
     const productsDir = path.join(__dirname, CONFIG.productsFolder)
     ensureDir(productsDir)
+    
+    // Use Stripe payment link if available, otherwise show "Coming Soon"
+    const buyButton = paymentLink 
+      ? `<a href="${paymentLink}" class="btn btn-primary">Buy Now — $${price}</a>`
+      : `<a href="#" class="btn btn-primary" onclick="alert('Payment coming soon!'); return false;">Buy Now — $${price}</a>`
     
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -576,7 +582,7 @@ async function createProductPage(name, description, options = {}) {
             ${features.map(f => `<li>${f}</li>`).join("\n            ")}
           </ul>
           
-          <a href="#" class="btn btn-primary">Buy Now — $${price}</a>
+          ${buyButton}
           <a href="/" class="btn btn-secondary" style="margin-left: 12px;">← Home</a>
         </div>
         

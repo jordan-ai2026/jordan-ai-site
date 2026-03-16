@@ -1,93 +1,66 @@
 require("dotenv").config()
-
 const fs = require("fs")
 const path = require("path")
 const OpenAI = require("openai")
-const { deploySite } = require("./githubDeploy")
-const { publishBlog } = require("./seoPublisher")
+const { createStripeProduct, isStripeConfigured } = require("./stripeHelper")
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
-function slugify(text){
+function slugify(text) {
   return text
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-|-$/g,"")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
 }
 
-function ensureFolder(folder){
-  if(!fs.existsSync(folder)){
-    fs.mkdirSync(folder,{recursive:true})
-  }
-}
-
-async function buildProductFromTopic(topic){
-
-  const slug = slugify(topic)
-
-  const res = await openai.chat.completions.create({
-    model:"gpt-4o-mini",
-    messages:[
-      {
-        role:"system",
-        content:"Write a short landing page description for this AI product."
-      },
-      {
-        role:"user",
-        content:topic
+async function buildProductFromTopic(topic) {
+  try {
+    const slug = slugify(topic)
+    const price = 99 // Default price
+    
+    const res = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: "Write a short landing page description for this AI product. 2-3 sentences."
+        },
+        {
+          role: "user",
+          content: topic
+        }
+      ]
+    })
+    
+    const description = res.choices[0].message.content
+    
+    console.log("Product built:", topic)
+    
+    // Create Stripe product if configured
+    let paymentLink = null
+    if (isStripeConfigured()) {
+      const stripeResult = await createStripeProduct(topic, description, price)
+      if (stripeResult.success) {
+        paymentLink = stripeResult.paymentLink
       }
-    ]
-  })
-
-  const description = res.choices[0].message.content
-
-deploySite()
-
-  // WEBSITE ROOT
-  const WEBSITE_ROOT = path.join(__dirname,"website")
-
-  const PRODUCTS_DIR = path.join(WEBSITE_ROOT,"products")
-  const BLOG_DIR = path.join(WEBSITE_ROOT,"blog")
-
-  ensureFolder(PRODUCTS_DIR)
-  ensureFolder(BLOG_DIR)
-
-  const productPath = path.join(PRODUCTS_DIR, slug + ".html")
-
-  const html = `
-<html>
-
-<head>
-<title>${topic}</title>
-</head>
-
-<body>
-
-<h1>${topic}</h1>
-
-<p>${description}</p>
-
-<h2>AI Automation Tool</h2>
-
-<p>Price: $99</p>
-
-</body>
-
-</html>
-`
-
-  fs.writeFileSync(productPath, html)
-
-  console.log("Product page created:", productPath)
-
-  // CREATE SEO BLOG ARTICLE
-  await publishBlog(
-    "How " + topic + " helps businesses",
-    slug
-  )
-
+    } else {
+      console.log("⚠️ Stripe not configured - no payment link created")
+    }
+    
+    return {
+      name: topic,
+      slug: slug,
+      description: description,
+      price: price,
+      paymentLink: paymentLink
+    }
+    
+  } catch (err) {
+    console.log("Product builder error:", err)
+    return null
+  }
 }
 
 module.exports = { buildProductFromTopic }

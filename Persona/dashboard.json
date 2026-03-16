@@ -1,0 +1,22 @@
+{
+  "totalRevenue": 0,
+  "todayRevenue": 0,
+  "weekRevenue": 0,
+  "monthRevenue": 0,
+  "productsCreated": 4,
+  "productsSold": 0,
+  "topProducts": [],
+  "blogsPublished": 4,
+  "tweetsPosted": 0,
+  "conversionRate": 0,
+  "avgOrderValue": 0,
+  "monthlyGoal": 10000,
+  "goalProgress": 0,
+  "dailyRevenue": [
+    {
+      "date": "2026-03-16",
+      "revenue": 0
+    }
+  ],
+  "lastUpdated": "2026-03-16T04:09:56.358Z"
+}

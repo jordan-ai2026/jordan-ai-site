@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — Jordan AI</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0a0a0f;
+      color: #e4e4e7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    
+    .bg-effects {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 500px;
+    }
+    
+    .checkmark {
+      font-size: 4rem;
+      margin-bottom: 24px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    p {
+      color: #71717a;
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+      color: #000;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-effects"></div>
+  
+  <div class="container">
+    <div class="checkmark">✅</div>
+    <h1>Thank You!</h1>
+    <p>Your purchase was successful. You'll receive an email with access details shortly.</p>
+    <a href="/" class="btn">← Back to Home</a>
+  </div>
+</body>
+</html>
