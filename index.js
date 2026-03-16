@@ -329,7 +329,7 @@ client.on("messageCreate", async (message) => {
   // !deploy
   if (content === "!deploy") {
     await message.reply("🚀 Deploying website...")
-    await deployWebsite("Manual deploy")
+    //await deployWebsite("Manual deploy")
     await message.reply("✅ Deployed!")
     return
   }
