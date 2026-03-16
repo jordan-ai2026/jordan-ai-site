@@ -1,15 +1,21 @@
 // ============================================
 // JORDAN AI - MAIN BOT
 // CEO orchestrating autonomous business
+// 
+// BRAIN: Claude Opus (main conversation & CEO decisions)
+// WORKERS: GPT-4o-mini (sub-agents, blogs, products)
+// LOOP: Once per day (not hourly)
+// HOMEPAGE: Protected — never overwritten
 // ============================================
 
 require("dotenv").config()
 const { Client, GatewayIntentBits } = require("discord.js")
 const OpenAI = require("openai")
+const Anthropic = require("@anthropic-ai/sdk")
 
 // Core modules
 const { buildSystemPrompt, addMemory } = require("./ceoBrain")
-const { startAutonomous, getStatus, runCycle } = require("./autonomousLoop")
+const { getStatus, runCycle } = require("./autonomousLoop")
 const { learnFromFeedback, getLearningResponse } = require("./feedbackLearner")
 const { deployWebsite } = require("./gitDeploy")
 
@@ -27,8 +33,47 @@ const { updateDashboard, formatDashboard } = require("./revenueDashboard")
 // Reporter
 const reporter = require("./reporter")
 
+// ============================================
+// DUAL AI SETUP
+// ============================================
+
+// OPUS — The CEO brain (main conversation, strategic decisions)
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY
+})
+
+// GPT-4o-mini — The worker (sub-agents, blogs, products, cheap tasks)
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
+// Helper: Talk to Opus (for important CEO-level thinking)
+async function askOpus(systemPrompt, userMessage) {
+  try {
+    const response = await anthropic.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 2048,
+      system: systemPrompt,
+      messages: [
+        { role: "user", content: userMessage }
+      ]
+    })
+    return response.content[0].text
+  } catch (err) {
+    console.log("Opus error, falling back to GPT-4o-mini:", err.message)
+    // Fallback to GPT if Opus fails (budget ran out, API down, etc.)
+    const fallback = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userMessage }
+      ]
+    })
+    return fallback.choices[0].message.content
+  }
+}
+
+// ============================================
+// DISCORD CLIENT
+// ============================================
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -48,6 +93,64 @@ async function sendLongMessage(channel, text) {
 }
 
 // ============================================
+// DAILY AUTONOMOUS LOOP (runs once per day)
+// Worker tasks use GPT-4o-mini (handled by autonomousLoop.js)
+// ============================================
+let dailyTimer = null
+
+function startDailyLoop() {
+  // Run the first cycle 5 minutes after startup (gives everything time to initialize)
+  setTimeout(async () => {
+    console.log("🔄 Running first daily cycle...")
+    try {
+      const result = await runCycle()
+      if (result && result.report) {
+        const reportsChannel = reporter.getReportsChannel()
+        if (reportsChannel) {
+          try {
+            const channel = await client.channels.fetch(reportsChannel)
+            if (channel) {
+              await sendLongMessage(channel, "📊 **Daily Autonomous Cycle Complete**\n\n" + result.report.join("\n"))
+            }
+          } catch (err) {
+            console.log("Could not send daily report:", err.message)
+          }
+        }
+      }
+      console.log("✅ Daily cycle complete")
+    } catch (err) {
+      console.log("❌ Daily cycle error:", err.message)
+    }
+  }, 5 * 60 * 1000) // 5 minutes after startup
+
+  // Then run every 24 hours
+  dailyTimer = setInterval(async () => {
+    console.log("🔄 Running daily autonomous cycle...")
+    try {
+      const result = await runCycle()
+      if (result && result.report) {
+        const reportsChannel = reporter.getReportsChannel()
+        if (reportsChannel) {
+          try {
+            const channel = await client.channels.fetch(reportsChannel)
+            if (channel) {
+              await sendLongMessage(channel, "📊 **Daily Autonomous Cycle Complete**\n\n" + result.report.join("\n"))
+            }
+          } catch (err) {
+            console.log("Could not send daily report:", err.message)
+          }
+        }
+      }
+      console.log("✅ Daily cycle complete")
+    } catch (err) {
+      console.log("❌ Daily cycle error:", err.message)
+    }
+  }, 24 * 60 * 60 * 1000) // Every 24 hours
+
+  console.log("📅 Daily loop started — cycles every 24 hours")
+}
+
+// ============================================
 // BOT STARTUP
 // ============================================
 client.once("ready", () => {
@@ -55,22 +158,28 @@ client.once("ready", () => {
   console.log("🤖 JORDAN AI - CEO MODE")
   console.log("=".repeat(60))
   console.log(`   Discord: ${client.user.tag}`)
+  console.log(`   CEO Brain: Claude Opus (Anthropic)`)
+  console.log(`   Workers: GPT-4o-mini (OpenAI)`)
   console.log(`   Trust Level: ${getTrustLevel().level}/4 - ${getTrustLevel().name}`)
   console.log(`   Agents: ${listAgents().map(a => a.name).join(", ")}`)
+  console.log(`   Autonomous: Once per day`)
+  console.log(`   Homepage: PROTECTED`)
   console.log("=".repeat(60) + "\n")
   
   // Initialize reporter with Discord client
   reporter.setClient(client)
   
-  // Start autonomous orchestration
-  console.log("Starting autonomous mode...")
-  startAutonomous()
+  // Start daily autonomous loop (once per day, NOT every hour)
+  startDailyLoop()
   
   // Schedule nightly self-review at 3am
   scheduleNightlyRoutine(3)
   
   // Update dashboard on startup
   updateDashboard()
+  
+  // NOTE: We do NOT call createHomepage() or deployWebsite() on startup
+  // The service landing page at website/index.html is manually managed
 })
 
 // ============================================
@@ -86,7 +195,7 @@ client.on("messageCreate", async (message) => {
   // ORCHESTRATION COMMANDS
   // ========================================
   
-  // !orchestrate - Full orchestration for a goal
+  // !orchestrate - Full orchestration for a goal (uses Opus for planning)
   if (content.startsWith("!orchestrate")) {
     const goal = content.replace("!orchestrate", "").trim()
     if (!goal) {
@@ -103,7 +212,7 @@ client.on("messageCreate", async (message) => {
     return
   }
 
-  // !cycle - Run one autonomous cycle
+  // !cycle - Run one autonomous cycle manually
   if (content === "!cycle") {
     await message.reply("🔄 Running autonomous cycle... Jordan is thinking.")
     const result = await runCycle()
@@ -130,7 +239,7 @@ client.on("messageCreate", async (message) => {
     return
   }
 
-  // !delegate - Smart delegation
+  // !delegate - Smart delegation (sub-agents use GPT-4o-mini)
   if (content.startsWith("!delegate")) {
     const task = content.replace("!delegate", "").trim()
     if (!task) {
@@ -147,7 +256,7 @@ client.on("messageCreate", async (message) => {
     return
   }
 
-  // !ask <agent> <task> - Direct delegation
+  // !ask <agent> <task> - Direct delegation (sub-agents use GPT-4o-mini)
   if (content.startsWith("!ask")) {
     const parts = content.replace("!ask", "").trim().split(" ")
     const agentId = parts[0]
@@ -247,13 +356,16 @@ client.on("messageCreate", async (message) => {
     const statusMsg = `**🤖 Jordan AI Status**
 
 **Mode:** CEO Orchestrator
-**Autonomous:** ${status.isRunning ? "✅ Running" : "❌ Stopped"}
+**CEO Brain:** Claude Opus (Anthropic)
+**Workers:** GPT-4o-mini (OpenAI)
+**Autonomous:** 📅 Daily (once per day)
 **Products Today:** ${status.productsToday}/${status.maxProductsPerDay}
 **Cycles Run:** ${status.cycleCount}
 **Last Cycle:** ${status.lastCycle ? status.lastCycle.toLocaleTimeString() : "Never"}
 
 **Trust Level:** ${trust.level}/4 — ${trust.name}
-**Reports Channel:** ${reportsChannel ? `<#${reportsChannel}>` : "Not set"}`
+**Reports Channel:** ${reportsChannel ? `<#${reportsChannel}>` : "Not set"}
+**Homepage:** 🔒 Protected (manual only)`
     await message.reply(statusMsg)
     return
   }
@@ -326,11 +438,11 @@ client.on("messageCreate", async (message) => {
     return
   }
 
-  // !deploy
+  // !deploy - Deploy website (but NEVER overwrite index.html)
   if (content === "!deploy") {
-    await message.reply("🚀 Deploying website...")
-    //await deployWebsite("Manual deploy")
-    await message.reply("✅ Deployed!")
+    await message.reply("🚀 Deploying website... (homepage is protected)")
+    await deployWebsite("Manual deploy")
+    await message.reply("✅ Deployed! Homepage was NOT overwritten.")
     return
   }
 
@@ -352,23 +464,27 @@ Agents: researcher, writer, support, sales, builder
 \`!skills\` — List all skills
 \`!skill assign <agent> <skill>\` — Give skill
 \`!skill remove <agent> <skill>\` — Remove skill
-\`!skill create <id> <name> | <desc> | <prompt>\`
+\`!skill create <id> <n> | <desc> | <prompt>\`
 
 **Management**
-\`!status\` — Bot status
+\`!status\` — Bot status (shows which AI model is active)
 \`!dashboard\` — Revenue stats
 \`!review\` — Self-review now
 \`!trust [1-4]\` — View/set trust
 \`!remember <fact>\` — Save to memory
-\`!deploy\` — Deploy website
+\`!deploy\` — Deploy website (homepage protected)
 \`!reports here\` — Send reports to this channel
-\`!reports off\` — Disable reports`
+\`!reports off\` — Disable reports
+
+**AI Models**
+CEO Brain: Claude Opus (strategic thinking, conversation)
+Workers: GPT-4o-mini (blogs, products, sub-agents)`
     await message.reply(helpMsg)
     return
   }
 
   // ========================================
-  // NATURAL CONVERSATION
+  // NATURAL CONVERSATION (powered by Opus)
   // ========================================
   
   try {
@@ -388,16 +504,9 @@ Agents: researcher, writer, support, sales, builder
       }
     }
     
-    // Normal conversation
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: buildSystemPrompt() },
-        { role: "user", content: content }
-      ]
-    })
-    
-    await sendLongMessage(message.channel, response.choices[0].message.content)
+    // CEO conversation — powered by Claude Opus
+    const reply = await askOpus(buildSystemPrompt(), content)
+    await sendLongMessage(message.channel, reply)
     
   } catch (err) {
     console.log("Chat error:", err.message)
