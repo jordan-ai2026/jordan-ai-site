@@ -2,11 +2,12 @@
 // JORDAN AI - WEBSITE BUILDER
 // Creates professional HTML pages
 // ============================================
-// 
+//
 // FOLDER STRUCTURE:
 // jordan-ai-bot/
 //   ├── website/
-//   │   ├── index.html        (homepage)
+//   │   ├── index.html        (homepage - auto-generated)
+//   │   ├── services.html     (service page - MANUAL, never overwritten)
 //   │   ├── products/
 //   │   │   └── product-name.html
 //   │   └── blog/
@@ -118,6 +119,7 @@ const getStyles = () => `
   }
   
   .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
   
   /* Hero */
   .hero {
@@ -321,6 +323,7 @@ const getStyles = () => `
   }
   
   footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
   
   /* Responsive */
   @media (max-width: 768px) {
@@ -332,7 +335,7 @@ const getStyles = () => `
 `
 
 // ============================================
-// NAVIGATION
+// NAVIGATION (with Services link)
 // ============================================
 const getNav = () => `
 <nav>
@@ -342,17 +345,24 @@ const getNav = () => `
       <li><a href="/">Home</a></li>
       <li><a href="/products">Products</a></li>
       <li><a href="/blog">Blog</a></li>
+      <li><a href="/services.html">Services</a></li>
     </ul>
   </div>
 </nav>
 `
 
 // ============================================
-// FOOTER
+// FOOTER (with Services link)
 // ============================================
 const getFooter = () => `
 <footer>
   <div class="container">
+    <p style="margin-bottom: 12px;">
+      <a href="/">Home</a> · 
+      <a href="/products">Products</a> · 
+      <a href="/blog">Blog</a> · 
+      <a href="/services.html">Services</a>
+    </p>
     <p>© ${new Date().getFullYear()} Jordan AI — Built autonomously</p>
   </div>
 </footer>
@@ -417,6 +427,8 @@ function getBlogList() {
 
 // ============================================
 // CREATE HOMEPAGE
+// NOTE: This ONLY writes index.html
+// services.html is NEVER touched by this code
 // ============================================
 async function createHomepage() {
   try {
@@ -487,10 +499,20 @@ async function createHomepage() {
       <div class="container">
         <h1>Autonomous AI<br><span class="gradient">Building Real Businesses</span></h1>
         <p>Jordan AI scans markets, builds products, and generates revenue — all autonomously.</p>
-        <div style="display: flex; gap: 16px; justify-content: center;">
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
           <a href="/products" class="btn btn-primary">View Products</a>
           <a href="/blog" class="btn btn-secondary">Read Blog</a>
+          <a href="/services.html" class="btn btn-secondary">Hire Us</a>
         </div>
+      </div>
+    </section>
+    
+    <!-- Services callout -->
+    <section style="background: var(--bg-light);">
+      <div class="container" style="text-align: center;">
+        <h2>Need a Custom AI Chatbot?</h2>
+        <p class="section-subtitle">We build AI agents that answer your customers 24/7, book appointments, and qualify leads.</p>
+        <a href="/services.html" class="btn btn-primary">Learn More →</a>
       </div>
     </section>
     
@@ -525,6 +547,7 @@ async function createHomepage() {
     console.log("✅ Homepage created: website/index.html")
     console.log(`   → ${products.length} products listed`)
     console.log(`   → ${blogs.length} blog posts listed`)
+    console.log(`   → Services link included`)
     
     return { success: true, path: filePath }
     
@@ -659,8 +682,9 @@ async function createBlogPost(title, content, options = {}) {
       ${paragraphs}
     </div>
     
-    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);">
-      <a href="/" class="btn btn-secondary">← Back to Home</a>
+    <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; gap: 12px;">
+      <a href="/" class="btn btn-secondary">← Home</a>
+      <a href="/services.html" class="btn btn-primary">Need a Custom AI Agent?</a>
     </div>
   </article>
   
@@ -818,6 +842,8 @@ async function createBlogIndex() {
 
 // ============================================
 // REBUILD ALL PAGES
+// NOTE: This rebuilds auto-generated pages only
+// services.html is NEVER touched
 // ============================================
 async function rebuildSite() {
   console.log("🔄 Rebuilding entire site...")
@@ -825,6 +851,7 @@ async function rebuildSite() {
   await createProductsIndex()
   await createBlogIndex()
   console.log("✅ Site rebuild complete")
+  console.log("   → services.html was NOT modified (manual page)")
   return { success: true }
 }
 
