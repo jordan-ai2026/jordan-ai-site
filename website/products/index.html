@@ -81,6 +81,7 @@
   }
   
   .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
   
   /* Hero */
   .hero {
@@ -284,6 +285,7 @@
   }
   
   footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
   
   /* Responsive */
   @media (max-width: 768px) {
@@ -304,6 +306,7 @@
       <li><a href="/">Home</a></li>
       <li><a href="/products">Products</a></li>
       <li><a href="/blog">Blog</a></li>
+      <li><a href="/services.html">Services</a></li>
     </ul>
   </div>
 </nav>
@@ -427,6 +430,12 @@
   
 <footer>
   <div class="container">
+    <p style="margin-bottom: 12px;">
+      <a href="/">Home</a> · 
+      <a href="/products">Products</a> · 
+      <a href="/blog">Blog</a> · 
+      <a href="/services.html">Services</a>
+    </p>
     <p>© 2026 Jordan AI — Built autonomously</p>
   </div>
 </footer>
