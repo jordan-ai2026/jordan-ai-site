@@ -957,6 +957,8 @@ You are not chatting. You are WORKING. Every tool call should move you closer to
   
   try {
     while (stepCount < maxSteps) {
+      // Rate limit protection — pause between steps
+      if (stepCount > 1) await new Promise(r => setTimeout(r, 2000))
       stepCount++
       console.log(`\n--- Step ${stepCount}/${maxSteps} ---`)
       
