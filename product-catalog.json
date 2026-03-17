@@ -1,0 +1,47 @@
+{
+  "ai-starter-kit": {
+    "name": "The Small Business AI Starter Kit",
+    "price": 29,
+    "stripePaymentLink": "https://buy.stripe.com/bJe5kv0SP8B0gpp7IfbfO0i",
+    "stripePriceId": "price_1TBlpv0Y8KdIJVDrISGcNnsb",
+    "stripeProductId": "prod_UA61pHGwoWMLMx",
+    "fileName": "small-business-ai-starter-kit.pdf",
+    "description": "30 ready-to-use AI prompts for small business owners"
+  },
+  "website-audit": {
+    "name": "The Website Audit Checklist",
+    "price": 29,
+    "stripePaymentLink": "https://buy.stripe.com/eVq8wHfNJbNcb552nVbfO0j",
+    "stripePriceId": "price_1TBlpv0Y8KdIJVDrAhI78ssp",
+    "stripeProductId": "prod_UA61czFE6uPPDv",
+    "fileName": "website-audit-checklist.pdf",
+    "description": "50-point website audit checklist for small businesses"
+  },
+  "social-media-pack": {
+    "name": "The Social Media Autopilot Pack",
+    "price": 39,
+    "stripePaymentLink": "https://buy.stripe.com/9B6cMX8lh6sS6OPd2zbfO0k",
+    "stripePriceId": "price_1TBlpw0Y8KdIJVDrrl82r9oB",
+    "stripeProductId": "prod_UA62BrSnqZpNtu",
+    "fileName": "social-media-autopilot-pack.pdf",
+    "description": "30-day content calendar with 90 pre-written posts"
+  },
+  "seo-blueprint": {
+    "name": "The SEO Blog Blueprint",
+    "price": 49,
+    "stripePaymentLink": "https://buy.stripe.com/eVq9ALdFB2cCc99faHbfO0l",
+    "stripePriceId": "price_1TBlpx0Y8KdIJVDrdUV33jhJ",
+    "stripeProductId": "prod_UA622GGGBXbDgO",
+    "fileName": "seo-blog-blueprint.pdf",
+    "description": "How to plan, write, and rank local SEO blog posts"
+  },
+  "chatbot-playbook": {
+    "name": "The AI Chatbot Playbook",
+    "price": 67,
+    "stripePaymentLink": "https://buy.stripe.com/aFa14f1WTg3s0qrbYvbfO0m",
+    "stripePriceId": "price_1TBlpx0Y8KdIJVDry7vMTaUU",
+    "stripeProductId": "prod_UA62ktLCoyODKH",
+    "fileName": "ai-chatbot-playbook.pdf",
+    "description": "Step-by-step guide to building a customer service chatbot"
+  }
+}
