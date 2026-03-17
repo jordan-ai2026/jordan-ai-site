@@ -1,0 +1,146 @@
+{
+  "queue": [],
+  "completed": [
+    {
+      "id": 1,
+      "agentId": "writer",
+      "description": "Social post: How AI automation can save small businesses 10+ hours per week and increase revenue - share specific examples of WordPress management, customer service chatbots, and content creation that business owners can relate to. Include a soft CTA about getting help with implementation.",
+      "toolCalls": [
+        {
+          "tool": "social_write_and_post",
+          "input": {
+            "topic": "How AI automation can save small businesses 10+ hours per week and increase revenue - share specific examples of WordPress management, customer service chatbots, and content creation that business owners can relate to. Include a soft CTA about getting help with implementation.",
+            "platform": "all"
+          },
+          "needsAI": false
+        }
+      ],
+      "priority": "normal",
+      "status": "completed",
+      "queuedAt": "2026-03-17T02:16:36.083Z",
+      "startedAt": "2026-03-17T02:16:36.085Z",
+      "completedAt": "2026-03-17T02:16:39.409Z",
+      "result": [
+        {
+          "tool": "social_write_and_post",
+          "result": {
+            "success": false,
+            "posted": 0,
+            "failed": 1,
+            "platforms": 1,
+            "results": {
+              "twitter": {
+                "success": false,
+                "error": "Your client app is not configured with the appropriate oauth1 app permissions for this endpoint."
+              }
+            },
+            "content": "💡 Small businesses can save 10+ hours a week with AI! 🚀 Automate WordPress management, engage customers 24/7 with chatbots, and streamline content creation. Imagine focusing on growth while AI handles the rest! Need help implementing it? We’ve got you! #AIforBusiness #SmallBiz #Automation"
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "id": 2,
+      "agentId": "builder",
+      "description": "Deploy: Add new blog post: 5 Ways AI Can Boost Small Business Revenue - lead generation content",
+      "toolCalls": [
+        {
+          "tool": "deploy_website",
+          "input": {
+            "message": "Add new blog post: 5 Ways AI Can Boost Small Business Revenue - lead generation content"
+          },
+          "needsAI": false
+        }
+      ],
+      "priority": "normal",
+      "status": "completed",
+      "queuedAt": "2026-03-17T02:16:58.905Z",
+      "startedAt": "2026-03-17T02:16:58.906Z",
+      "completedAt": "2026-03-17T02:17:00.510Z",
+      "result": [
+        {
+          "tool": "deploy_website",
+          "result": {
+            "success": true,
+            "message": "Add new blog post: 5 Ways AI Can Boost Small Business Revenue - lead generation content"
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "id": 3,
+      "agentId": "writer",
+      "description": "Write blog post: The Complete Guide to AI Automation for Small Businesses: 15 Ways to Save Time and Increase Revenue in 2026",
+      "toolCalls": [
+        {
+          "tool": "wp_create_post",
+          "input": {
+            "slug": "jordan-ai",
+            "topic": "The Complete Guide to AI Automation for Small Businesses: 15 Ways to Save Time and Increase Revenue in 2026",
+            "categories": [
+              "Blog"
+            ]
+          },
+          "needsAI": false
+        }
+      ],
+      "priority": "normal",
+      "status": "completed",
+      "queuedAt": "2026-03-17T02:28:25.055Z",
+      "startedAt": "2026-03-17T02:28:25.056Z",
+      "completedAt": "2026-03-17T02:28:25.058Z",
+      "result": [
+        {
+          "tool": "wp_create_post",
+          "result": {
+            "success": false,
+            "error": "Client \"jordan-ai\" not found"
+          }
+        }
+      ],
+      "error": null
+    },
+    {
+      "id": 4,
+      "agentId": "writer",
+      "description": "Social post: Small business owners: Stop manually doing tasks that AI can handle in seconds. Here are 5 game-changing automations you can implement TODAY: 1) Customer service chatbots 2) Social media scheduling 3) Email follow-ups 4) Content creation 5) Website updates. Which one would save you the most time? Comment below 👇",
+      "toolCalls": [
+        {
+          "tool": "social_write_and_post",
+          "input": {
+            "topic": "Small business owners: Stop manually doing tasks that AI can handle in seconds. Here are 5 game-changing automations you can implement TODAY: 1) Customer service chatbots 2) Social media scheduling 3) Email follow-ups 4) Content creation 5) Website updates. Which one would save you the most time? Comment below 👇",
+            "platform": "all"
+          },
+          "needsAI": false
+        }
+      ],
+      "priority": "normal",
+      "status": "completed",
+      "queuedAt": "2026-03-17T02:28:39.460Z",
+      "startedAt": "2026-03-17T02:28:39.461Z",
+      "completedAt": "2026-03-17T02:28:42.399Z",
+      "result": [
+        {
+          "tool": "social_write_and_post",
+          "result": {
+            "success": false,
+            "posted": 0,
+            "failed": 1,
+            "platforms": 1,
+            "results": {
+              "twitter": {
+                "success": false,
+                "error": "Your client app is not configured with the appropriate oauth1 app permissions for this endpoint."
+              }
+            },
+            "content": "Small business owners: Stop wasting time on tasks AI can handle in seconds! 🚀 Check out these 5 game-changing automations you can implement TODAY: 1) Chatbots 2) Social media scheduling 3) Email follow-ups 4) Content creation 5) Website updates. Which saves you the most time? Comment below! 👇 #SmallBusiness #AI #Automation"
+          }
+        }
+      ],
+      "error": null
+    }
+  ],
+  "counter": 5
+}

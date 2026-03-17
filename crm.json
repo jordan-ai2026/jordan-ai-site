@@ -1,1 +1,142 @@
-{"clients":{},"nextId":1}
+{
+  "clients": {
+    "prospect-law-firm": {
+      "id": 1,
+      "slug": "prospect-law-firm",
+      "contactName": "",
+      "email": "",
+      "phone": "",
+      "businessName": "Local Law Firm (Prospect)",
+      "industry": "Legal Services",
+      "website": "",
+      "location": "",
+      "services": [],
+      "monthlyValue": 1500,
+      "setupFee": 0,
+      "stage": "lead",
+      "wpSlug": "prospect-law-firm",
+      "createdAt": "2026-03-17T01:58:08.837Z",
+      "lastContact": "2026-03-17T02:29:12.771Z",
+      "nextFollowUp": null,
+      "signedAt": null,
+      "notes": [
+        {
+          "date": "2026-03-17T02:29:12.771Z",
+          "text": "HIGH VALUE: $1.5k/month potential. Need to identify specific firm, managing partner or office administrator contact info. Check local bar association directories and firm websites."
+        }
+      ],
+      "activity": [
+        {
+          "date": "2026-03-17T01:58:08.837Z",
+          "action": "Client added to CRM",
+          "auto": true
+        },
+        {
+          "date": "2026-03-17T02:29:12.771Z",
+          "action": "Note added: HIGH VALUE: $1.5k/month potential. Need to identif...",
+          "auto": false
+        }
+      ]
+    },
+    "prospect-medical-practice": {
+      "id": 2,
+      "slug": "prospect-medical-practice",
+      "contactName": "",
+      "email": "",
+      "phone": "",
+      "businessName": "Medical Practice (Prospect)",
+      "industry": "Healthcare",
+      "website": "",
+      "location": "",
+      "services": [],
+      "monthlyValue": 2000,
+      "setupFee": 0,
+      "stage": "lead",
+      "wpSlug": "prospect-medical-practice",
+      "createdAt": "2026-03-17T01:58:10.890Z",
+      "lastContact": "2026-03-17T02:28:59.938Z",
+      "nextFollowUp": "2026-03-18T02:29:49.483Z",
+      "signedAt": null,
+      "notes": [
+        {
+          "date": "2026-03-17T02:28:59.938Z",
+          "text": "PRIORITY TARGET: $2k/month value. Need to research specific practice name, contact person (likely practice manager), email/phone. Search medical directories and LinkedIn for decision-makers."
+        }
+      ],
+      "activity": [
+        {
+          "date": "2026-03-17T01:58:10.890Z",
+          "action": "Client added to CRM",
+          "auto": true
+        },
+        {
+          "date": "2026-03-17T02:28:59.938Z",
+          "action": "Note added: PRIORITY TARGET: $2k/month value. Need to research...",
+          "auto": false
+        },
+        {
+          "date": "2026-03-17T02:29:49.483Z",
+          "action": "Follow-up set for 3/17/2026",
+          "auto": false
+        }
+      ]
+    },
+    "lake-murray-landscape": {
+      "id": 3,
+      "slug": "lake-murray-landscape",
+      "contactName": "",
+      "email": "",
+      "phone": "",
+      "businessName": "Lake Murray Landscape Supply",
+      "industry": "Landscaping Supply",
+      "website": "",
+      "location": "",
+      "services": [],
+      "monthlyValue": 0,
+      "setupFee": 0,
+      "stage": "lead",
+      "wpSlug": "lake-murray-landscape",
+      "createdAt": "2026-03-17T02:23:32.360Z",
+      "lastContact": "2026-03-17T02:23:32.360Z",
+      "nextFollowUp": null,
+      "signedAt": null,
+      "notes": [],
+      "activity": [
+        {
+          "date": "2026-03-17T02:23:32.360Z",
+          "action": "Client added to CRM",
+          "auto": true
+        }
+      ]
+    },
+    "local-restaurant-group": {
+      "id": 4,
+      "slug": "local-restaurant-group",
+      "contactName": "TBD - Research Needed",
+      "email": "research-pending@example.com",
+      "phone": "",
+      "businessName": "Local Restaurant Group (Research Target)",
+      "industry": "Food Service",
+      "website": "",
+      "location": "",
+      "services": [],
+      "monthlyValue": 800,
+      "setupFee": 0,
+      "stage": "lead",
+      "wpSlug": "local-restaurant-group",
+      "createdAt": "2026-03-17T02:29:34.725Z",
+      "lastContact": "2026-03-17T02:29:34.725Z",
+      "nextFollowUp": null,
+      "signedAt": null,
+      "notes": [],
+      "activity": [
+        {
+          "date": "2026-03-17T02:29:34.725Z",
+          "action": "Client added to CRM",
+          "auto": true
+        }
+      ]
+    }
+  },
+  "nextId": 5
+}

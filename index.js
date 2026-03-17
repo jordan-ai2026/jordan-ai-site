@@ -15,7 +15,7 @@ const Anthropic = require("@anthropic-ai/sdk")
 
 // Core modules
 const { buildSystemPrompt, addMemory } = require("./ceoBrain")
-const { getStatus, runCycle } = require("./autonomousLoop")
+// autonomousLoop replaced by agentEngine
 const { learnFromFeedback, getLearningResponse } = require("./feedbackLearner")
 const { deployWebsite } = require("./gitDeploy")
 const wp = require("./wordpressManager")
@@ -24,6 +24,8 @@ const crm = require("./crm")
 const billing = require("./billingManager")
 const social = require("./socialManager")
 const fulfill = require("./fulfillment")
+const agent = require("./agentEngine")
+const taskQueue = require("./taskQueue")
 
 // Orchestrator & Agents
 const { orchestrate, quickOrchestrate } = require("./orchestrator")
@@ -88,6 +90,9 @@ const client = new Client({
   ]
 })
 
+// Store conversation history per channel
+const conversationHistory = new Map()
+
 // ============================================
 // HELPERS
 // ============================================
@@ -105,55 +110,45 @@ async function sendLongMessage(channel, text) {
 let dailyTimer = null
 
 function startDailyLoop() {
-  // Run the first cycle 5 minutes after startup (gives everything time to initialize)
+  // Run the agent 5 minutes after startup
   setTimeout(async () => {
-    console.log("🔄 Running first daily cycle...")
+    console.log("🧠 Running first daily agent cycle...")
     try {
-      const result = await runCycle()
-      if (result && result.report) {
-        const reportsChannel = reporter.getReportsChannel()
-        if (reportsChannel) {
-          try {
-            const channel = await client.channels.fetch(reportsChannel)
-            if (channel) {
-              await sendLongMessage(channel, "📊 **Daily Autonomous Cycle Complete**\n\n" + result.report.join("\n"))
-            }
-          } catch (err) {
-            console.log("Could not send daily report:", err.message)
-          }
-        }
-      }
-      console.log("✅ Daily cycle complete")
+      const reportsChannel = reporter.getReportsChannel()
+      const notifier = reportsChannel ? async (msg) => {
+        try {
+          const channel = await client.channels.fetch(reportsChannel)
+          if (channel) await channel.send(msg)
+        } catch (err) {}
+      } : null
+      
+      await agent.dailyAgentRun(notifier)
+      console.log("✅ Daily agent cycle complete")
     } catch (err) {
-      console.log("❌ Daily cycle error:", err.message)
+      console.log("❌ Daily agent error:", err.message)
     }
   }, 5 * 60 * 1000) // 5 minutes after startup
 
   // Then run every 24 hours
   dailyTimer = setInterval(async () => {
-    console.log("🔄 Running daily autonomous cycle...")
+    console.log("🧠 Running daily agent cycle...")
     try {
-      const result = await runCycle()
-      if (result && result.report) {
-        const reportsChannel = reporter.getReportsChannel()
-        if (reportsChannel) {
-          try {
-            const channel = await client.channels.fetch(reportsChannel)
-            if (channel) {
-              await sendLongMessage(channel, "📊 **Daily Autonomous Cycle Complete**\n\n" + result.report.join("\n"))
-            }
-          } catch (err) {
-            console.log("Could not send daily report:", err.message)
-          }
-        }
-      }
-      console.log("✅ Daily cycle complete")
+      const reportsChannel = reporter.getReportsChannel()
+      const notifier = reportsChannel ? async (msg) => {
+        try {
+          const channel = await client.channels.fetch(reportsChannel)
+          if (channel) await channel.send(msg)
+        } catch (err) {}
+      } : null
+      
+      await agent.dailyAgentRun(notifier)
+      console.log("✅ Daily agent cycle complete")
     } catch (err) {
-      console.log("❌ Daily cycle error:", err.message)
+      console.log("❌ Daily agent error:", err.message)
     }
   }, 24 * 60 * 60 * 1000) // Every 24 hours
 
-  console.log("📅 Daily loop started — cycles every 24 hours")
+  console.log("📅 Daily agent loop started — runs every 24 hours with full autonomy")
 }
 
 // ============================================
@@ -175,10 +170,23 @@ client.once("ready", () => {
   console.log(`   Billing: ${billing.isConfigured() ? "✅ Stripe connected" : "❌ Not configured"}`)
   console.log(`   Social: ${social.getConnectedPlatforms().length > 0 ? social.getConnectedPlatforms().join(", ") : "❌ No platforms (add API keys to .env)"}`)
   console.log(`   Products: ${Object.keys(fulfill.listProducts()).length} in catalog | Auto-delivery every 5 min`)
+  console.log(`   Agent: 🧠 Claude Opus brain with ${agent.TOOLS.length} tools`)
+  console.log(`   Sub-agents: Writer, Researcher, Builder, Sales, Support (GPT-4o-mini)`)
   console.log("=".repeat(60) + "\n")
   
   // Initialize reporter with Discord client
   reporter.setClient(client)
+  
+  // Initialize task queue notifier (sub-agents report here)
+  taskQueue.setNotifier(async (msg) => {
+    const reportsChannel = reporter.getReportsChannel()
+    if (reportsChannel) {
+      try {
+        const channel = await client.channels.fetch(reportsChannel)
+        if (channel) await channel.send(msg)
+      } catch (err) {}
+    }
+  })
   
   // Start daily autonomous loop (once per day, NOT every hour)
   startDailyLoop()
@@ -235,14 +243,24 @@ client.on("messageCreate", async (message) => {
     return
   }
 
-  // !cycle - Run one autonomous cycle manually
+  // !cycle - Run one agent cycle manually
   if (content === "!cycle") {
-    await message.reply("🔄 Running autonomous cycle... Jordan is thinking.")
-    const result = await runCycle()
-    if (result && result.report) {
-      await sendLongMessage(message.channel, result.report.join("\n"))
+    await message.reply("🧠 Running agent cycle... Jordan is thinking and acting.")
+    
+    const result = await agent.runAgent(
+      "Check the business status. Handle any overdue follow-ups. If any active WordPress clients need new content this week, write a blog post. Then check for any new product sales.",
+      {
+        maxSteps: 10,
+        discordNotify: async (msg) => {
+          try { await message.channel.send(msg) } catch (err) {}
+        }
+      }
+    )
+    
+    if (result.success) {
+      await message.reply(`✅ Agent cycle complete — ${result.steps} steps taken`)
     } else {
-      await message.reply("✅ Cycle complete (no report generated)")
+      await message.reply(`❌ ${result.error}`)
     }
     return
   }
@@ -373,18 +391,17 @@ client.on("messageCreate", async (message) => {
   
   // !status
   if (content === "!status") {
-    const status = getStatus()
+    const agentStatus = agent.getAgentStatus()
     const trust = getTrustLevel()
     const reportsChannel = reporter.getReportsChannel()
     const statusMsg = `**🤖 Jordan AI Status**
 
-**Mode:** CEO Orchestrator
+**Mode:** Autonomous Agent
 **CEO Brain:** Claude Opus (Anthropic)
 **Workers:** GPT-4o-mini (OpenAI)
-**Autonomous:** 📅 Daily (once per day)
-**Products Today:** ${status.productsToday}/${status.maxProductsPerDay}
-**Cycles Run:** ${status.cycleCount}
-**Last Cycle:** ${status.lastCycle ? status.lastCycle.toLocaleTimeString() : "Never"}
+**Tools Available:** ${agent.TOOLS.length}
+**Agent Runs Today:** ${agentStatus.runsToday}/10
+**Last Run:** ${agentStatus.lastRun ? new Date(agentStatus.lastRun).toLocaleTimeString() : "Never"}
 
 **Trust Level:** ${trust.level}/4 — ${trust.name}
 **Reports Channel:** ${reportsChannel ? `<#${reportsChannel}>` : "Not set"}
@@ -394,7 +411,8 @@ client.on("messageCreate", async (message) => {
 **CRM:** ${crm.getDashboardStats().totalClients} clients | $${crm.getDashboardStats().mrr}/mo MRR${crm.getFollowUpsDue().length > 0 ? `\n⚠️ **${crm.getFollowUpsDue().length} follow-ups overdue!**` : ""}
 **Billing:** ${billing.isConfigured() ? "✅ Stripe connected" : "❌ Not configured"}
 **Social:** ${social.getConnectedPlatforms().length > 0 ? social.getConnectedPlatforms().map(p => "✅ " + p).join(", ") : "❌ No platforms connected"}
-**Products:** ${Object.keys(fulfill.listProducts()).length} in catalog | ${fulfill.getFulfillmentStats().totalSales} sales | $${fulfill.getFulfillmentStats().totalRevenue} revenue`
+**Products:** ${Object.keys(fulfill.listProducts()).length} in catalog | ${fulfill.getFulfillmentStats().totalSales} sales | $${fulfill.getFulfillmentStats().totalRevenue} revenue
+**Agent:** 🧠 ${agentStatus.isRunning ? "Running — " + agentStatus.currentGoal : "Idle"} | ${agentStatus.totalRuns} total runs`
     await message.reply(statusMsg)
     return
   }
@@ -1908,38 +1926,123 @@ client.on("messageCreate", async (message) => {
 **Social** (\`!social help\`) — ${socialPlatforms.length} platforms
 \`!social write\` · \`!social batch\` · \`!social ideas\`
 
+**Agent** (\`!agent help\`)
+\`!agent <goal>\` — Give Jordan a goal, watch it work autonomously
+
 **System**
 \`!status\` · \`!dashboard\` · \`!review\` · \`!trust\` · \`!remember\` · \`!deploy\`
 
-**AI:** CEO = Claude Opus | Workers = GPT-4o-mini`
+**AI:** CEO = Claude Opus (agent brain) | Workers = GPT-4o-mini
+
+**Pro tip:** You can also just talk to me normally.
+I'll use tools automatically when I need to.`
     await message.reply(helpMsg)
     return
   }
 
   // ========================================
-  // NATURAL CONVERSATION (powered by Opus)
+  // AGENT COMMANDS
   // ========================================
-  
-  try {
-    // Check for feedback
-    const learning = await learnFromFeedback(content)
-    if (learning.learned) {
-      await message.reply(`🧠 ${getLearningResponse(learning)}\n\n_Saved: "${learning.lesson}"_`)
+
+  // !agent <goal> - Run the agent with a specific goal (NON-BLOCKING)
+  if (content.startsWith("!agent") && content !== "!agent status" && content !== "!agents") {
+    const goal = content.replace("!agent", "").trim()
+    if (!goal) {
+      await message.reply(`**🧠 Agent Mode**\n\nGive Jordan a goal and watch it work autonomously.\n\n**Examples:**\n\`!agent Check on all clients and handle overdue follow-ups\`\n\`!agent Write and publish a blog post about AI for landscaping businesses\`\n\`!agent Review revenue and find the highest impact action for today\`\n\`!agent Onboard lakemurray and create their first 2 blog posts\`\n\n**Status:** \`!agent status\` | **Queue:** \`!queue\``)
       return
     }
     
-    // Check for push back
-    if (mightNeedPushBack(content)) {
-      const pushBack = await evaluateAndRespond(content)
-      if (pushBack.pushingBack && pushBack.response) {
-        await message.reply(`⚠️ ${pushBack.response}`)
-        return
+    await message.reply(`🧠 **Agent starting in background...**\nGoal: ${goal}\n\nI'll update this channel as I work. You can keep chatting — I'm not blocked.`)
+    
+    // Run in background — does NOT block the bot
+    agent.runAgent(goal, {
+      maxSteps: 15,
+      discordNotify: async (msg) => {
+        try { await message.channel.send(msg) } catch (err) {}
       }
+    }).then(result => {
+      if (result.success) {
+        message.channel.send(`✅ **Agent finished** — ${result.steps} steps taken\nGoal: ${goal}`)
+      } else {
+        message.channel.send(`❌ Agent error: ${result.error}`)
+      }
+    }).catch(err => {
+      message.channel.send(`❌ Agent crashed: ${err.message}`)
+    })
+    
+    return
+  }
+
+  // !agent status - Show agent status
+  if (content === "!agent status") {
+    const status = agent.getAgentStatus()
+    const queueStatus = taskQueue.getQueueStatus()
+    await message.reply(
+      `**🧠 Agent Status**\n\n` +
+      `Running: ${status.isRunning ? "✅ Yes — " + status.currentGoal : "❌ Idle"}\n` +
+      `Runs today: ${status.runsToday}/10\n` +
+      `Total runs: ${status.totalRuns}\n` +
+      `Last run: ${status.lastRun || "Never"}\n` +
+      `Max steps/run: ${status.guardrails.maxStepsPerRun}\n` +
+      `Emails this hour: ${status.guardrails.emailsSentThisHour}/10\n\n` +
+      `**Sub-agent Queue:**\n` +
+      `Queued: ${queueStatus.queued} | Running: ${queueStatus.running} | Completed: ${queueStatus.completed}`
+    )
+    return
+  }
+
+  // !queue - Show task queue status
+  if (content === "!queue") {
+    await message.reply(taskQueue.formatQueueStatus())
+    return
+  }
+
+  // !queue clear - Clear the task queue
+  if (content === "!queue clear") {
+    const cleared = taskQueue.clearQueue()
+    await message.reply(`🗑️ Cleared ${cleared} queued tasks`)
+    return
+  }
+
+  // ========================================
+  // NATURAL CONVERSATION (Agent-powered)
+  // Jordan AI can now take ACTIONS during chat
+  // This is the brain — not just a chatbot
+  // ========================================
+  
+  try {
+    // Store conversation history per channel
+    if (!conversationHistory.has(message.channel.id)) {
+      conversationHistory.set(message.channel.id, [])
     }
     
-    // CEO conversation — powered by Claude Opus
-    const reply = await askOpus(buildSystemPrompt(), content)
-    await sendLongMessage(message.channel, reply)
+    const history = conversationHistory.get(message.channel.id)
+    
+    // Keep last 20 messages for context
+    if (history.length > 20) {
+      history.splice(0, history.length - 20)
+    }
+    
+    const result = await agent.agentChat(content, history)
+    
+    if (result.success && result.response) {
+      // Update conversation history
+      history.push({ role: "user", content: content })
+      history.push({ role: "assistant", content: result.response })
+      
+      // Show what tools were used
+      let toolNote = ""
+      if (result.toolsUsed.length > 0) {
+        const tools = result.toolsUsed.map(t => 
+          `${t.result === "success" ? "✅" : t.result === "needs_approval" ? "⚠️" : "❌"} ${t.tool}`
+        ).join(", ")
+        toolNote = `\n\n_Tools used: ${tools}_`
+      }
+      
+      await sendLongMessage(message.channel, result.response + toolNote)
+    } else {
+      await message.channel.send("I ran into an issue. Try again or use a specific !command.")
+    }
     
   } catch (err) {
     console.log("Chat error:", err.message)

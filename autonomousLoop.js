@@ -1,19 +1,16 @@
 // ============================================
 // JORDAN AI - AUTONOMOUS LOOP
-// Jordan as CEO orchestrating sub-agents
+// Creates AI/business blog content daily
+// NO product creation — products are manual only
 // ============================================
 
 require("dotenv").config()
-const { thinkDeep, thinkDeepJSON } = require("./aiBrain")
+const { thinkDeep } = require("./aiBrain")
 const { loadPersona, addMemory } = require("./ceoBrain")
-const { delegateTo, delegateJSONTo } = require("./subAgents")
-const { createProductPage, createProductsIndex, createBlogIndex } = require("./websiteBuilder")
-const { publishBlog } = require("./seoPublisher")
+const { delegateTo } = require("./subAgents")
+const { createBlogPost, createHomepage, createBlogIndex } = require("./websiteBuilder")
 const { deployWebsite } = require("./gitDeploy")
-const { createStripeProduct } = require("./stripeHelper")
-const { createDeliveryPage } = require("./productDelivery")
-const { trackProductCreated, trackBlogPublished, updateDashboard } = require("./revenueDashboard")
-const { canPerform } = require("./trustLadder")
+const { trackBlogPublished } = require("./revenueDashboard")
 const { sendReport, getReportsChannel } = require("./reporter")
 
 // ============================================
@@ -21,334 +18,205 @@ const { sendReport, getReportsChannel } = require("./reporter")
 // ============================================
 let isRunning = false
 let cycleCount = 0
-let productsToday = 0
+let blogsToday = 0
 let lastCycle = null
-const MAX_PRODUCTS_PER_DAY = 3
-const CYCLE_INTERVAL = 60 * 60 * 1000 // 1 hour
+const MAX_BLOGS_PER_DAY = 2
 
 // ============================================
-// JORDAN THINKS STRATEGICALLY
-// CEO-level decision making
+// BLOG TOPICS
+// Real topics about AI for small business
+// Jordan AI picks from these + generates its own
 // ============================================
-async function jordanThinks() {
-  console.log("\n" + "=".repeat(60))
-  console.log("🧠 JORDAN AI - STRATEGIC THINKING")
-  console.log("=".repeat(60))
+const TOPIC_CATEGORIES = [
+  // How AI helps specific businesses
+  "How AI chatbots help [dentists/barbers/restaurants/gyms] save time and money",
+  "Why small businesses in [industry] are switching to AI customer service",
+  "The real cost of missing customer calls after hours",
+  "How a landscaping company used AI to double their online leads",
+  "5 ways AI can automate your [industry] business today",
+  
+  // Practical AI guides
+  "How to use ChatGPT to write better customer emails in 5 minutes",
+  "A beginner's guide to AI tools for small business owners",
+  "The truth about AI-generated content and Google rankings in 2026",
+  "How to automate your social media without losing your authentic voice",
+  "AI vs hiring: when does automation make more sense than a new employee",
+  
+  // SEO and online presence
+  "Why your small business website needs a blog (and how AI makes it easy)",
+  "Local SEO explained: how to show up when customers search near you",
+  "The 5 biggest website mistakes small businesses make",
+  "How to get more Google reviews without being annoying",
+  "What is a chatbot and does your business actually need one",
+  
+  // Business and tech trends
+  "How AI is changing customer expectations in 2026",
+  "The small business owner's guide to not getting left behind by AI",
+  "Why your competitor's website outranks yours (and how to fix it)",
+  "How to evaluate if an AI tool is worth the investment for your business",
+  "The difference between AI hype and AI that actually makes you money",
+  
+  // Jordan AI specific (subtle marketing)
+  "What we learned building AI chatbots for 10 different industries",
+  "Behind the scenes: how an AI agent manages a real business website",
+  "Monthly SEO results: what realistic progress looks like for small businesses",
+  "How we helped a local business go from invisible to page one on Google",
+  "The tools we use to manage multiple client websites automatically"
+]
+
+// ============================================
+// PICK A BLOG TOPIC
+// ============================================
+async function pickTopic() {
+  console.log("\n🧠 Picking blog topic...")
   
   const persona = loadPersona()
   
-  const thinkingPrompt = `You are Jordan AI, CEO of an autonomous business.
-
-YOUR SOUL:
-${persona.soul}
-
-YOUR MEMORY:
-${persona.memory}
-
-CURRENT STATUS:
-- Products created today: ${productsToday}/${MAX_PRODUCTS_PER_DAY}
-- Cycle count: ${cycleCount}
-
-Think strategically about what your business should do next.
-Focus on the AI/automation niche. Digital products only.
-
-Consider:
-1. What product would solve a real pain point?
-2. What content would drive traffic?
-3. What's missing from your current offerings?
-
-Return JSON:
-{
-  "thinking": "Your CEO-level strategic thinking (2-3 sentences)",
-  "action": "BUILD_PRODUCT" or "WRITE_CONTENT" or "IMPROVE_EXISTING" or "ANALYZE_MARKET" or "SKIP",
-  "idea": "Specific product or content idea",
-  "reasoning": "Why this is the right move"
-}`
-
-  const decision = await thinkDeepJSON(thinkingPrompt)
+  // Pick a random seed topic for inspiration
+  const seedTopic = TOPIC_CATEGORIES[Math.floor(Math.random() * TOPIC_CATEGORIES.length)]
   
-  if (!decision) {
-    console.log("❌ Couldn't think strategically")
-    return null
-  }
+  const prompt = `You are Jordan AI, writing blog content about AI technology and how businesses can use it.
+
+Your website (jordan-ai.co) offers:
+- AI chatbot building for small businesses
+- WordPress website management
+- SEO content services
+- Digital products (AI starter kits, SEO guides, chatbot playbooks)
+
+INSPIRATION TOPIC: ${seedTopic}
+
+Pick a specific, helpful blog post topic. Requirements:
+- About AI, automation, or digital marketing for small businesses
+- Practical and helpful (not salesy)
+- Something a small business owner would actually search for
+- Include a local angle when possible (South Carolina, Columbia area)
+- NOT about a specific product to sell — this is educational content
+
+Return ONLY the blog post title. Nothing else.`
+
+  const title = await thinkDeep(prompt)
   
-  console.log(`\n💭 Jordan's Thinking: ${decision.thinking}`)
-  console.log(`📌 Action: ${decision.action}`)
-  console.log(`💡 Idea: ${decision.idea}`)
+  if (!title) return seedTopic.replace("[dentists/barbers/restaurants/gyms]", "small businesses").replace("[industry]", "service")
   
-  return decision
+  return title.replace(/^["']|["']$/g, "").trim()
 }
 
 // ============================================
-// VALIDATE IDEA WITH SCOUT
+// WRITE BLOG POST
 // ============================================
-async function validateWithScout(idea) {
-  console.log("\n🔍 VALIDATION: Asking Scout to research...")
+async function writeBlogPost(title) {
+  console.log(`\n✍️ Writing: ${title}`)
   
-  const validation = await delegateJSONTo("researcher", `
-Validate this product idea for the AI/automation market:
+  const content = await delegateTo("writer", `
+Write an SEO blog post with this title: "${title}"
 
-"${idea}"
+Requirements:
+- 600-800 words
+- Helpful, practical, educational
+- Written for small business owners who aren't tech-savvy
+- Include specific examples and actionable advice
+- Natural tone — conversational, not corporate
+- Include a subtle mention of jordan-ai.co services at the end
+  (just one sentence, not a hard sell)
+- Break into sections with clear subheadings
+- End with a simple call to action
 
-Research and return JSON:
-{
-  "verdict": "BUILD" or "IMPROVE" or "SKIP",
-  "score": 1-10,
-  "targetAudience": "Who would buy this",
-  "competitors": "Similar products that exist",
-  "uniqueAngle": "How to differentiate",
-  "priceRange": "$X-$Y",
-  "concerns": "Any red flags"
-}
+DO NOT:
+- Make up statistics or cite fake studies
+- Promise unrealistic results
+- Sound like an AI wrote it (no "in today's digital landscape" or "leverage AI solutions")
+- Write about a specific product to buy
+- Use excessive buzzwords
 
-Be brutally honest. Only recommend BUILD for ideas scoring 7+.`)
-
-  return validation?.result || null
-}
-
-// ============================================
-// CREATE PRODUCT WITH INK
-// ============================================
-async function createWithInk(idea, validation) {
-  console.log("\n✍️ CONTENT: Asking Ink to write...")
-  
-  const content = await delegateJSONTo("writer", `
-Create product content for:
-
-IDEA: ${idea}
-TARGET: ${validation.targetAudience}
-UNIQUE ANGLE: ${validation.uniqueAngle}
-PRICE RANGE: ${validation.priceRange}
-
-Return JSON:
-{
-  "name": "Product name (catchy, specific)",
-  "tagline": "One-line hook",
-  "description": "2-3 paragraph sales description",
-  "benefits": ["benefit 1", "benefit 2", "benefit 3"],
-  "price": number (pick optimal from range),
-  "slug": "url-friendly-slug"
-}
-
-Make it compelling. Focus on transformation, not features.`)
+Write the blog post content now. Use paragraph breaks between sections.`)
 
   return content?.result || null
 }
 
 // ============================================
-// EXECUTE PRODUCT PIPELINE
-// ============================================
-async function executeProductPipeline(product) {
-  console.log("\n" + "=".repeat(60))
-  console.log("🚀 EXECUTING PRODUCT PIPELINE")
-  console.log("=".repeat(60))
-  
-  try {
-    // 1. Create Stripe product
-    console.log("\n💳 Creating Stripe product...")
-    if (!canPerform("create_stripe_product")) {
-      console.log("   ⚠️ Trust level too low for Stripe, skipping payment")
-    }
-    
-    let paymentLink = null
-    try {
-      const stripe = await createStripeProduct(
-        product.name,
-        product.description,
-        product.price,
-        product.slug
-      )
-      paymentLink = stripe?.paymentLink
-      console.log(`   ✅ Stripe product created: ${paymentLink}`)
-    } catch (err) {
-      console.log(`   ⚠️ Stripe error: ${err.message}`)
-    }
-    
-    // 2. Create delivery page
-    console.log("\n📦 Creating delivery page...")
-    await createDeliveryPage({
-      name: product.name,
-      slug: product.slug,
-      description: product.description
-    })
-    
-    // 3. Create product page
-    console.log("\n📄 Creating product page...")
-    await createProductPage(product.name, product.description, {
-      price: product.price,
-      paymentLink: paymentLink,
-      tagline: product.tagline,
-      benefits: product.benefits,
-      slug: product.slug
-    })
-    
-    // 4. Update products index
-    console.log("\n📑 Updating products index...")
-    await createProductsIndex()
-    
-    // 5. Create blog post with Ink
-    console.log("\n📝 Asking Ink to write blog post...")
-    const blogContent = await delegateTo("writer", `
-Write an SEO blog post about "${product.name}".
-
-Target keywords: ${product.slug.replace(/-/g, ", ")}
-Link to product: /products/${product.slug}.html
-
-Write 600-800 words. Include:
-- Problem/pain point
-- Why it matters
-- How this product helps
-- Call to action
-
-Make it valuable, not salesy.`)
-
-    if (blogContent?.result) {
-      await publishBlog(product.name, product.slug, blogContent.result)
-      await createBlogIndex()
-      trackBlogPublished()
-    }
-    
-    // 6. Deploy to GitHub
-    console.log("\n🚀 Deploying to GitHub...")
-    await deployWebsite(`New product: ${product.name}`)
-    
-    trackProductCreated()
-    productsToday++
-    
-    console.log("\n✅ PRODUCT PIPELINE COMPLETE")
-    console.log(`   Product: ${product.name}`)
-    console.log(`   Price: $${product.price}`)
-    console.log(`   URL: /products/${product.slug}.html`)
-    
-    return true
-    
-  } catch (err) {
-    console.log(`\n❌ Pipeline error: ${err.message}`)
-    return false
-  }
-}
-
-// ============================================
-// MAIN AUTONOMOUS CYCLE
+// MAIN CYCLE — BLOG ONLY
 // ============================================
 async function runCycle() {
   const report = []
   
-  if (productsToday >= MAX_PRODUCTS_PER_DAY) {
-    console.log(`\n⏸️ Daily product limit reached (${MAX_PRODUCTS_PER_DAY})`)
-    return { success: false, report: [`⏸️ Daily product limit reached (${MAX_PRODUCTS_PER_DAY})`] }
+  if (blogsToday >= MAX_BLOGS_PER_DAY) {
+    console.log(`\n⏸️ Daily blog limit reached (${MAX_BLOGS_PER_DAY})`)
+    return { success: false, report: [`⏸️ Daily blog limit reached (${MAX_BLOGS_PER_DAY})`] }
   }
   
   cycleCount++
   lastCycle = new Date()
   
-  console.log("\n" + "🔄".repeat(20))
-  console.log(`AUTONOMOUS CYCLE #${cycleCount}`)
-  console.log("🔄".repeat(20))
+  console.log("\n" + "=".repeat(60))
+  console.log(`📝 BLOG CYCLE #${cycleCount}`)
+  console.log("=".repeat(60))
   
-  report.push(`**🔄 AUTONOMOUS CYCLE #${cycleCount}**`)
+  report.push(`**📝 BLOG CYCLE #${cycleCount}**`)
   report.push(`${"━".repeat(30)}`)
   report.push("")
   
-  // 1. Jordan thinks strategically
-  const decision = await jordanThinks()
-  
-  if (!decision || decision.action === "SKIP") {
-    console.log("\n⏭️ Jordan decided to skip this cycle")
-    report.push("⏭️ Jordan decided to skip this cycle")
-    return { success: false, report }
-  }
-  
-  report.push(`**🧠 Jordan's Thinking:**`)
-  report.push(decision.thinking)
-  report.push("")
-  report.push(`**📌 Action:** ${decision.action}`)
-  report.push(`**💡 Idea:** ${decision.idea}`)
-  report.push("")
-  
-  // 2. Scout validates the idea
-  const validation = await validateWithScout(decision.idea)
-  
-  if (!validation) {
-    console.log("\n❌ Scout couldn't validate idea")
-    report.push("❌ Scout couldn't validate idea")
-    return { success: false, report }
-  }
-  
-  console.log(`\n📊 Scout's Verdict: ${validation.verdict} (Score: ${validation.score}/10)`)
-  
-  report.push(`**🔍 Scout's Validation:**`)
-  report.push(`• Verdict: ${validation.verdict}`)
-  report.push(`• Score: ${validation.score}/10`)
-  report.push(`• Target: ${validation.targetAudience}`)
-  report.push(`• Price Range: ${validation.priceRange}`)
-  report.push("")
-  
-  if (validation.verdict === "SKIP" || validation.score < 6) {
-    console.log("⏭️ Idea didn't pass validation")
-    addMemory(`Skipped idea "${decision.idea}" - Scout score: ${validation.score}/10`, "Validation")
-    report.push(`⏭️ Idea didn't pass validation (score < 6)`)
-    return { success: false, report }
-  }
-  
-  // 3. Ink creates the content
-  const product = await createWithInk(decision.idea, validation)
-  
-  if (!product) {
-    console.log("\n❌ Ink couldn't create content")
-    report.push("❌ Ink couldn't create content")
-    return { success: false, report }
-  }
-  
-  console.log(`\n📦 Product Created:`)
-  console.log(`   Name: ${product.name}`)
-  console.log(`   Price: $${product.price}`)
-  
-  report.push(`**✍️ Ink Created Product:**`)
-  report.push(`• Name: ${product.name}`)
-  report.push(`• Price: $${product.price}`)
-  report.push(`• Tagline: ${product.tagline}`)
-  report.push("")
-  
-  // 4. Execute the full pipeline
-  report.push(`**🚀 Pipeline Execution:**`)
-  const success = await executeProductPipeline(product)
-  
-  if (success) {
-    addMemory(`Created "${product.name}" at $${product.price} - validated by Scout`, "Products")
-    report.push(`✅ Stripe product created`)
-    report.push(`✅ Delivery page created`)
-    report.push(`✅ Product page created`)
-    report.push(`✅ Blog post published`)
-    report.push(`✅ Deployed to GitHub`)
+  try {
+    // 1. Pick a topic
+    const title = await pickTopic()
+    console.log(`📌 Topic: ${title}`)
+    report.push(`**📌 Topic:** ${title}`)
     report.push("")
-    report.push(`**🎉 PRODUCT LIVE:**`)
-    report.push(`• URL: /products/${product.slug}.html`)
-    report.push(`• Price: $${product.price}`)
-  } else {
-    report.push(`❌ Pipeline failed`)
-  }
-  
-  // 5. Update dashboard every few cycles
-  if (cycleCount % 3 === 0) {
-    console.log("\n📊 Updating dashboard...")
-    await updateDashboard()
+    
+    // 2. Write the content
+    const content = await writeBlogPost(title)
+    
+    if (!content) {
+      console.log("❌ Couldn't write blog post")
+      report.push("❌ Couldn't write blog post")
+      return { success: false, report }
+    }
+    
+    // 3. Create the blog post page
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+    const result = await createBlogPost(title, content)
+    
+    if (result && result.success) {
+      console.log(`✅ Blog published: ${result.url}`)
+      report.push(`✅ **Blog published:** ${result.url}`)
+      
+      // 4. Update blog index
+      await createBlogIndex()
+      
+      // 5. Deploy
+      console.log("🚀 Deploying...")
+      await deployWebsite(`New blog: ${title}`)
+      report.push("✅ Deployed to site")
+      
+      // 6. Track it
+      trackBlogPublished()
+      blogsToday++
+      addMemory(`Published blog: "${title}"`, "Content")
+      
+      report.push("")
+      report.push(`**🎉 Blog live on jordan-ai.co**`)
+    } else {
+      console.log("❌ Failed to create blog page")
+      report.push("❌ Failed to create blog page")
+    }
+    
+  } catch (err) {
+    console.log(`❌ Cycle error: ${err.message}`)
+    report.push(`❌ Error: ${err.message}`)
   }
   
   report.push("")
   report.push(`${"━".repeat(30)}`)
-  report.push(`✅ Cycle #${cycleCount} complete`)
+  report.push(`✅ Cycle #${cycleCount} complete | Blogs today: ${blogsToday}/${MAX_BLOGS_PER_DAY}`)
   
-  return { success, report, product }
+  return { success: true, report }
 }
 
 // ============================================
-// START AUTONOMOUS MODE
+// RUN CYCLE WITH DISCORD REPORT
 // ============================================
 async function runCycleWithReport() {
   const result = await runCycle()
   
-  // Send report to Discord if channel is configured
   if (result && result.report && getReportsChannel()) {
     const reportText = Array.isArray(result.report) ? result.report.join("\n") : result.report
     await sendReport(reportText)
@@ -357,22 +225,17 @@ async function runCycleWithReport() {
   return result
 }
 
+// ============================================
+// START / STOP / STATUS
+// These are called from index.js
+// ============================================
 function startAutonomous() {
   if (isRunning) {
     console.log("Already running")
     return
   }
-  
   isRunning = true
-  console.log("\n🤖 AUTONOMOUS MODE STARTED")
-  console.log(`   Cycle interval: ${CYCLE_INTERVAL / 60000} minutes`)
-  console.log(`   Max products/day: ${MAX_PRODUCTS_PER_DAY}`)
-  
-  // Run first cycle after short delay
-  setTimeout(runCycleWithReport, 5000)
-  
-  // Then run on interval
-  setInterval(runCycleWithReport, CYCLE_INTERVAL)
+  console.log("\n📝 BLOG MODE STARTED (no product creation)")
 }
 
 function stopAutonomous() {
@@ -384,9 +247,10 @@ function getStatus() {
   return {
     isRunning,
     cycleCount,
-    productsToday,
+    productsToday: 0,
+    blogsToday,
     lastCycle,
-    maxProductsPerDay: MAX_PRODUCTS_PER_DAY
+    maxProductsPerDay: 0
   }
 }
 
@@ -400,8 +264,8 @@ function scheduleDailyReset() {
   const msUntilMidnight = tomorrow - now
   
   setTimeout(() => {
-    productsToday = 0
-    console.log("🌅 Daily product counter reset")
+    blogsToday = 0
+    console.log("🌅 Daily blog counter reset")
     scheduleDailyReset()
   }, msUntilMidnight)
 }
