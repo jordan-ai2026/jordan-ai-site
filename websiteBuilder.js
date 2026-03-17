@@ -346,6 +346,7 @@ const getNav = () => `
       <li><a href="/products">Products</a></li>
       <li><a href="/blog">Blog</a></li>
       <li><a href="/services.html">Services</a></li>
+      <li><a href="/newsletter.html">Newsletter</a></li>
     </ul>
   </div>
 </nav>
