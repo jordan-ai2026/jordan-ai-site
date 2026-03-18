@@ -17,26 +17,54 @@ const openai = new OpenAI({
 })
 
 // ============================================
+// RATE LIMIT HELPERS
+// ============================================
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function withRetry(fn, label = "API call", maxRetries = 4) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      return await fn()
+    } catch (err) {
+      const isRateLimit = err.status === 429 || err.message?.includes("rate limit") || err.message?.includes("overloaded")
+      const isServerErr = err.status >= 500
+
+      if ((isRateLimit || isServerErr) && attempt < maxRetries - 1) {
+        const waitMs = Math.pow(2, attempt + 1) * 5000 // 10s, 20s, 40s
+        console.log(`⏳ ${label} rate limited. Waiting ${waitMs / 1000}s (attempt ${attempt + 1}/${maxRetries})...`)
+        await sleep(waitMs)
+        continue
+      }
+
+      throw err
+    }
+  }
+}
+
+// ============================================
 // OPUS: Strategic Thinking
 // Use for: Research, validation, product design
 // ============================================
 async function thinkDeep(prompt, context = "") {
   try {
     console.log("🧠 Opus thinking...")
-    
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 4096,
-      messages: [
-        {
-          role: "user",
-          content: context ? `${context}\n\n${prompt}` : prompt
-        }
-      ]
-    })
-    
-    return response.content[0].text
-    
+
+    return await withRetry(async () => {
+      const response = await anthropic.messages.create({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4096,
+        messages: [
+          {
+            role: "user",
+            content: context ? `${context}\n\n${prompt}` : prompt
+          }
+        ]
+      })
+      return response.content[0].text
+    }, "thinkDeep")
+
   } catch (err) {
     console.log("❌ Opus error:", err.message)
     return null
@@ -50,32 +78,31 @@ async function thinkDeep(prompt, context = "") {
 async function thinkDeepJSON(prompt, context = "") {
   try {
     console.log("🧠 Opus thinking (JSON)...")
-    
+
     const fullPrompt = `${context ? context + "\n\n" : ""}${prompt}
 
 IMPORTANT: Respond ONLY with valid JSON. No markdown, no explanation, just the JSON object.`
-    
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 4096,
-      messages: [
-        {
-          role: "user",
-          content: fullPrompt
-        }
-      ]
-    })
-    
-    const text = response.content[0].text.trim()
-    
-    // Try to extract JSON if wrapped in anything
-    let jsonText = text
-    if (text.includes("```")) {
-      jsonText = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
-    }
-    
-    return JSON.parse(jsonText)
-    
+
+    return await withRetry(async () => {
+      const response = await anthropic.messages.create({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4096,
+        messages: [
+          {
+            role: "user",
+            content: fullPrompt
+          }
+        ]
+      })
+
+      const text = response.content[0].text.trim()
+      let jsonText = text
+      if (text.includes("```")) {
+        jsonText = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
+      }
+      return JSON.parse(jsonText)
+    }, "thinkDeepJSON")
+
   } catch (err) {
     console.log("❌ Opus JSON error:", err.message)
     return null
@@ -88,16 +115,17 @@ IMPORTANT: Respond ONLY with valid JSON. No markdown, no explanation, just the J
 // ============================================
 async function quickWrite(prompt, systemPrompt = "You are a helpful assistant.") {
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: prompt }
-      ]
-    })
-    
-    return response.choices[0].message.content
-    
+    return await withRetry(async () => {
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: prompt }
+        ]
+      })
+      return response.choices[0].message.content
+    }, "quickWrite")
+
   } catch (err) {
     console.log("❌ GPT error:", err.message)
     return null
@@ -110,17 +138,18 @@ async function quickWrite(prompt, systemPrompt = "You are a helpful assistant.")
 // ============================================
 async function quickWriteJSON(prompt, systemPrompt = "You are a helpful assistant. Respond only with valid JSON.") {
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: prompt }
-      ],
-      response_format: { type: "json_object" }
-    })
-    
-    return JSON.parse(response.choices[0].message.content)
-    
+    return await withRetry(async () => {
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: prompt }
+        ],
+        response_format: { type: "json_object" }
+      })
+      return JSON.parse(response.choices[0].message.content)
+    }, "quickWriteJSON")
+
   } catch (err) {
     console.log("❌ GPT JSON error:", err.message)
     return null

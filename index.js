@@ -15,7 +15,7 @@ const Anthropic = require("@anthropic-ai/sdk")
 
 // Core modules
 const { buildSystemPrompt, addMemory } = require("./ceoBrain")
-// autonomousLoop replaced by agentEngine
+const blogLoop = require("./autonomousLoop")
 const { learnFromFeedback, getLearningResponse } = require("./feedbackLearner")
 const { deployWebsite } = require("./gitDeploy")
 const wp = require("./wordpressManager")
@@ -40,6 +40,10 @@ const { updateDashboard, formatDashboard } = require("./revenueDashboard")
 
 // Reporter
 const reporter = require("./reporter")
+const leadScraper = require("./leadScraper")
+const outreach = require("./outboundOutreach")
+const followUp = require("./followUpSystem")
+const websiteGenerator = require("./websiteGenerator")
 
 // ============================================
 // DUAL AI SETUP
@@ -104,51 +108,114 @@ async function sendLongMessage(channel, text) {
 }
 
 // ============================================
-// DAILY AUTONOMOUS LOOP (runs once per day)
-// Worker tasks use GPT-4o-mini (handled by autonomousLoop.js)
+// BLOG LOOP — runs every 4 hours automatically
+// Uses autonomousLoop.js (GPT-4o-mini writes content)
+// One cycle at a time — concurrency guard inside autonomousLoop
 // ============================================
-let dailyTimer = null
+let blogLoopTimer = null
 
-function startDailyLoop() {
-  // Run the agent 5 minutes after startup
+function startBlogLoop() {
+  const INTERVAL_MS = 4 * 60 * 60 * 1000  // 4 hours
+
+  // First run: 3 minutes after startup (let Discord connect first)
   setTimeout(async () => {
-    console.log("🧠 Running first daily agent cycle...")
+    console.log("📝 Running first blog cycle...")
     try {
-      const reportsChannel = reporter.getReportsChannel()
-      const notifier = reportsChannel ? async (msg) => {
-        try {
-          const channel = await client.channels.fetch(reportsChannel)
-          if (channel) await channel.send(msg)
-        } catch (err) {}
-      } : null
-      
-      await agent.dailyAgentRun(notifier)
-      console.log("✅ Daily agent cycle complete")
+      await blogLoop.runCycleWithReport()
+      console.log("✅ First blog cycle complete")
     } catch (err) {
-      console.log("❌ Daily agent error:", err.message)
+      console.log("❌ Blog cycle error:", err.message)
     }
-  }, 5 * 60 * 1000) // 5 minutes after startup
+  }, 3 * 60 * 1000)
 
-  // Then run every 24 hours
-  dailyTimer = setInterval(async () => {
-    console.log("🧠 Running daily agent cycle...")
+  // Then every 4 hours
+  blogLoopTimer = setInterval(async () => {
+    console.log("📝 Running scheduled blog cycle...")
     try {
-      const reportsChannel = reporter.getReportsChannel()
-      const notifier = reportsChannel ? async (msg) => {
-        try {
-          const channel = await client.channels.fetch(reportsChannel)
-          if (channel) await channel.send(msg)
-        } catch (err) {}
-      } : null
-      
-      await agent.dailyAgentRun(notifier)
-      console.log("✅ Daily agent cycle complete")
+      await blogLoop.runCycleWithReport()
+      console.log("✅ Blog cycle complete")
     } catch (err) {
-      console.log("❌ Daily agent error:", err.message)
+      console.log("❌ Blog cycle error:", err.message)
     }
-  }, 24 * 60 * 60 * 1000) // Every 24 hours
+  }, INTERVAL_MS)
 
-  console.log("📅 Daily agent loop started — runs every 24 hours with full autonomy")
+  console.log("📅 Blog loop started — runs every 4 hours (up to 6 posts/day)")
+}
+
+// ============================================
+// OUTREACH LOOP — runs once/day at 9am
+// Sends cold emails to new "lead" CRM entries
+// ============================================
+function startOutreachLoop() {
+  function msUntil9am() {
+    const now = new Date()
+    const next9am = new Date(now)
+    next9am.setHours(9, 0, 0, 0)
+    if (next9am <= now) next9am.setDate(next9am.getDate() + 1)
+    return next9am - now
+  }
+
+  function scheduleNextRun() {
+    setTimeout(async () => {
+      console.log("📧 Running scheduled outreach...")
+      try {
+        const result = await outreach.runOutreach({ dailyLimit: 5 })
+        console.log(`✅ Outreach done: ${result.sent} sent`)
+        const reportsChannel = reporter.getReportsChannel()
+        if (reportsChannel && result.sent > 0) {
+          try {
+            const channel = await client.channels.fetch(reportsChannel)
+            if (channel) await channel.send(outreach.formatOutreachReport(result))
+          } catch (err) {}
+        }
+      } catch (err) {
+        console.log("❌ Outreach error:", err.message)
+      }
+      scheduleNextRun()  // schedule the next day's run
+    }, msUntil9am())
+  }
+
+  scheduleNextRun()
+  const nextRun = new Date(Date.now() + msUntil9am())
+  console.log(`📅 Outreach loop started — next run at ${nextRun.toLocaleTimeString()} (then daily at 9am)`)
+}
+
+// ============================================
+// FOLLOW-UP LOOP — runs once/day at 10am
+// Follows up with "contacted" leads after 3 days
+// ============================================
+function startFollowUpLoop() {
+  function msUntil10am() {
+    const now = new Date()
+    const next10am = new Date(now)
+    next10am.setHours(10, 0, 0, 0)
+    if (next10am <= now) next10am.setDate(next10am.getDate() + 1)
+    return next10am - now
+  }
+
+  function scheduleNextRun() {
+    setTimeout(async () => {
+      console.log("🔁 Running scheduled follow-ups...")
+      try {
+        const result = await followUp.runFollowUps({ dailyLimit: 5 })
+        console.log(`✅ Follow-ups done: ${result.sent} sent, ${result.movedToCold} moved to cold`)
+        const reportsChannel = reporter.getReportsChannel()
+        if (reportsChannel && (result.sent > 0 || result.movedToCold > 0)) {
+          try {
+            const channel = await client.channels.fetch(reportsChannel)
+            if (channel) await channel.send(followUp.formatFollowUpReport(result))
+          } catch (err) {}
+        }
+      } catch (err) {
+        console.log("❌ Follow-up error:", err.message)
+      }
+      scheduleNextRun()  // schedule the next day's run
+    }, msUntil10am())
+  }
+
+  scheduleNextRun()
+  const nextRun = new Date(Date.now() + msUntil10am())
+  console.log(`📅 Follow-up loop started — next run at ${nextRun.toLocaleTimeString()} (then daily at 10am)`)
 }
 
 // ============================================
@@ -163,9 +230,9 @@ client.once("ready", () => {
   console.log(`   Workers: GPT-4o-mini (OpenAI)`)
   console.log(`   Trust Level: ${getTrustLevel().level}/4 - ${getTrustLevel().name}`)
   console.log(`   Agents: ${listAgents().map(a => a.name).join(", ")}`)
-  console.log(`   Autonomous: Once per day`)
+  console.log(`   Autonomous: Blog every 4 hours (up to 6/day)`)
   console.log(`   Homepage: PROTECTED`)
-  console.log(`   Email: ${email.isConfigured() ? "✅ Mailgun connected" : "❌ Not configured (add to .env)"}`)
+  console.log(`   Email: ${email.isConfigured() ? "✅ Zoho SMTP connected (info@jordan-ai.co)" : "❌ Not configured (add SMTP_USER/SMTP_PASS to .env)"}`)
   console.log(`   CRM: ${crm.getDashboardStats().totalClients} clients | $${crm.getDashboardStats().mrr}/mo MRR`)
   console.log(`   Billing: ${billing.isConfigured() ? "✅ Stripe connected" : "❌ Not configured"}`)
   console.log(`   Social: ${social.getConnectedPlatforms().length > 0 ? social.getConnectedPlatforms().join(", ") : "❌ No platforms (add API keys to .env)"}`)
@@ -188,9 +255,15 @@ client.once("ready", () => {
     }
   })
   
-  // Start daily autonomous loop (once per day, NOT every hour)
-  startDailyLoop()
-  
+  // Start blog loop — posts every 4 hours automatically
+  startBlogLoop()
+
+  // Start outreach loop — emails new leads once per day at 9am
+  startOutreachLoop()
+
+  // Start follow-up loop — follows up with contacted leads daily at 10am
+  startFollowUpLoop()
+
   // Schedule nightly self-review at 3am
   scheduleNightlyRoutine(3)
   
@@ -406,7 +479,7 @@ client.on("messageCreate", async (message) => {
 **Trust Level:** ${trust.level}/4 — ${trust.name}
 **Reports Channel:** ${reportsChannel ? `<#${reportsChannel}>` : "Not set"}
 **Homepage:** 🔒 Protected (manual only)
-**Email:** ${email.isConfigured() ? "✅ Mailgun connected" : "❌ Not configured"}
+**Email:** ${email.isConfigured() ? "✅ Zoho SMTP connected" : "❌ Not configured"}
 
 **CRM:** ${crm.getDashboardStats().totalClients} clients | $${crm.getDashboardStats().mrr}/mo MRR${crm.getFollowUpsDue().length > 0 ? `\n⚠️ **${crm.getFollowUpsDue().length} follow-ups overdue!**` : ""}
 **Billing:** ${billing.isConfigured() ? "✅ Stripe connected" : "❌ Not configured"}
@@ -486,6 +559,172 @@ client.on("messageCreate", async (message) => {
     }
     addMemory(fact)
     await message.reply(`✅ I'll remember: "${fact}"`)
+    return
+  }
+
+  // ========================================
+  // LEAD GENERATION
+  // ========================================
+
+  // !leads scrape <industry> <city>
+  if (content.startsWith("!leads scrape")) {
+    const rest = content.replace("!leads scrape", "").trim()
+    if (!rest) {
+      await message.reply("Usage: `!leads scrape <industry> [city]`\n\nExamples:\n`!leads scrape dentist`\n`!leads scrape restaurant Columbia, SC`\n`!leads scrape landscaping Lexington, SC`")
+      return
+    }
+
+    if (!leadScraper.isConfigured()) {
+      await message.reply("❌ GOOGLE_PLACES_API_KEY not set in .env\n\nGet one at: https://console.cloud.google.com/\nEnable: Places API")
+      return
+    }
+
+    // Split on comma or first natural break — last "city, state" part
+    const parts = rest.split(",")
+    let industry, city
+    if (parts.length >= 2) {
+      // "dentist Columbia, SC" or "dentist, Columbia SC"
+      const words = rest.split(" ")
+      // Find if there's a state abbreviation (2 caps) at the end
+      const stateIdx = words.findIndex(w => /^[A-Z]{2}$/.test(w))
+      if (stateIdx >= 2) {
+        city = words.slice(stateIdx - 1).join(" ")
+        industry = words.slice(0, stateIdx - 1).join(" ")
+      } else {
+        industry = words[0]
+        city = words.slice(1).join(" ")
+      }
+    } else {
+      industry = rest
+      city = "Columbia, SC"
+    }
+
+    await message.reply(`🔍 Scraping Google Maps for **${industry}** near **${city}**...`)
+    try {
+      const result = await leadScraper.scrapeLeads(industry.trim(), city.trim(), 10)
+      await sendLongMessage(message.channel, leadScraper.formatLeadResults(result))
+    } catch (err) {
+      await message.reply(`❌ Scrape failed: ${err.message}`)
+    }
+    return
+  }
+
+  // !leads list - Show CRM prospects
+  if (content === "!leads list") {
+    const allClients = crm.listAllClients()
+    const prospects = allClients.filter(c => c.stage === "prospect" || c.stage === "contacted")
+    if (prospects.length === 0) {
+      await message.reply("No prospects in CRM yet.\n\nRun `!leads scrape <industry>` to find some.")
+      return
+    }
+    const lines = prospects.map(p => `• **${p.businessName}** [${p.stage}]${p.email ? ` — ${p.email}` : " — no email"}`)
+    await sendLongMessage(message.channel, `**📋 Prospects (${prospects.length})**\n\n${lines.join("\n")}`)
+    return
+  }
+
+  // !outreach run - Send emails to uncontacted leads now (don't wait for 9am)
+  if (content.startsWith("!outreach")) {
+    const limitArg = parseInt(content.replace(/\D/g, "")) || 5
+    const limit = Math.min(limitArg, 20)
+    await message.reply(`📧 Running outreach batch (up to ${limit} emails)...`)
+    try {
+      const result = await outreach.runOutreach({ dailyLimit: limit })
+      await sendLongMessage(message.channel, outreach.formatOutreachReport(result))
+    } catch (err) {
+      await message.reply(`❌ Outreach error: ${err.message}`)
+    }
+    return
+  }
+
+  // !outreach status - Show pending leads and today's stats
+  if (content === "!outreach status") {
+    const stats = outreach.getOutreachStats()
+    await message.reply(
+      `**📧 Outreach Status**\n\n` +
+      `Pending leads (have email, not yet contacted): **${stats.pendingOutreach}**\n` +
+      `Contacted (all time): **${stats.contacted}**\n` +
+      `Emails sent today: **${stats.emailsSentToday}/${stats.dailyLimit}**\n` +
+      `Total leads in CRM: **${stats.totalLeads}**\n\n` +
+      `Auto-runs daily at 9am. Use \`!outreach\` to run now.`
+    )
+    return
+  }
+
+  // !followup run [limit] - Run follow-up batch now
+  if (content.startsWith("!followup run") || content === "!followup run") {
+    const limitArg = parseInt(content.replace(/\D/g, "")) || 5
+    const limit = Math.min(limitArg, 20)
+    await message.reply(`🔁 Running follow-up batch (up to ${limit} emails)...`)
+    try {
+      const result = await followUp.runFollowUps({ dailyLimit: limit })
+      await sendLongMessage(message.channel, followUp.formatFollowUpReport(result))
+    } catch (err) {
+      await message.reply(`❌ Follow-up error: ${err.message}`)
+    }
+    return
+  }
+
+  // !followup status - Show follow-up stats
+  if (content === "!followup status") {
+    const stats = followUp.getFollowUpStats()
+    await message.reply(
+      `**🔁 Follow-Up Status**\n\n` +
+      `Leads in "contacted" stage: **${stats.contacted}**\n` +
+      `Ready for follow-up (3+ days): **${stats.readyForFollowUp}**\n` +
+      `Moved to cold (all time): **${stats.cold}**\n` +
+      `Follow-ups sent today: **${stats.followUpsSentToday}/${stats.dailyLimit}**\n\n` +
+      `Auto-runs daily at 10am. Use \`!followup run\` to run now.`
+    )
+    return
+  }
+
+  // !website create <slug> <name> | <industry> | <city> | <phone> | <email> | [color]
+  if (content.startsWith("!website create")) {
+    const rest = content.replace("!website create", "").trim()
+    const [slugPart, ...pipes] = rest.split("|").map(p => p.trim())
+    const [slug, ...nameParts] = slugPart.trim().split(" ")
+    const businessName = nameParts.join(" ") || slug
+
+    if (!slug || !businessName) {
+      await message.reply(
+        "Usage: `!website create <slug> <name> | <industry> | <city> | <phone> | <email> | [color]`\n\n" +
+        "Example:\n`!website create green-peak Green Peak Landscaping | landscaping | Austin TX | (512) 555-0194 | info@greenpeak.com | green`\n\n" +
+        `Colors: ${Object.keys(websiteGenerator.COLOR_PRESETS).join(", ")}`
+      )
+      return
+    }
+
+    await message.reply(`🌐 Building website for **${businessName}**...`)
+    try {
+      const result = await websiteGenerator.createClientWebsite({
+        slug,
+        businessName,
+        industry: pipes[0] || "service",
+        city:     pipes[1] || "Your City",
+        phone:    pipes[2] || "",
+        email:    pipes[3] || "",
+        color:    pipes[4] || "green",
+        deploy:   true,
+      })
+      await message.reply(websiteGenerator.formatWebsiteResult(result))
+    } catch (err) {
+      await message.reply(`❌ Website creation failed: ${err.message}`)
+    }
+    return
+  }
+
+  // !website list
+  if (content === "!website list") {
+    const sites = websiteGenerator.listClientWebsites()
+    if (sites.length === 0) {
+      await message.reply("No client websites created yet. Use `!website create` to build one.")
+      return
+    }
+    const lines = [`**🌐 Client Websites (${sites.length})**`, ``]
+    for (const s of sites) {
+      lines.push(`• **${s.slug}** — ${s.url}`)
+    }
+    await message.reply(lines.join("\n"))
     return
   }
 
@@ -833,14 +1072,12 @@ client.on("messageCreate", async (message) => {
   // !email status - Check email configuration
   if (content === "!email status") {
     if (!email.isConfigured()) {
-      await message.reply(`❌ **Mailgun not configured**\n\nAdd these to your \`.env\` file:\n\`\`\`\nMAILGUN_API_KEY=your-key\nMAILGUN_DOMAIN=your-domain.mailgun.org\nFROM_EMAIL=you@yourdomain.com\nFROM_NAME=Jordan AI\n\`\`\``)
+      await message.reply(`❌ **Email not configured**\n\nAdd these to your \`.env\` file:\n\`\`\`\nSMTP_HOST=smtp.zoho.com\nSMTP_PORT=465\nSMTP_USER=info@jordan-ai.co\nSMTP_PASS=your-password\nFROM_EMAIL=info@jordan-ai.co\nFROM_NAME=Jordan\n\`\`\``)
       return
     }
-    
+
     const config = email.getConfig()
-    const stats = email.getEmailStats()
-    
-    await message.reply(`**📧 Email System**\n\n**Status:** ✅ Configured\n**Domain:** ${config.domain}\n**From:** ${config.fromName} <${config.fromEmail}>\n\n**Stats:**\nToday: ${stats.today}\nThis month: ${stats.thisMonth}\nAll time: ${stats.total}`)
+    await message.reply(`**📧 Email System**\n\n**Status:** ✅ Configured\n**SMTP:** ${config.host}:${config.port}\n**From:** ${config.fromName} <${config.fromEmail}>\n**Reply-To:** ${config.replyTo}`)
     return
   }
 

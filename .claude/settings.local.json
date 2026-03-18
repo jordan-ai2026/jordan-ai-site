@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --check outboundOutreach.js)",
+      "Bash(node --check emailManager.js)",
+      "Bash(node --check index.js)",
+      "Bash(node --check agentEngine.js)",
+      "Bash(grep -rn @ /c/Users/Jordan/Desktop/jordan-ai-bot --include=*.js --include=*.json --include=*.md --include=*.env --include=.env --exclude-dir=node_modules --exclude-dir=.git)",
+      "Bash(grep -E \"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}\")",
+      "Bash(grep -v \"//.*@\")",
+      "Bash(grep -v \"^\\\\s*//\")"
+    ]
+  }
+}

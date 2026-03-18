@@ -1,5 +1,27 @@
 {
-  "queue": [],
+  "queue": [
+    {
+      "id": 5,
+      "agentId": "builder",
+      "description": "Deploy: Deploy RC Bounce LLC demo website for client presentation to Ryan Carroll",
+      "toolCalls": [
+        {
+          "tool": "deploy_website",
+          "input": {
+            "message": "Deploy RC Bounce LLC demo website for client presentation to Ryan Carroll"
+          },
+          "needsAI": false
+        }
+      ],
+      "priority": "normal",
+      "status": "queued",
+      "queuedAt": "2026-03-18T03:20:48.462Z",
+      "startedAt": null,
+      "completedAt": null,
+      "result": null,
+      "error": null
+    }
+  ],
   "completed": [
     {
       "id": 1,
@@ -142,5 +164,5 @@
       "error": null
     }
   ],
-  "counter": 5
+  "counter": 6
 }

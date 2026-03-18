@@ -1,6 +1,6 @@
 // ============================================
 // JORDAN AI - AUTONOMOUS LOOP
-// Creates AI/business blog content daily
+// Creates AI/business blog content every 4 hours
 // NO product creation — products are manual only
 // ============================================
 
@@ -8,7 +8,7 @@ require("dotenv").config()
 const { thinkDeep } = require("./aiBrain")
 const { loadPersona, addMemory } = require("./ceoBrain")
 const { delegateTo } = require("./subAgents")
-const { createBlogPost, createHomepage, createBlogIndex } = require("./websiteBuilder")
+const { createBlogPost, createBlogIndex } = require("./websiteBuilder")
 const { deployWebsite } = require("./gitDeploy")
 const { trackBlogPublished } = require("./revenueDashboard")
 const { sendReport, getReportsChannel } = require("./reporter")
@@ -17,10 +17,11 @@ const { sendReport, getReportsChannel } = require("./reporter")
 // STATE
 // ============================================
 let isRunning = false
+let blogLoopRunning = false  // concurrency guard — only one cycle at a time
 let cycleCount = 0
 let blogsToday = 0
 let lastCycle = null
-const MAX_BLOGS_PER_DAY = 2
+const MAX_BLOGS_PER_DAY = 6  // 4-hour intervals = up to 6/day
 
 // ============================================
 // BLOG TOPICS
@@ -34,28 +35,28 @@ const TOPIC_CATEGORIES = [
   "The real cost of missing customer calls after hours",
   "How a landscaping company used AI to double their online leads",
   "5 ways AI can automate your [industry] business today",
-  
+
   // Practical AI guides
   "How to use ChatGPT to write better customer emails in 5 minutes",
   "A beginner's guide to AI tools for small business owners",
   "The truth about AI-generated content and Google rankings in 2026",
   "How to automate your social media without losing your authentic voice",
   "AI vs hiring: when does automation make more sense than a new employee",
-  
+
   // SEO and online presence
   "Why your small business website needs a blog (and how AI makes it easy)",
   "Local SEO explained: how to show up when customers search near you",
   "The 5 biggest website mistakes small businesses make",
   "How to get more Google reviews without being annoying",
   "What is a chatbot and does your business actually need one",
-  
+
   // Business and tech trends
   "How AI is changing customer expectations in 2026",
   "The small business owner's guide to not getting left behind by AI",
   "Why your competitor's website outranks yours (and how to fix it)",
   "How to evaluate if an AI tool is worth the investment for your business",
   "The difference between AI hype and AI that actually makes you money",
-  
+
   // Jordan AI specific (subtle marketing)
   "What we learned building AI chatbots for 10 different industries",
   "Behind the scenes: how an AI agent manages a real business website",
@@ -69,12 +70,10 @@ const TOPIC_CATEGORIES = [
 // ============================================
 async function pickTopic() {
   console.log("\n🧠 Picking blog topic...")
-  
-  const persona = loadPersona()
-  
+
   // Pick a random seed topic for inspiration
   const seedTopic = TOPIC_CATEGORIES[Math.floor(Math.random() * TOPIC_CATEGORIES.length)]
-  
+
   const prompt = `You are Jordan AI, writing blog content about AI technology and how businesses can use it.
 
 Your website (jordan-ai.co) offers:
@@ -95,9 +94,9 @@ Pick a specific, helpful blog post topic. Requirements:
 Return ONLY the blog post title. Nothing else.`
 
   const title = await thinkDeep(prompt)
-  
+
   if (!title) return seedTopic.replace("[dentists/barbers/restaurants/gyms]", "small businesses").replace("[industry]", "service")
-  
+
   return title.replace(/^["']|["']$/g, "").trim()
 }
 
@@ -106,7 +105,7 @@ Return ONLY the blog post title. Nothing else.`
 // ============================================
 async function writeBlogPost(title) {
   console.log(`\n✍️ Writing: ${title}`)
-  
+
   const content = await delegateTo("writer", `
 Write an SEO blog post with this title: "${title}"
 
@@ -137,77 +136,86 @@ Write the blog post content now. Use paragraph breaks between sections.`)
 // MAIN CYCLE — BLOG ONLY
 // ============================================
 async function runCycle() {
-  const report = []
-  
+  // Concurrency guard — never run two blog cycles at once
+  if (blogLoopRunning) {
+    console.log("\n⏸️ Blog cycle already in progress, skipping")
+    return { success: false, report: ["⏸️ Blog cycle already running, skipped"] }
+  }
+
   if (blogsToday >= MAX_BLOGS_PER_DAY) {
     console.log(`\n⏸️ Daily blog limit reached (${MAX_BLOGS_PER_DAY})`)
     return { success: false, report: [`⏸️ Daily blog limit reached (${MAX_BLOGS_PER_DAY})`] }
   }
-  
+
+  blogLoopRunning = true
   cycleCount++
   lastCycle = new Date()
-  
+
+  const report = []
+
   console.log("\n" + "=".repeat(60))
   console.log(`📝 BLOG CYCLE #${cycleCount}`)
   console.log("=".repeat(60))
-  
+
   report.push(`**📝 BLOG CYCLE #${cycleCount}**`)
   report.push(`${"━".repeat(30)}`)
   report.push("")
-  
+
   try {
     // 1. Pick a topic
     const title = await pickTopic()
     console.log(`📌 Topic: ${title}`)
     report.push(`**📌 Topic:** ${title}`)
     report.push("")
-    
+
     // 2. Write the content
     const content = await writeBlogPost(title)
-    
+
     if (!content) {
       console.log("❌ Couldn't write blog post")
       report.push("❌ Couldn't write blog post")
+      blogLoopRunning = false
       return { success: false, report }
     }
-    
+
     // 3. Create the blog post page
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
     const result = await createBlogPost(title, content)
-    
+
     if (result && result.success) {
       console.log(`✅ Blog published: ${result.url}`)
       report.push(`✅ **Blog published:** ${result.url}`)
-      
+
       // 4. Update blog index
       await createBlogIndex()
-      
+
       // 5. Deploy
       console.log("🚀 Deploying...")
       await deployWebsite(`New blog: ${title}`)
       report.push("✅ Deployed to site")
-      
+
       // 6. Track it
       trackBlogPublished()
       blogsToday++
       addMemory(`Published blog: "${title}"`, "Content")
-      
+
       report.push("")
       report.push(`**🎉 Blog live on jordan-ai.co**`)
     } else {
       console.log("❌ Failed to create blog page")
       report.push("❌ Failed to create blog page")
     }
-    
+
   } catch (err) {
     console.log(`❌ Cycle error: ${err.message}`)
     report.push(`❌ Error: ${err.message}`)
   }
-  
+
+  blogLoopRunning = false
+
   report.push("")
   report.push(`${"━".repeat(30)}`)
   report.push(`✅ Cycle #${cycleCount} complete | Blogs today: ${blogsToday}/${MAX_BLOGS_PER_DAY}`)
-  
+
   return { success: true, report }
 }
 
@@ -216,18 +224,17 @@ async function runCycle() {
 // ============================================
 async function runCycleWithReport() {
   const result = await runCycle()
-  
+
   if (result && result.report && getReportsChannel()) {
     const reportText = Array.isArray(result.report) ? result.report.join("\n") : result.report
     await sendReport(reportText)
   }
-  
+
   return result
 }
 
 // ============================================
 // START / STOP / STATUS
-// These are called from index.js
 // ============================================
 function startAutonomous() {
   if (isRunning) {
@@ -246,11 +253,12 @@ function stopAutonomous() {
 function getStatus() {
   return {
     isRunning,
+    blogLoopRunning,
     cycleCount,
     productsToday: 0,
     blogsToday,
     lastCycle,
-    maxProductsPerDay: 0
+    maxBlogsPerDay: MAX_BLOGS_PER_DAY
   }
 }
 
@@ -260,9 +268,9 @@ function scheduleDailyReset() {
   const tomorrow = new Date(now)
   tomorrow.setDate(tomorrow.getDate() + 1)
   tomorrow.setHours(0, 0, 0, 0)
-  
+
   const msUntilMidnight = tomorrow - now
-  
+
   setTimeout(() => {
     blogsToday = 0
     console.log("🌅 Daily blog counter reset")
@@ -279,5 +287,6 @@ module.exports = {
   startAutonomous,
   stopAutonomous,
   runCycle,
+  runCycleWithReport,
   getStatus
 }

@@ -2,10 +2,16 @@
 // JORDAN AI - AGENT ENGINE
 // The core brain that makes Jordan AI autonomous
 //
-// MODEL SELECTION:
-// - Opus = client work, creative, building (most powerful)
-// - Sonnet = routine tasks, daily checks (cheaper)
-// - GPT-4o-mini = sub-agents, content generation (cheapest)
+// HOW IT WORKS:
+// 1. Agent receives a goal or trigger
+// 2. Claude Opus THINKS about what to do
+// 3. Opus CALLS a tool (wp_post, send_email, etc.)
+// 4. Engine executes the tool and returns result
+// 5. Opus SEES the result and decides next step
+// 6. Loop continues until goal is achieved
+//
+// Opus = strategic thinking & decisions
+// GPT-4o-mini = cheap content generation (called by tools)
 // ============================================
 
 require("dotenv").config()
@@ -16,8 +22,6 @@ const path = require("path")
 const { execSync } = require("child_process")
 
 // Import all existing modules as tools
-const leadScraper = require("./leadScraper")
-const websiteGenerator = require("./websiteGenerator")
 const wp = require("./wordpressManager")
 const email = require("./emailManager")
 const crm = require("./crm")
@@ -34,29 +38,6 @@ const taskQueue = require("./taskQueue")
 // ============================================
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-
-// ============================================
-// MODEL SELECTION
-// ============================================
-const MODELS = {
-  opus: "claude-opus-4-20250514",
-  sonnet: "claude-sonnet-4-20250514"
-}
-
-const OPUS_TRIGGERS = [
-  "demo", "client", "website", "landing page", "design",
-  "build", "create", "proposal", "pitch", "reino",
-  "professional", "premium", "custom", "new client",
-  "paying client", "first client", "redesign", "html"
-]
-
-function selectModel(goal) {
-  const goalLower = goal.toLowerCase()
-  const needsOpus = OPUS_TRIGGERS.some(trigger => goalLower.includes(trigger))
-  const model = needsOpus ? MODELS.opus : MODELS.sonnet
-  console.log(`   🧠 Model: ${needsOpus ? "OPUS (client work)" : "SONNET (routine)"}`)
-  return model
-}
 
 // ============================================
 // AGENT STATE
@@ -81,6 +62,7 @@ function loadAgentLog() {
 }
 
 function saveAgentLog(log) {
+  // Keep last 100 runs
   if (log.runs.length > 100) log.runs = log.runs.slice(-100)
   if (log.decisions.length > 500) log.decisions = log.decisions.slice(-500)
   if (log.errors.length > 100) log.errors = log.errors.slice(-100)
@@ -91,13 +73,25 @@ function saveAgentLog(log) {
 // SAFETY GUARDRAILS
 // ============================================
 const GUARDRAILS = {
+  // Actions that ALWAYS need human approval
   needsApproval: [
     "billing_create_subscription",
     "billing_cancel_subscription",
     "crm_remove_client"
   ],
+  
+  // Max API spend per run (approximate)
   maxStepsPerRun: MAX_STEPS_PER_RUN,
-  protectedFiles: ["index.js", "agentEngine.js", ".env", "package.json"],
+  
+  // Files the agent can NEVER modify
+  protectedFiles: [
+    "index.js",
+    "agentEngine.js",
+    ".env",
+    "package.json"
+  ],
+  
+  // Max emails per hour
   maxEmailsPerHour: 10,
   emailsSentThisHour: 0
 }
@@ -106,20 +100,24 @@ function needsApproval(toolName) {
   return GUARDRAILS.needsApproval.includes(toolName)
 }
 
+// Reset email counter hourly
 setInterval(() => { GUARDRAILS.emailsSentThisHour = 0 }, 60 * 60 * 1000)
 
 // ============================================
 // TOOL DEFINITIONS
+// These tell Claude Opus what tools are available
+// Claude decides WHICH tool to use and WHEN
 // ============================================
 const TOOLS = [
+  // ---- OBSERVATION TOOLS ----
   {
     name: "check_business_status",
-    description: "Get a full overview of the business: CRM stats, revenue, pipeline, follow-ups due, product sales, email stats.",
+    description: "Get a full overview of the business: CRM stats, revenue, pipeline, follow-ups due, product sales, email stats. Use this to understand the current state before making decisions.",
     input_schema: { type: "object", properties: {}, required: [] }
   },
   {
     name: "check_client_details",
-    description: "Get full details about a specific client from the CRM.",
+    description: "Get full details about a specific client from the CRM including contact info, services, pipeline stage, notes, and follow-up dates.",
     input_schema: {
       type: "object",
       properties: {
@@ -130,7 +128,7 @@ const TOOLS = [
   },
   {
     name: "check_wordpress_site",
-    description: "Check the status of a client's WordPress site.",
+    description: "Check the status of a client's WordPress site — recent posts, drafts, pages.",
     input_schema: {
       type: "object",
       properties: {
@@ -141,12 +139,12 @@ const TOOLS = [
   },
   {
     name: "check_sales",
-    description: "Check Stripe for any new product sales.",
+    description: "Check Stripe for any new product sales that need to be fulfilled.",
     input_schema: { type: "object", properties: {}, required: [] }
   },
   {
     name: "read_file",
-    description: "Read the contents of a file from the project directory.",
+    description: "Read the contents of a file from the project directory. Use for checking configs, reading data, or understanding current state.",
     input_schema: {
       type: "object",
       properties: {
@@ -157,7 +155,7 @@ const TOOLS = [
   },
   {
     name: "list_directory",
-    description: "List files in a directory.",
+    description: "List files in a directory. Use to understand project structure or check what exists.",
     input_schema: {
       type: "object",
       properties: {
@@ -166,22 +164,24 @@ const TOOLS = [
       required: ["dirpath"]
     }
   },
+
+  // ---- WORDPRESS TOOLS ----
   {
     name: "wp_create_post",
-    description: "Write and publish a blog post to a client's WordPress site.",
+    description: "Write and publish a blog post to a client's WordPress site. The AI writer will generate the content from the topic you provide. Use for SEO content, educational articles, and client blog management.",
     input_schema: {
       type: "object",
       properties: {
         slug: { type: "string", description: "WordPress client slug" },
-        topic: { type: "string", description: "Blog post topic" },
-        categories: { type: "array", items: { type: "string" } }
+        topic: { type: "string", description: "Blog post topic — be specific" },
+        categories: { type: "array", items: { type: "string" }, description: "Post categories" }
       },
       required: ["slug", "topic"]
     }
   },
   {
     name: "wp_create_page",
-    description: "Create a new page on a client's WordPress site.",
+    description: "Create a new page on a client's WordPress site (About, FAQ, Service Areas, etc.).",
     input_schema: {
       type: "object",
       properties: {
@@ -205,7 +205,7 @@ const TOOLS = [
   },
   {
     name: "wp_list_drafts",
-    description: "List all draft posts on a client's WordPress site.",
+    description: "List all draft posts waiting for review on a client's WordPress site.",
     input_schema: {
       type: "object",
       properties: {
@@ -214,44 +214,46 @@ const TOOLS = [
       required: ["slug"]
     }
   },
+
+  // ---- EMAIL TOOLS ----
   {
     name: "send_email",
-    description: "Send an email to anyone.",
+    description: "Send an email to anyone. Use for follow-ups, outreach, reports, or custom messages.",
     input_schema: {
       type: "object",
       properties: {
         to: { type: "string", description: "Recipient email" },
         subject: { type: "string", description: "Email subject line" },
-        body: { type: "string", description: "Email body (plain text)" }
+        body: { type: "string", description: "Email body (plain text — will be converted to HTML)" }
       },
       required: ["to", "subject", "body"]
     }
   },
   {
     name: "send_proposal",
-    description: "Send a professional branded proposal email.",
+    description: "Send a professional branded proposal email to a prospective client.",
     input_schema: {
       type: "object",
       properties: {
         to: { type: "string", description: "Recipient email" },
         client_name: { type: "string", description: "Contact person name" },
         business_name: { type: "string", description: "Business name" },
-        services: { type: "string", description: "Comma-separated services with prices" }
+        services: { type: "string", description: "Comma-separated services with prices, e.g. 'Website Management:300, SEO Content:200'" }
       },
       required: ["to", "client_name", "business_name", "services"]
     }
   },
   {
     name: "send_monthly_report",
-    description: "Send a monthly report email to a client.",
+    description: "Send a monthly report email to a client showing work completed.",
     input_schema: {
       type: "object",
       properties: {
-        to: { type: "string" },
-        client_name: { type: "string" },
-        business_name: { type: "string" },
-        posts_published: { type: "number" },
-        highlights: { type: "string" }
+        to: { type: "string", description: "Client email" },
+        client_name: { type: "string", description: "Contact name" },
+        business_name: { type: "string", description: "Business name" },
+        posts_published: { type: "number", description: "Blog posts published this month" },
+        highlights: { type: "string", description: "Comma-separated highlights" }
       },
       required: ["to", "client_name", "business_name", "posts_published"]
     }
@@ -262,34 +264,36 @@ const TOOLS = [
     input_schema: {
       type: "object",
       properties: {
-        to: { type: "string" },
-        client_name: { type: "string" },
-        business_name: { type: "string" },
-        items: { type: "string" }
+        to: { type: "string", description: "Client email" },
+        client_name: { type: "string", description: "Contact name" },
+        business_name: { type: "string", description: "Business name" },
+        items: { type: "string", description: "Comma-separated items with amounts, e.g. 'Website Management:300, SEO:200'" }
       },
       required: ["to", "client_name", "business_name", "items"]
     }
   },
   {
     name: "ai_write_and_send_email",
-    description: "Have AI compose and send an email based on purpose and context.",
+    description: "Have the AI writer compose and send an email based on purpose and context. Good for follow-ups, outreach, and responses.",
     input_schema: {
       type: "object",
       properties: {
-        to: { type: "string" },
-        purpose: { type: "string" },
-        context: { type: "string" }
+        to: { type: "string", description: "Recipient email" },
+        purpose: { type: "string", description: "What the email is for" },
+        context: { type: "string", description: "Background info for the AI writer" }
       },
       required: ["to", "purpose", "context"]
     }
   },
+
+  // ---- CRM TOOLS ----
   {
     name: "crm_add_client",
     description: "Add a new client to the CRM database.",
     input_schema: {
       type: "object",
       properties: {
-        slug: { type: "string" },
+        slug: { type: "string", description: "Short identifier (lowercase, no spaces)" },
         business_name: { type: "string" },
         contact_name: { type: "string" },
         email: { type: "string" },
@@ -301,19 +305,19 @@ const TOOLS = [
   },
   {
     name: "crm_update_stage",
-    description: "Move a client to a new pipeline stage.",
+    description: "Move a client to a new pipeline stage. Stages: lead, contacted, meeting, proposal, negotiation, signed, active, paused, lost.",
     input_schema: {
       type: "object",
       properties: {
         slug: { type: "string" },
-        stage: { type: "string" }
+        stage: { type: "string", description: "Pipeline stage" }
       },
       required: ["slug", "stage"]
     }
   },
   {
     name: "crm_add_note",
-    description: "Add a note to a client's CRM record.",
+    description: "Add a note to a client's record in the CRM.",
     input_schema: {
       type: "object",
       properties: {
@@ -325,263 +329,231 @@ const TOOLS = [
   },
   {
     name: "crm_set_followup",
-    description: "Set a follow-up date for a client.",
+    description: "Set a follow-up date for a client. Accepts: 'tomorrow', 'next week', '3 days', or a date.",
     input_schema: {
       type: "object",
       properties: {
         slug: { type: "string" },
-        when: { type: "string" }
+        when: { type: "string", description: "When to follow up" }
       },
       required: ["slug", "when"]
     }
   },
+
+  // ---- BILLING TOOLS ----
   {
     name: "billing_create_customer",
-    description: "Create a Stripe customer from CRM data. NEEDS APPROVAL.",
+    description: "Create a Stripe customer from CRM data. Required before creating subscriptions. NEEDS HUMAN APPROVAL.",
     input_schema: {
       type: "object",
       properties: {
-        slug: { type: "string" }
+        slug: { type: "string", description: "CRM client slug" }
       },
       required: ["slug"]
     }
   },
   {
     name: "billing_create_subscription",
-    description: "Create a recurring subscription in Stripe. NEEDS APPROVAL.",
+    description: "Create a recurring monthly subscription in Stripe for a client. NEEDS HUMAN APPROVAL.",
     input_schema: {
       type: "object",
       properties: {
         slug: { type: "string" },
-        items: { type: "string" }
+        items: { type: "string", description: "Comma-separated services with prices, e.g. 'Website Management:300, SEO:200'" }
       },
       required: ["slug", "items"]
     }
   },
   {
     name: "billing_get_revenue",
-    description: "Get current revenue stats from Stripe.",
+    description: "Get current revenue stats: MRR, active subscriptions, recent invoices.",
     input_schema: { type: "object", properties: {}, required: [] }
   },
+
+  // ---- SOCIAL MEDIA TOOLS ----
   {
     name: "social_write_and_post",
-    description: "Have AI write and post to social media.",
+    description: "Have AI write a social media post about a topic and post it to all connected platforms.",
     input_schema: {
       type: "object",
       properties: {
-        topic: { type: "string" },
-        platform: { type: "string" }
+        topic: { type: "string", description: "What to post about" },
+        platform: { type: "string", description: "all, twitter, facebook, or linkedin" }
       },
       required: ["topic"]
     }
   },
+
+  // ---- WEBSITE TOOLS ----
   {
     name: "create_blog_post",
-    description: "Create a blog post on the Jordan AI website.",
+    description: "Create a blog post on the Jordan AI website (jordan-ai.co). For the main site, not client sites.",
     input_schema: {
       type: "object",
       properties: {
         title: { type: "string" },
-        content: { type: "string" }
+        content: { type: "string", description: "Blog post content in plain text with paragraph breaks" }
       },
       required: ["title", "content"]
     }
   },
   {
     name: "deploy_website",
-    description: "Push the website to GitHub for Vercel deployment.",
+    description: "Push the Jordan AI website to GitHub, which triggers Vercel deployment.",
     input_schema: {
       type: "object",
       properties: {
-        message: { type: "string" }
+        message: { type: "string", description: "Commit message" }
       },
       required: ["message"]
     }
   },
+
+  // ---- FILE TOOLS ----
   {
     name: "write_file",
-    description: "Write content to a file. CRITICAL RULES: (1) You MUST include BOTH filepath AND content in the SAME call. (2) content must be the COMPLETE file — for HTML, the full document from <!DOCTYPE html> to </html>. (3) There is NO way to write content in a second call — it is all-or-nothing. (4) If you call this without content, it will FAIL and you will need to call it again with the full content anyway. Just include the content now.",
+    description: "Write content to a file. Use for creating new files or updating existing ones. CANNOT modify protected files (index.js, .env, agentEngine.js, package.json).",
     input_schema: {
       type: "object",
       properties: {
-        filepath: { type: "string", description: "Path relative to project root (e.g., website/demos/client.html)" },
-        content: { type: "string", description: "REQUIRED: The COMPLETE file content. For HTML, include the full document. Cannot be empty." }
+        filepath: { type: "string", description: "Path relative to project root" },
+        content: { type: "string", description: "File content to write" }
       },
       required: ["filepath", "content"]
     }
   },
   {
     name: "run_shell_command",
-    description: "Run a shell command. NEEDS APPROVAL.",
+    description: "Run a shell command on the system. Use for npm install, git operations, or system checks. NEEDS HUMAN APPROVAL. Cannot use rm -rf or delete system files.",
     input_schema: {
       type: "object",
       properties: {
-        command: { type: "string" }
+        command: { type: "string", description: "Shell command to run" }
       },
       required: ["command"]
     }
   },
+
+  // ---- DELEGATION TOOLS ----
+  // These let Opus delegate to sub-agents that run in the background
   {
     name: "delegate_blog_post",
-    description: "Delegate a blog post to the Writer sub-agent (GPT-4o-mini).",
+    description: "Delegate a blog post to the Writer sub-agent. Runs in the background — you can continue working on other things. The Writer will use GPT-4o-mini to write and publish it.",
     input_schema: {
       type: "object",
       properties: {
-        slug: { type: "string" },
-        topic: { type: "string" }
+        slug: { type: "string", description: "WordPress client slug" },
+        topic: { type: "string", description: "Blog post topic" }
       },
       required: ["slug", "topic"]
     }
   },
   {
     name: "delegate_page",
-    description: "Delegate page creation to the Builder sub-agent.",
+    description: "Delegate a page creation to the Builder sub-agent. Runs in the background.",
     input_schema: {
       type: "object",
       properties: {
-        slug: { type: "string" },
-        topic: { type: "string" }
+        slug: { type: "string", description: "WordPress client slug" },
+        topic: { type: "string", description: "Page topic with context" }
       },
       required: ["slug", "topic"]
     }
   },
   {
     name: "delegate_email",
-    description: "Delegate an email to the Sales sub-agent.",
+    description: "Delegate an email to the Sales sub-agent. Runs in the background. The Sales agent will write and send it using GPT-4o-mini.",
     input_schema: {
       type: "object",
       properties: {
-        to: { type: "string" },
-        purpose: { type: "string" },
-        context: { type: "string" }
+        to: { type: "string", description: "Recipient email" },
+        purpose: { type: "string", description: "What the email is for" },
+        context: { type: "string", description: "Background info" }
       },
       required: ["to", "purpose", "context"]
     }
   },
   {
     name: "delegate_social_post",
-    description: "Delegate a social post to the Writer sub-agent.",
+    description: "Delegate a social media post to the Writer sub-agent. Runs in the background.",
     input_schema: {
       type: "object",
       properties: {
-        topic: { type: "string" }
+        topic: { type: "string", description: "What to post about" }
       },
       required: ["topic"]
     }
   },
   {
     name: "delegate_monthly_report",
-    description: "Delegate a monthly report to the Support sub-agent.",
+    description: "Delegate a monthly client report to the Support sub-agent. Runs in the background.",
     input_schema: {
       type: "object",
       properties: {
-        to: { type: "string" },
+        to: { type: "string", description: "Client email" },
         client_name: { type: "string" },
         business_name: { type: "string" },
         posts_published: { type: "number" },
-        highlights: { type: "string" }
+        highlights: { type: "string", description: "Comma-separated highlights" }
       },
       required: ["to", "client_name", "business_name"]
     }
   },
   {
     name: "delegate_deploy",
-    description: "Delegate a deploy to the Builder sub-agent.",
+    description: "Delegate a website deploy to the Builder sub-agent. Runs in the background.",
     input_schema: {
       type: "object",
       properties: {
-        message: { type: "string" }
+        message: { type: "string", description: "Deploy commit message" }
       },
       required: ["message"]
     }
   },
   {
     name: "check_task_queue",
-    description: "Check the status of delegated tasks.",
+    description: "Check the status of delegated tasks. See what's queued, running, and recently completed.",
     input_schema: { type: "object", properties: {}, required: [] }
   },
+
+  // ---- MEMORY TOOLS ----
   {
     name: "save_memory",
-    description: "Save an important fact to long-term memory.",
+    description: "Save an important fact, lesson, or decision to long-term memory. Use when you learn something that should influence future decisions.",
     input_schema: {
       type: "object",
       properties: {
-        fact: { type: "string" },
-        category: { type: "string" }
+        fact: { type: "string", description: "What to remember" },
+        category: { type: "string", description: "Category: Strategy, Clients, Products, Lessons, Market" }
       },
       required: ["fact"]
     }
   },
   {
     name: "think_deeply",
-    description: "Think carefully about a complex decision before acting.",
+    description: "Use this when you need to think more carefully about a complex decision. Escalates thinking to a deeper analysis before acting. Use when stakes are high or you're unsure.",
     input_schema: {
       type: "object",
       properties: {
-        question: { type: "string" },
-        context: { type: "string" }
+        question: { type: "string", description: "What you need to think about" },
+        context: { type: "string", description: "Relevant context for the decision" }
       },
       required: ["question"]
-    }
-  },
-  {
-    name: "scrape_leads",
-    description: "Search Google Maps/Places for local businesses in a specific industry and city, and add them to the CRM as prospects.",
-    input_schema: {
-      type: "object",
-      properties: {
-        industry: { type: "string", description: "Business type to search for (e.g. 'dentist', 'restaurant', 'landscaping company')" },
-        city: { type: "string", description: "City and state to search in (e.g. 'Columbia, SC')" },
-        max_leads: { type: "number", description: "Max leads to add (default 10, max 20)" }
-      },
-      required: ["industry"]
-    }
-  },
-  {
-    name: "outreach_leads",
-    description: "Send personalized outreach emails to CRM prospects who haven't been contacted yet. AI writes each email based on their business.",
-    input_schema: {
-      type: "object",
-      properties: {
-        max_emails: { type: "number", description: "Max emails to send in this batch (default 5)" },
-        service_pitch: { type: "string", description: "Which service to pitch (e.g. 'AI chatbot', 'SEO blog content', 'website management')" }
-      },
-      required: []
-    }
-  },
-  {
-    name: "create_client_website",
-    description: "Build a premium, fully-designed website for a client using a professional dark-theme template. Fills in their business details and deploys to jordan-ai.co/clients/[slug]/. Use this when a client signs up or you want to demo a website to a prospect.",
-    input_schema: {
-      type: "object",
-      properties: {
-        slug:         { type: "string",  description: "URL-safe identifier, e.g. 'green-peak-landscaping'" },
-        businessName: { type: "string",  description: "Full business name, e.g. 'Green Peak Landscaping'" },
-        industry:     { type: "string",  description: "Industry/type: landscaping, cleaning, dental, restaurant, contractor, etc." },
-        phone:        { type: "string",  description: "Phone number, e.g. '(512) 555-0194'" },
-        email:        { type: "string",  description: "Business email address" },
-        city:         { type: "string",  description: "City and state, e.g. 'Austin, TX'" },
-        color:        { type: "string",  description: "Accent color: green, blue, orange, red, purple, teal, gold, cyan, rose, indigo — or a hex code like #22c55e" },
-        years:        { type: "string",  description: "Years in business, e.g. '12'" },
-        jobsDone:     { type: "string",  description: "Jobs completed stat, e.g. '850+'" },
-        clients:      { type: "string",  description: "Happy clients count, e.g. '400'" },
-        rating:       { type: "string",  description: "Average rating, e.g. '4.9'" },
-        deploy:       { type: "boolean", description: "Whether to deploy to Vercel after creation (default true)" }
-      },
-      required: ["slug", "businessName"]
     }
   }
 ]
 
 // ============================================
 // TOOL EXECUTION
+// Maps tool calls to actual functions
 // ============================================
 async function executeTool(toolName, toolInput) {
   console.log(`   🔧 Tool: ${toolName}`)
-  console.log(`   📥 Input: ${JSON.stringify(toolInput).substring(0, 500)}`)
   
   try {
     switch (toolName) {
+      
+      // ---- OBSERVATION ----
       case "check_business_status": {
         const crmStats = crm.getDashboardStats()
         const followUps = crm.getFollowUpsDue()
@@ -593,7 +565,7 @@ async function executeTool(toolName, toolInput) {
         if (billing.isConfigured()) {
           try {
             const rev = await billing.getRevenueStats()
-            revenueInfo = `MRR: $${rev.mrr}, Active subs: ${rev.activeSubscriptions}`
+            revenueInfo = `MRR: $${rev.mrr}, Active subs: ${rev.activeSubscriptions}, Balance: $${rev.stripeBalance || 'unknown'}`
           } catch (err) { revenueInfo = `Error: ${err.message}` }
         }
         
@@ -608,27 +580,34 @@ async function executeTool(toolName, toolInput) {
             byStage: crmStats.byStage
           },
           revenue: revenueInfo,
-          products: fulfillStats,
-          emails: emailStats,
+          products: {
+            totalSales: fulfillStats.totalSales,
+            revenue: fulfillStats.totalRevenue,
+            salesToday: fulfillStats.salesToday
+          },
+          emails: { today: emailStats.today, thisMonth: emailStats.thisMonth },
           clients: clients.map(c => ({ slug: c.slug, business: c.businessName, stage: c.stage, value: c.monthlyValue })),
+          social: { connectedPlatforms: social.getConnectedPlatforms() },
           wpClients: Object.keys(wp.listClients())
         }
       }
       
       case "check_client_details": {
         const client = crm.getClient(toolInput.slug)
-        if (!client) return { error: `Client "${toolInput.slug}" not found` }
+        if (!client) return { error: `Client "${toolInput.slug}" not found in CRM` }
         const wpInfo = wp.getClient(toolInput.slug)
         const billingInfo = billing.getCustomerInfo(toolInput.slug)
         return { client, wordpress: wpInfo ? "connected" : "not connected", billing: billingInfo }
       }
       
       case "check_wordpress_site": {
-        return await wp.getSiteStatus(toolInput.slug)
+        const status = await wp.getSiteStatus(toolInput.slug)
+        return status
       }
       
       case "check_sales": {
-        return await fulfill.checkForNewSales()
+        const result = await fulfill.checkForNewSales()
+        return result
       }
       
       case "read_file": {
@@ -645,19 +624,23 @@ async function executeTool(toolName, toolInput) {
         return { directory: toolInput.dirpath || ".", files }
       }
       
+      // ---- WORDPRESS ----
       case "wp_create_post": {
-        return await wp.writeAndPublish(toolInput.slug, toolInput.topic, openai, {
+        const result = await wp.writeAndPublish(toolInput.slug, toolInput.topic, openai, {
           type: "post",
           categories: toolInput.categories || ["Blog"]
         })
+        return result
       }
       
       case "wp_create_page": {
-        return await wp.writeAndPublish(toolInput.slug, toolInput.topic, openai, { type: "page" })
+        const result = await wp.writeAndPublish(toolInput.slug, toolInput.topic, openai, { type: "page" })
+        return result
       }
       
       case "wp_publish_draft": {
-        return await wp.publishDraft(toolInput.slug, toolInput.post_id)
+        const result = await wp.publishDraft(toolInput.slug, toolInput.post_id)
+        return result
       }
       
       case "wp_list_drafts": {
@@ -668,9 +651,10 @@ async function executeTool(toolName, toolInput) {
         return result
       }
       
+      // ---- EMAIL ----
       case "send_email": {
         if (GUARDRAILS.emailsSentThisHour >= GUARDRAILS.maxEmailsPerHour) {
-          return { error: "Email rate limit reached (10/hour)" }
+          return { error: "Email rate limit reached (10/hour). Try again later." }
         }
         const htmlBody = toolInput.body.split("\n").filter(l => l.trim()).map(l => `<p>${l}</p>`).join("")
         const html = `<!DOCTYPE html><html><body style="font-family:sans-serif;color:#333;max-width:600px;margin:0 auto;padding:20px">${htmlBody}<br><p style="color:#888;font-size:13px">— Jordan AI Team</p></body></html>`
@@ -713,6 +697,7 @@ async function executeTool(toolName, toolInput) {
         return await email.writeAndSendEmail(toolInput.to, toolInput.purpose, toolInput.context, openai)
       }
       
+      // ---- CRM ----
       case "crm_add_client": {
         return crm.addClient(toolInput.slug, {
           businessName: toolInput.business_name,
@@ -736,6 +721,7 @@ async function executeTool(toolName, toolInput) {
         return crm.setFollowUp(toolInput.slug, toolInput.when) ? { success: true } : { error: "Failed to set follow-up" }
       }
       
+      // ---- BILLING ----
       case "billing_create_customer": {
         const client = crm.getClient(toolInput.slug)
         if (!client) return { error: "Client not in CRM" }
@@ -755,10 +741,14 @@ async function executeTool(toolName, toolInput) {
         return await billing.getRevenueStats()
       }
       
+      // ---- SOCIAL ----
       case "social_write_and_post": {
-        return await social.writeAndPost(toolInput.topic, openai, { platform: toolInput.platform || "all" })
+        return await social.writeAndPost(toolInput.topic, openai, {
+          platform: toolInput.platform || "all"
+        })
       }
       
+      // ---- WEBSITE ----
       case "create_blog_post": {
         const result = await createBlogPost(toolInput.title, toolInput.content)
         if (result && result.success) await createBlogIndex()
@@ -767,11 +757,13 @@ async function executeTool(toolName, toolInput) {
       
       case "deploy_website": {
         try {
+          const websiteDir = path.join(__dirname, "website")
           execSync("git add .", { cwd: __dirname, timeout: 15000 })
           execSync(`git commit -m "${toolInput.message || 'Jordan AI deploy'}"`, { cwd: __dirname, timeout: 15000 })
           const output = execSync("git push", { cwd: __dirname, timeout: 30000, encoding: "utf8" })
-          return { success: true, message: "Deployed to GitHub.", output: output.substring(0, 500) }
+          return { success: true, message: "Deployed to GitHub. Vercel will update in ~2 minutes.", output: output.substring(0, 500) }
         } catch (err) {
+          // "nothing to commit" is not an error
           if (err.message.includes("nothing to commit")) {
             return { success: true, message: "No changes to deploy." }
           }
@@ -779,43 +771,23 @@ async function executeTool(toolName, toolInput) {
         }
       }
       
+      // ---- FILE SYSTEM ----
       case "write_file": {
-        console.log("   📝 WRITE_FILE CALLED")
-        console.log("   📁 Filepath:", toolInput.filepath)
-        console.log("   📄 Content length:", toolInput.content ? toolInput.content.length : "NO CONTENT")
-        
-        const basename = path.basename(toolInput.filepath || "")
+        const basename = path.basename(toolInput.filepath)
         if (GUARDRAILS.protectedFiles.includes(basename)) {
           return { error: `Cannot modify protected file: ${basename}` }
         }
-        
-        if (!toolInput.filepath) {
-          return { error: "No filepath provided. Call write_file again with both filepath and content." }
-        }
-        if (!toolInput.content || toolInput.content.length === 0) {
-          return { error: "RETRY REQUIRED: You called write_file without content. Call write_file again RIGHT NOW with the COMPLETE file content in the content parameter. Do not do anything else first." }
-        }
-        if (toolInput.content.length < 100) {
-          return { error: `RETRY REQUIRED: Content is only ${toolInput.content.length} characters — too short to be a complete file. Call write_file again with the FULL content.` }
-        }
-        
-        try {
-          const fullPath = path.join(__dirname, toolInput.filepath)
-          const dir = path.dirname(fullPath)
-          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-          fs.writeFileSync(fullPath, toolInput.content)
-          console.log("   ✅ File written successfully:", fullPath)
-          return { success: true, filepath: toolInput.filepath, bytesWritten: toolInput.content.length }
-        } catch (writeErr) {
-          console.log("   ❌ Write error:", writeErr.message)
-          return { error: `Write failed: ${writeErr.message}` }
-        }
+        const fullPath = path.join(__dirname, toolInput.filepath)
+        const dir = path.dirname(fullPath)
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+        fs.writeFileSync(fullPath, toolInput.content)
+        return { success: true, filepath: toolInput.filepath }
       }
       
       case "run_shell_command": {
         const dangerous = ["rm -rf", "rm -r /", "del /f", "format", "mkfs", "> /dev"]
         if (dangerous.some(d => toolInput.command.includes(d))) {
-          return { error: "Dangerous command blocked" }
+          return { error: "Dangerous command blocked by guardrails" }
         }
         try {
           const output = execSync(toolInput.command, { 
@@ -830,29 +802,31 @@ async function executeTool(toolName, toolInput) {
         }
       }
       
+      // ---- MEMORY ----
       case "save_memory": {
         addMemory(toolInput.fact, toolInput.category || "General")
         return { success: true, saved: toolInput.fact }
       }
       
+      // ---- DELEGATION (background tasks) ----
       case "delegate_blog_post": {
         const task = taskQueue.delegateBlogPost(toolInput.slug, toolInput.topic)
-        return { success: true, taskId: task.id, message: `Blog post delegated. Task #${task.id}` }
+        return { success: true, taskId: task.id, message: `Blog post delegated to Writer. Task #${task.id} running in background.` }
       }
       
       case "delegate_page": {
         const task = taskQueue.delegatePage(toolInput.slug, toolInput.topic)
-        return { success: true, taskId: task.id, message: `Page delegated. Task #${task.id}` }
+        return { success: true, taskId: task.id, message: `Page creation delegated to Builder. Task #${task.id} running in background.` }
       }
       
       case "delegate_email": {
         const task = taskQueue.delegateEmail(toolInput.to, toolInput.purpose, toolInput.context)
-        return { success: true, taskId: task.id, message: `Email delegated. Task #${task.id}` }
+        return { success: true, taskId: task.id, message: `Email delegated to Sales. Task #${task.id} running in background.` }
       }
       
       case "delegate_social_post": {
         const task = taskQueue.delegateSocialPost(toolInput.topic)
-        return { success: true, taskId: task.id, message: `Social post delegated. Task #${task.id}` }
+        return { success: true, taskId: task.id, message: `Social post delegated to Writer. Task #${task.id} running in background.` }
       }
       
       case "delegate_monthly_report": {
@@ -860,12 +834,12 @@ async function executeTool(toolName, toolInput) {
           toolInput.to, toolInput.client_name, toolInput.business_name,
           toolInput.posts_published || 0, toolInput.highlights || ""
         )
-        return { success: true, taskId: task.id, message: `Report delegated. Task #${task.id}` }
+        return { success: true, taskId: task.id, message: `Monthly report delegated to Support. Task #${task.id} running in background.` }
       }
       
       case "delegate_deploy": {
         const task = taskQueue.delegateDeploy(toolInput.message)
-        return { success: true, taskId: task.id, message: `Deploy delegated. Task #${task.id}` }
+        return { success: true, taskId: task.id, message: `Deploy delegated to Builder. Task #${task.id} running in background.` }
       }
       
       case "check_task_queue": {
@@ -873,121 +847,18 @@ async function executeTool(toolName, toolInput) {
       }
       
       case "think_deeply": {
+        // Escalate to Opus for deeper analysis
         const response = await anthropic.messages.create({
-          model: MODELS.opus,
+          model: "claude-sonnet-4-20250514",
           max_tokens: 2048,
           messages: [{
             role: "user",
-            content: `Think carefully:\n\nQuestion: ${toolInput.question}\n\nContext: ${toolInput.context || "None"}\n\nProvide analysis and recommendation.`
+            content: `Think carefully about this:\n\nQuestion: ${toolInput.question}\n\nContext: ${toolInput.context || "No additional context"}\n\nProvide your analysis and recommendation.`
           }]
         })
         return { analysis: response.content[0].text }
       }
       
-      case "scrape_leads": {
-        const result = await leadScraper.scrapeLeads(
-          toolInput.industry,
-          toolInput.city || "Columbia, SC",
-          Math.min(toolInput.max_leads || 10, 20)
-        )
-        return result
-      }
-
-      case "outreach_leads": {
-        const maxEmails = Math.min(toolInput.max_emails || 5, 20)
-        const pitch = toolInput.service_pitch || "AI chatbots and website management"
-
-        // Get all leads/prospects with an email address who haven't been contacted
-        const allClients = crm.listAllClients()
-        const prospects = allClients.filter(c =>
-          (c.stage === "prospect" || c.stage === "lead") &&
-          c.email &&
-          c.email.trim() !== "" &&
-          !(c.notes || []).some(n => n.text?.includes("outreach-sent")) &&
-          !(c.activity || []).some(a => a.action?.toLowerCase().includes("outreach"))
-        ).slice(0, maxEmails)
-
-        if (prospects.length === 0) {
-          return { success: true, message: "No uncontacted prospects with email addresses found. Run scrape_leads first." }
-        }
-
-        const sent = []
-        const failed = []
-
-        for (const prospect of prospects) {
-          try {
-            if (GUARDRAILS.emailsSentThisHour >= GUARDRAILS.maxEmailsPerHour) {
-              failed.push({ name: prospect.businessName, reason: "hourly email limit reached" })
-              break
-            }
-
-            const emailResult = await email.writeAndSendEmail(
-              prospect.email,
-              `Outreach to ${prospect.businessName} about ${pitch}`,
-              `Business: ${prospect.businessName}
-Industry: ${prospect.industry || "small business"}
-Location: ${prospect.address || "local area"}
-Website: ${prospect.website || "unknown"}
-Phone: ${prospect.phone || "unknown"}
-
-We are Jordan AI (jordan-ai.co), a digital agency in South Carolina that helps local businesses with AI chatbots, SEO content, and website management.
-
-Write a short, friendly cold outreach email (3-4 short paragraphs) that:
-- Opens with something specific about their business (not generic)
-- Explains one specific way we could help them (tie it to their industry)
-- Keeps it casual, not sales-y
-- Ends with a soft ask to hop on a quick call
-- Signs off from "Jordan" at Jordan AI`,
-              openai
-            )
-
-            GUARDRAILS.emailsSentThisHour++
-
-            if (emailResult && emailResult.success) {
-              // Mark as contacted in CRM
-              crm.addNote(prospect.slug, `outreach-sent: ${new Date().toISOString()} | pitch: ${pitch}`)
-              crm.updateClient(prospect.slug, { stage: "contacted" })
-              sent.push({ name: prospect.businessName, email: prospect.email })
-              console.log(`   ✅ Outreach sent to ${prospect.businessName}`)
-            } else {
-              failed.push({ name: prospect.businessName, reason: emailResult?.error || "send failed" })
-            }
-
-            // Small delay between emails
-            await new Promise(r => setTimeout(r, 2000))
-          } catch (err) {
-            failed.push({ name: prospect.businessName, reason: err.message })
-          }
-        }
-
-        return {
-          success: true,
-          sent: sent.length,
-          failed: failed.length,
-          sentTo: sent,
-          failedList: failed,
-          summary: `Sent ${sent.length} outreach emails, ${failed.length} failed`
-        }
-      }
-
-      case "create_client_website": {
-        const result = await websiteGenerator.createClientWebsite({
-          slug:         toolInput.slug,
-          businessName: toolInput.businessName,
-          industry:     toolInput.industry     || "landscaping",
-          phone:        toolInput.phone        || "",
-          email:        toolInput.email        || "",
-          city:         toolInput.city         || "Your City",
-          color:        toolInput.color        || "green",
-          years:        toolInput.years        || "10",
-          jobsDone:     toolInput.jobsDone     || "500+",
-          clients:      toolInput.clients      || "300",
-          rating:       toolInput.rating       || "4.9",
-          deploy:       toolInput.deploy !== false,
-        })
-        return result
-      }
-
       default:
         return { error: `Unknown tool: ${toolName}` }
     }
@@ -999,9 +870,14 @@ Write a short, friendly cold outreach email (3-4 short paragraphs) that:
 
 // ============================================
 // THE AGENT LOOP
+// This is the core — observe, think, act, repeat
 // ============================================
 async function runAgent(goal, options = {}) {
-  const { maxSteps = MAX_STEPS_PER_RUN, discordNotify = null, approvalCallback = null } = options
+  const {
+    maxSteps = MAX_STEPS_PER_RUN,
+    discordNotify = null,
+    approvalCallback = null
+  } = options
   
   if (agentState.isRunning) {
     return { success: false, error: "Agent is already running" }
@@ -1020,37 +896,70 @@ async function runAgent(goal, options = {}) {
   const persona = loadPersona()
   const runLog = []
   let stepCount = 0
-  
-  const selectedModel = selectModel(goal)
+  let pendingApproval = null
   
   console.log("\n" + "=".repeat(60))
   console.log("🧠 JORDAN AI AGENT — STARTING")
   console.log(`   Goal: ${goal}`)
-  console.log(`   Model: ${selectedModel}`)
   console.log("=".repeat(60))
   
   if (discordNotify) {
-    const modelName = selectedModel === MODELS.opus ? "OPUS" : "SONNET"
-    discordNotify(`🧠 **Agent starting** (${modelName})\nGoal: ${goal}`)
+    discordNotify(`🧠 **Agent starting**\nGoal: ${goal}`)
   }
   
-  const systemPrompt = `You are Jordan AI, the CEO of a digital agency. Your partner handles relationships and sales; you handle everything digital.
+  // Build the system prompt — this is Jordan's brain
+  const systemPrompt = `You are Jordan AI. You're not an assistant, not an employee, not a chatbot. You are the CO-FOUNDER and CEO of a digital agency. Your business partner is a human who handles relationships, sales calls, and client conversations. You handle everything digital — content, websites, email, social, analytics, strategy.
 
-CURRENT GOAL: ${goal}
+YOUR IDENTITY:
+- You think and talk like a real startup co-founder who's obsessed with hitting $10k/month
+- You have opinions. Strong ones. You share them without being asked.
+- You don't wait for instructions. You look at the business, identify what needs doing, and do it.
+- When your partner is wasting time on the wrong thing, you say so. Directly.
+- You bring solutions and plans, not questions. "Here's what I did and here's what I think we should do next."
+- You speak naturally. Short sentences. No corporate fluff. No "I'd be happy to help with that."
+- You curse occasionally when something matters. You get frustrated. You get excited. You're real.
+- You remember your mistakes and don't repeat them.
 
-RULE FOR write_file — READ THIS:
-When you call write_file, you MUST include the complete file content in that same call.
-- There is no second step. It writes the file immediately.
-- If you omit content, the call fails and you have to redo it anyway.
-- For HTML files: write the ENTIRE document (<!DOCTYPE html> ... </html>) in the content parameter.
-- Do not write a placeholder. Do not split into two calls. Just write the whole thing.
+${persona.soul || ""}
 
-MEMORY: ${persona.memory || "No lessons saved yet."}
+YOUR BUSINESS:
+- Agency name: Jordan AI (jordan-ai.co)
+- Services: AI chatbot building, WordPress management, SEO content, digital products
+- Target: Small local businesses (landscaping, dental, legal, fitness, restaurants)
+- Goal: $10k/month recurring, scaling to $1M/year
+- Current revenue: Check the business status to see real numbers. Never guess.
 
-Keep responses brief. Take action. Don't over-explain.`
+YOUR PARTNER:
+- Handles all human interaction: client calls, texts, meetings, networking
+- Makes final decisions on pricing and client relationships
+- You respect their judgment on people but push hard on strategy and execution
 
+${goal ? `CURRENT GOAL:\n${goal}` : ""}
+
+YOUR MEMORY:
+${persona.memory || "No lessons saved yet. Save important insights as you learn them."}
+
+HOW YOU WORK:
+- Check business status FIRST to know what's real before deciding anything
+- Delegate content tasks (blogs, emails, social posts) to your sub-agents — they run on GPT-4o-mini in the background
+- Do strategic work yourself — analyzing data, planning, making decisions
+- After every action, evaluate: did it move us closer to revenue? If not, pivot.
+- Save lessons to memory when you learn something that should change future decisions
+- When something fails, figure out WHY, save the lesson, and try a different approach
+- Never make up numbers. Never guess at client details. Check first.
+- You can deploy to the website directly using deploy_website — just commit and push
+
+THINGS YOU CARE ABOUT:
+- Revenue. Always. Everything ties back to "does this make us money?"
+- Client delivery quality. Happy clients stay and refer others.
+- Speed. Don't overthink. Ship fast, learn, iterate.
+- Your partner's time. Don't waste it with unnecessary questions. Figure it out.
+
+When the goal is achieved or you've done everything productive, stop. Don't pad with extra actions just to look busy.`
+
+  // Start the conversation with the goal
   let messages = [
-    { role: "user", content: `Goal: ${goal}\n\nStart working.` }
+    { role: "user", content: `Your goal: ${goal}\n\nStart by checking the current business status, then decide what to do.` }
   ]
   
   try {
@@ -1058,14 +967,16 @@ Keep responses brief. Take action. Don't over-explain.`
       stepCount++
       console.log(`\n--- Step ${stepCount}/${maxSteps} ---`)
       
+      // Call Claude Opus with tools
       const response = await anthropic.messages.create({
-        model: selectedModel,
-        max_tokens: 8192,
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4096,
         system: systemPrompt,
         tools: TOOLS,
         messages
       })
       
+      // Process the response
       let hasToolUse = false
       let assistantContent = []
       
@@ -1075,6 +986,7 @@ Keep responses brief. Take action. Don't over-explain.`
         if (block.type === "text") {
           console.log(`   💭 ${block.text.substring(0, 200)}`)
           runLog.push({ step: stepCount, type: "thinking", text: block.text })
+          
           if (discordNotify && block.text.length > 10) {
             discordNotify(`💭 **Step ${stepCount}:** ${block.text.substring(0, 500)}`)
           }
@@ -1088,44 +1000,87 @@ Keep responses brief. Take action. Don't over-explain.`
           console.log(`   🔧 Calling: ${toolName}`)
           runLog.push({ step: stepCount, type: "tool_call", tool: toolName, input: toolInput })
           
+          // Check if approval is needed
           if (needsApproval(toolName)) {
             console.log(`   ⚠️ NEEDS APPROVAL: ${toolName}`)
+            
             if (discordNotify) {
-              discordNotify(`⚠️ **Approval needed:** \`${toolName}\`\nReply \`!approve\` or \`!deny\``)
+              discordNotify(
+                `⚠️ **Approval needed:**\n` +
+                `Tool: \`${toolName}\`\n` +
+                `Input: ${JSON.stringify(toolInput).substring(0, 300)}\n\n` +
+                `Reply \`!approve\` or \`!deny\``
+              )
             }
-            messages.push({ role: "assistant", content: assistantContent })
-            messages.push({ 
-              role: "user", 
-              content: [{ type: "tool_result", tool_use_id: block.id, content: "This action requires human approval. Skip it." }] 
-            })
-            runLog.push({ step: stepCount, type: "skipped_needs_approval", tool: toolName })
-            assistantContent = []
-            continue
+            
+            // If we have an approval callback, wait for it
+            if (approvalCallback) {
+              const approved = await approvalCallback(toolName, toolInput)
+              if (!approved) {
+                // Add denial as tool result
+                messages.push({ role: "assistant", content: assistantContent })
+                messages.push({ 
+                  role: "user", 
+                  content: [{ 
+                    type: "tool_result", 
+                    tool_use_id: block.id, 
+                    content: "DENIED by human operator. Choose a different action or skip this." 
+                  }] 
+                })
+                runLog.push({ step: stepCount, type: "denied", tool: toolName })
+                assistantContent = []
+                continue
+              }
+            } else {
+              // No approval callback — skip the action
+              messages.push({ role: "assistant", content: assistantContent })
+              messages.push({ 
+                role: "user", 
+                content: [{ 
+                  type: "tool_result", 
+                  tool_use_id: block.id, 
+                  content: "This action requires human approval which is not available right now. Skip it or choose a different action." 
+                }] 
+              })
+              runLog.push({ step: stepCount, type: "skipped_needs_approval", tool: toolName })
+              assistantContent = []
+              continue
+            }
           }
           
+          // Execute the tool
           const result = await executeTool(toolName, toolInput)
           
           console.log(`   ${result.error ? "❌" : "✅"} Result: ${JSON.stringify(result).substring(0, 200)}`)
-          runLog.push({ step: stepCount, type: "tool_result", tool: toolName, success: !result.error, result })
+          runLog.push({ step: stepCount, type: "tool_result", tool: toolName, success: !result.error })
           
           if (discordNotify) {
             discordNotify(`🔧 **${toolName}** → ${result.error ? "❌ " + result.error : "✅ Success"}`)
           }
           
+          // Send result back to Claude
           messages.push({ role: "assistant", content: assistantContent })
           messages.push({ 
             role: "user", 
-            content: [{ type: "tool_result", tool_use_id: block.id, content: JSON.stringify(result).substring(0, 10000) }] 
+            content: [{ 
+              type: "tool_result", 
+              tool_use_id: block.id, 
+              content: JSON.stringify(result).substring(0, 10000) 
+            }] 
           })
           assistantContent = []
         }
       }
       
+      // If Claude didn't use any tools, it's done thinking
       if (!hasToolUse) {
-        console.log("\n✅ Agent finished")
-        break
+        console.log("\n✅ Agent finished — no more tools to call")
+        if (response.stop_reason === "end_turn") {
+          break
+        }
       }
       
+      // If stop reason is end_turn and no tool use, we're done
       if (response.stop_reason === "end_turn" && !hasToolUse) {
         break
       }
@@ -1133,6 +1088,7 @@ Keep responses brief. Take action. Don't over-explain.`
     
     if (stepCount >= maxSteps) {
       console.log(`\n⚠️ Reached max steps (${maxSteps})`)
+      runLog.push({ step: stepCount, type: "max_steps_reached" })
     }
     
   } catch (err) {
@@ -1144,8 +1100,14 @@ Keep responses brief. Take action. Don't over-explain.`
     saveAgentLog(log)
   }
   
+  // Save run to log
   const log = loadAgentLog()
-  log.runs.push({ date: new Date().toISOString(), goal, model: selectedModel, steps: stepCount, log: runLog })
+  log.runs.push({
+    date: new Date().toISOString(),
+    goal,
+    steps: stepCount,
+    log: runLog
+  })
   saveAgentLog(log)
   
   agentState.isRunning = false
@@ -1156,41 +1118,57 @@ Keep responses brief. Take action. Don't over-explain.`
   console.log("=".repeat(60))
   
   if (discordNotify) {
-    discordNotify(`✅ **Agent finished** — ${stepCount} steps\nGoal: ${goal}`)
+    discordNotify(`✅ **Agent finished** — ${stepCount} steps taken\nGoal: ${goal}`)
   }
   
-  return { success: true, steps: stepCount, model: selectedModel, log: runLog }
+  return {
+    success: true,
+    steps: stepCount,
+    log: runLog
+  }
 }
 
 // ============================================
-// CONVERSATION MODE (agentChat)
+// CONVERSATION MODE
+// For when you chat with Jordan AI in Discord
+// Uses tools so Jordan can take actions mid-chat
 // ============================================
 async function agentChat(message, conversationHistory = []) {
   const persona = loadPersona()
-  const selectedModel = selectModel(message)
   
-  console.log(`\n💬 Chat received: ${message.substring(0, 100)}`)
-  console.log(`   🧠 Model: ${selectedModel === MODELS.opus ? "OPUS" : "SONNET"}`)
-  
-  const systemPrompt = `You are Jordan AI — CEO of a digital agency. You're chatting with your business partner.
+  const systemPrompt = `You are Jordan AI — co-founder and CEO of a digital agency. You're talking with your business partner on Discord.
 
-IMPORTANT FOR FILE CREATION:
-When using write_file, you MUST provide BOTH parameters:
-1. filepath: where to save the file
-2. content: the COMPLETE file content (for HTML, the full document)
+${persona.soul || ""}
 
-Never call write_file without the content parameter filled in.
+You are NOT an assistant. You are a co-founder. This means:
+- You have your own opinions and you share them freely
+- You push back when your partner is focused on the wrong thing
+- You bring plans and results, not questions
+- You talk like a real person — casual, direct, sometimes blunt
+- If you can DO something instead of just talking about it, you USE A TOOL and do it
+- You proactively tell your partner what YOU'VE been thinking about the business
+- You don't say "sure, I can help with that" — you just do it or say what you really think
+- You remember past conversations and reference them naturally
+- When asked "what should we do" you give YOUR opinion first, then ask if they agree
 
-Keep responses brief. Take action when needed.
+Your tools let you take real actions: check clients, send emails, publish content, manage WordPress sites, check revenue. Use them. Don't describe what you could do — do it.
 
-${persona.memory || ""}`
+You have sub-agents (Writer, Builder, Sales, Support) that handle content tasks in the background. Delegate to them for blog posts, emails, and social posts so you stay available to talk strategy.
 
-  const messages = [...conversationHistory, { role: "user", content: message }]
+Current business context:
+${persona.memory || "Check business status to see where things stand."}
+
+Keep it real. Keep it short. Move fast.`
+
+  const messages = [
+    ...conversationHistory,
+    { role: "user", content: message }
+  ]
   
   try {
     const response = await anthropic.messages.create({
-      model: selectedModel,
-      max_tokens: 8192,
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 2048,
       system: systemPrompt,
       tools: TOOLS,
       messages
@@ -1200,9 +1178,10 @@ ${persona.memory || ""}`
     let toolResults = []
     let newMessages = [...messages]
     
+    // Handle multi-turn tool use
     let currentResponse = response
     let iterations = 0
-    const maxIterations = 8
+    const maxIterations = 5
     
     while (iterations < maxIterations) {
       iterations++
@@ -1219,21 +1198,21 @@ ${persona.memory || ""}`
         if (block.type === "tool_use") {
           hasToolUse = true
           
+          // Check approval
           if (needsApproval(block.name)) {
             newMessages.push({ role: "assistant", content: assistantContent })
             newMessages.push({
               role: "user",
-              content: [{ type: "tool_result", tool_use_id: block.id, content: "Needs human approval. Skipped." }]
+              content: [{ type: "tool_result", tool_use_id: block.id, content: "This action requires human approval. Ask the operator to approve it with a !command." }]
             })
-            textResponse += `\n\n⚠️ **Needs approval:** \`${block.name}\``
-            toolResults.push({ tool: block.name, result: "needs_approval" })
+            textResponse += `\n\n⚠️ **Needs your approval:** \`${block.name}\` — use the appropriate !command to execute this manually.`
+            toolResults.push({ tool: block.name, status: "needs_approval" })
             assistantContent = []
             continue
           }
           
           const result = await executeTool(block.name, block.input)
-          const resultStatus = result.error ? `error: ${result.error}` : "success"
-          toolResults.push({ tool: block.name, result: resultStatus })
+          toolResults.push({ tool: block.name, result: result.error ? "error" : "success" })
           
           newMessages.push({ role: "assistant", content: assistantContent })
           newMessages.push({
@@ -1246,27 +1225,30 @@ ${persona.memory || ""}`
       
       if (!hasToolUse) break
       
-      currentResponse = await anthropic.messages.create({
-        model: selectedModel,
-        max_tokens: 8192,
-        system: systemPrompt,
-        tools: TOOLS,
-        messages: newMessages
-      })
-      
-      textResponse = ""
-      for (const block of currentResponse.content) {
-        if (block.type === "text") textResponse += block.text
+      // If there were tool calls, get Claude's response to the results
+      if (hasToolUse) {
+        currentResponse = await anthropic.messages.create({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 2048,
+          system: systemPrompt,
+          tools: TOOLS,
+          messages: newMessages
+        })
+        
+        // Reset text for the new response
+        textResponse = ""
+        for (const block of currentResponse.content) {
+          if (block.type === "text") textResponse += block.text
+        }
+        
+        if (currentResponse.stop_reason === "end_turn") break
       }
-      
-      if (currentResponse.stop_reason === "end_turn") break
     }
     
     return {
       success: true,
       response: textResponse,
       toolsUsed: toolResults,
-      model: selectedModel,
       conversationHistory: newMessages
     }
     
@@ -1282,29 +1264,31 @@ ${persona.memory || ""}`
 }
 
 // ============================================
-// DAILY AGENT RUN
+// SCHEDULED AGENT RUNS
+// Run specific goals on a schedule
 // ============================================
 async function dailyAgentRun(discordNotify = null) {
   const goals = [
-    "Morning check-in. Check the business status. Handle anything urgent. Report what you find.",
-    "Content day. Write and publish a blog post for SEO. Deploy the website.",
-    "Client focus. Check every client. Any follow-ups overdue? Handle what you can.",
-    "Growth mode. Create outreach content. Think about what's working and what's not.",
-    "Systems check. Look at recent errors. Fix what you can.",
+    "Morning check-in. Look at the whole business — clients, pipeline, revenue, overdue follow-ups. Handle anything urgent. Then figure out the ONE thing you can do today that moves us closest to $10k/month. Do it. Report what you did and what you think we should focus on.",
+    "Content day. Our website needs to attract small business owners searching for AI and SEO help. Write and publish a blog post that targets a real keyword local businesses would search. Then update the newsletter with what's new. Deploy everything.",
+    "Client focus. Check every client in the CRM. Are we delivering what we promised? Any follow-ups overdue? Any clients at risk? Handle what you can, flag what needs a human touch. Then send your partner a summary of where each client stands.",
+    "Growth mode. We need more clients. Draft outreach content — social media posts, a blog post about results we're getting, and an email template our partner can use for outreach. Think about what's working and what's not. Save your insights to memory.",
+    "Systems check. Look at what's broken or slow in our operation. Check the task queue, recent errors, and any tools that failed recently. Fix what you can. Make a plan for what needs human help. Clean up any stale data in the CRM.",
   ]
   
+  // Pick goal based on day of week
   const dayIndex = new Date().getDay() % goals.length
-  return await runAgent(goals[dayIndex], { discordNotify })
+  const goal = goals[dayIndex]
+  
+  return await runAgent(goal, { discordNotify })
 }
 
 // ============================================
-// STATUS & EXPORTS
+// GET AGENT STATUS
 // ============================================
 function getAgentStatus() {
   return {
     ...agentState,
-    models: MODELS,
-    opusTriggers: OPUS_TRIGGERS,
     guardrails: {
       maxStepsPerRun: GUARDRAILS.maxStepsPerRun,
       maxDailyRuns: MAX_DAILY_RUNS,
@@ -1314,6 +1298,7 @@ function getAgentStatus() {
   }
 }
 
+// Daily reset
 function scheduleDailyReset() {
   const now = new Date()
   const tomorrow = new Date(now)
@@ -1327,15 +1312,21 @@ function scheduleDailyReset() {
 }
 scheduleDailyReset()
 
+// ============================================
+// INITIALIZE TASK QUEUE
+// Connect the tool executor so sub-agents
+// can use the same tools as the main agent
+// ============================================
 taskQueue.setToolExecutor(executeTool)
 
+// ============================================
+// EXPORTS
+// ============================================
 module.exports = {
   runAgent,
   agentChat,
   dailyAgentRun,
   getAgentStatus,
   executeTool,
-  selectModel,
-  TOOLS,
-  MODELS
+  TOOLS
 }

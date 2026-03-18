@@ -254,7 +254,7 @@ async function createDeliveryPage(product) {
     </div>
     
     <div class="support">
-      <p>Need help? Reply to your purchase confirmation email or contact us at <a href="mailto:support@jordan-ai.co">support@jordan-ai.co</a></p>
+      <p>Need help? Reply to your purchase confirmation email or contact us at <a href="mailto:info@jordan-ai.co">info@jordan-ai.co</a></p>
       <p style="margin-top: 12px;">Bookmark this page to access your downloads anytime.</p>
     </div>
   </div>

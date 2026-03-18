@@ -1,93 +1,99 @@
 // ============================================
-// JORDAN AI - EMAIL MANAGER (Mailgun)
+// JORDAN AI - EMAIL MANAGER (Zoho SMTP)
 // Sends emails: proposals, reports, follow-ups,
 // invoices, outreach, and custom messages
 //
-// SETUP:
-// 1. Go to mailgun.com and create free account
-// 2. Get your API key from Settings → API Keys
-// 3. Get your domain (sandbox or custom)
-// 4. Add to .env:
-//    MAILGUN_API_KEY=your-api-key
-//    MAILGUN_DOMAIN=your-domain.mailgun.org
-//    FROM_EMAIL=jordan@yourdomain.com
-//    FROM_NAME=Jordan AI
+// SETUP — add to .env:
+//   SMTP_HOST=smtp.zoho.com
+//   SMTP_PORT=465
+//   SMTP_USER=info@jordan-ai.co
+//   SMTP_PASS=your-zoho-password
+//   FROM_EMAIL=info@jordan-ai.co
+//   FROM_NAME=Jordan
+//   REPLY_TO=info@jordan-ai.co
 // ============================================
 
+require("dotenv").config()
+const nodemailer = require("nodemailer")
 const fs = require("fs")
 const path = require("path")
 
 // ============================================
-// MAILGUN API
+// SMTP CONFIG
 // ============================================
 
 function getConfig() {
   return {
-    apiKey: process.env.MAILGUN_API_KEY,
-    domain: process.env.MAILGUN_DOMAIN,
-    fromEmail: process.env.FROM_EMAIL || `mailgun@${process.env.MAILGUN_DOMAIN}`,
-    fromName: process.env.FROM_NAME || "Jordan AI"
+    host:      process.env.SMTP_HOST || "smtp.zoho.com",
+    port:      parseInt(process.env.SMTP_PORT || "465"),
+    secure:    (process.env.SMTP_PORT || "465") === "465",  // true=SSL, false=TLS
+    user:      process.env.SMTP_USER,
+    pass:      process.env.SMTP_PASS,
+    fromEmail: process.env.FROM_EMAIL || process.env.SMTP_USER,
+    fromName:  process.env.FROM_NAME  || "Jordan",
+    replyTo:   process.env.REPLY_TO   || process.env.FROM_EMAIL || process.env.SMTP_USER
   }
 }
 
 function isConfigured() {
-  return !!(process.env.MAILGUN_API_KEY && process.env.MAILGUN_DOMAIN)
+  return !!(process.env.SMTP_USER && process.env.SMTP_PASS)
+}
+
+// Create a fresh transporter each send (picks up .env changes without restart)
+function createTransporter() {
+  const cfg = getConfig()
+  return nodemailer.createTransport({
+    host:   cfg.host,
+    port:   cfg.port,
+    secure: cfg.secure,
+    auth: {
+      user: cfg.user,
+      pass: cfg.pass
+    }
+  })
 }
 
 async function sendEmail(to, subject, html, options = {}) {
-  const config = getConfig()
-  
   if (!isConfigured()) {
-    return { success: false, error: "Mailgun not configured. Add MAILGUN_API_KEY and MAILGUN_DOMAIN to .env" }
+    return { success: false, error: "SMTP not configured — add SMTP_USER and SMTP_PASS to .env" }
   }
-  
+
+  const cfg = getConfig()
   const {
-    from = `${config.fromName} <${config.fromEmail}>`,
-    text = null,
-    replyTo = null,
-    cc = null,
-    tags = []
+    from    = `${cfg.fromName} <${cfg.fromEmail}>`,
+    replyTo = cfg.replyTo,
+    cc      = null,
+    tags    = []
   } = options
-  
-  // Build form data
-  const formData = new URLSearchParams()
-  formData.append("from", from)
-  formData.append("to", to)
-  formData.append("subject", subject)
-  formData.append("html", html)
-  
-  if (text) formData.append("text", text)
-  if (replyTo) formData.append("h:Reply-To", replyTo)
-  if (cc) formData.append("cc", cc)
-  tags.forEach(tag => formData.append("o:tag", tag))
-  
+
   try {
-    const url = `https://api.mailgun.net/v3/${config.domain}/messages`
-    const auth = Buffer.from(`api:${config.apiKey}`).toString("base64")
-    
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Authorization": `Basic ${auth}`,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formData.toString()
-    })
-    
-    const data = await response.json()
-    
-    if (!response.ok) {
-      console.log(`❌ Email error (${response.status}):`, data.message || data)
-      return { success: false, error: data.message || `HTTP ${response.status}` }
+    const transporter = createTransporter()
+
+    const mailOptions = {
+      from,
+      to,
+      subject,
+      html,
+      replyTo
     }
-    
-    console.log(`✅ Email sent to ${to}: "${subject}"`)
+    if (cc) mailOptions.cc = cc
+
+    const info = await transporter.sendMail(mailOptions)
+
+    console.log(`✅ Email sent to ${to}: "${subject}" (${info.messageId})`)
     logEmail(to, subject, tags)
-    
-    return { success: true, id: data.id, message: data.message }
-    
+
+    return { success: true, id: info.messageId, message: "Email sent" }
+
   } catch (err) {
-    console.log("Email send error:", err.message)
+    console.log(`❌ Email send error: ${err.message}`)
+    // Give a clearer hint for the most common Zoho auth problem
+    if (err.message.includes("535") || err.message.includes("auth")) {
+      return { success: false, error: `SMTP auth failed — check SMTP_USER/SMTP_PASS in .env. Also ensure "Less secure app access" or App Password is set in Zoho. (${err.message})` }
+    }
+    if (err.message.includes("sender") || err.message.includes("not allowed")) {
+      return { success: false, error: `Sender mismatch — FROM_EMAIL must match SMTP_USER or be a verified Zoho alias. Change FROM_EMAIL=${cfg.user} in .env to fix. (${err.message})` }
+    }
     return { success: false, error: err.message }
   }
 }
@@ -480,23 +486,24 @@ module.exports = {
   sendEmail,
   isConfigured,
   getConfig,
-  
+
   // Stats
   getEmailStats,
-  
+
   // Templates
+  baseTemplate,
   proposalTemplate,
   monthlyReportTemplate,
   followUpTemplate,
   outreachTemplate,
   invoiceTemplate,
-  
+
   // Send helpers
   sendProposal,
   sendMonthlyReport,
   sendFollowUp,
   sendInvoice,
-  
+
   // AI-powered
   writeAndSendEmail
 }
