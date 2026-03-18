@@ -44,7 +44,7 @@
   },
   "images": {
     "hero": [
-      "/clients/rc-bounce/assets/images/hero/bounce-house-kids.jpg"
+      "/clients/rc-bounce/assets/images/hero/hero.jpg"
     ],
     "about": [
       "./images/about.jpg"
@@ -53,5 +53,5 @@
     "logo": [],
     "other": []
   },
-  "generatedAt": "2026-03-18T18:36:54.187Z"
+  "generatedAt": "2026-03-18T18:37:08.740Z"
 }
