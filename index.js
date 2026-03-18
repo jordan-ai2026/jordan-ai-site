@@ -45,6 +45,8 @@ const outreach = require("./outboundOutreach")
 const followUp = require("./followUpSystem")
 const websiteGenerator = require("./websiteGenerator")
 const assetManager     = require("./assetManager")
+const chatbotManager   = require("./chatbotManager")
+const lessonsManager   = require("./lessonsManager")
 
 // ============================================
 // DUAL AI SETUP
@@ -242,6 +244,10 @@ client.once("ready", () => {
   console.log(`   Sub-agents: Writer, Researcher, Builder, Sales, Support (GPT-4o-mini)`)
   console.log("=".repeat(60) + "\n")
   
+  // Seed core lessons (idempotent — skips duplicates)
+  lessonsManager.seedCoreLessons()
+  console.log(`   Lessons: ${lessonsManager.loadLessons().length} loaded into agent prompts`)
+
   // Initialize reporter with Discord client
   reporter.setClient(client)
   
@@ -928,6 +934,228 @@ client.on("messageCreate", async (message) => {
     } catch (err) {
       await message.reply(`❌ ${err.message}`)
     }
+    return
+  }
+
+  // ========================================
+  // LESSONS / SELF-CORRECTION COMMANDS
+  // ========================================
+
+  // !learn "lesson text" — teach Jordan something directly
+  // !learn what="..." wrong="..." fix="..." cat="..."
+  if (content.startsWith("!learn")) {
+    const rest = content.replace("!learn", "").trim()
+
+    if (!rest) {
+      await message.reply(
+        '**Usage:** `!learn "what Jordan should always do"`\n\n' +
+        '**Examples:**\n' +
+        '`!learn "Always download Discord attachments before building website"`\n' +
+        '`!learn "Check assets.json before fetching Unsplash images"`\n\n' +
+        'For full detail: `!learn what="..." wrong="..." fix="..." cat="general"`'
+      )
+      return
+    }
+
+    // Parse short form: !learn "lesson text"
+    // Parse long form: !learn what="..." wrong="..." fix="..." cat="..."
+    let whatHappened = "", whatWentWrong = "", correctApproach = "", category = "general"
+
+    const fixMatch  = rest.match(/fix="([^"]+)"/)
+    const whatMatch = rest.match(/what="([^"]+)"/)
+    const wrongMatch= rest.match(/wrong="([^"]+)"/)
+    const catMatch  = rest.match(/cat="([^"]+)"/)
+
+    if (fixMatch) {
+      // Long form
+      correctApproach = fixMatch[1]
+      whatHappened    = whatMatch?.[1]  || ""
+      whatWentWrong   = wrongMatch?.[1] || ""
+      category        = catMatch?.[1]   || "general"
+    } else {
+      // Short form — strip surrounding quotes
+      correctApproach = rest.replace(/^"|"$/g, "")
+    }
+
+    if (!correctApproach) {
+      await message.reply('❌ Could not parse lesson. Use: `!learn "Your lesson text here"`')
+      return
+    }
+
+    const result = lessonsManager.addLesson({ whatHappened, whatWentWrong, correctApproach, category, source: "human" })
+
+    if (result.added) {
+      await message.reply(
+        `**✅ Lesson Saved** (Lesson #${result.lesson.id})\n\n` +
+        `📚 **[${result.lesson.category}]** ${correctApproach}\n\n` +
+        `_Jordan will apply this before every future task._`
+      )
+    } else {
+      await message.reply(
+        `⚠️ **Already learned:** This lesson already exists.\n\n` +
+        `"${result.existing.correctApproach}"`
+      )
+    }
+    return
+  }
+
+  // !lessons — show everything Jordan has learned
+  if (content === "!lessons") {
+    const text = lessonsManager.formatLessonsForDiscord()
+    await sendLongMessage(message.channel, text)
+    return
+  }
+
+  // !lesson remove <id> — remove a lesson by ID
+  if (content.startsWith("!lesson remove")) {
+    const id = parseInt(content.replace("!lesson remove", "").trim())
+    if (isNaN(id)) {
+      await message.reply("Usage: `!lesson remove <id>` — get IDs from `!lessons`")
+      return
+    }
+    const all = lessonsManager.loadLessons()
+    const idx = all.findIndex(l => l.id === id)
+    if (idx === -1) {
+      await message.reply(`❌ Lesson #${id} not found.`)
+      return
+    }
+    const removed = all.splice(idx, 1)[0]
+    // Re-save (lessonsManager doesn't export save directly, write inline)
+    const fs = require("fs")
+    fs.writeFileSync(require("path").join(__dirname, "lessons.json"), JSON.stringify(all, null, 2))
+    await message.reply(`✅ Removed lesson #${id}: "${removed.correctApproach}"`)
+    return
+  }
+
+  // ========================================
+  // CHATBOT COMMANDS
+  // ========================================
+
+  // !chatbot setup <slug> <tidioKey> [accentColor]
+  if (content.startsWith("!chatbot setup")) {
+    const parts = content.replace("!chatbot setup", "").trim().split(/\s+/)
+    const slug        = parts[0]
+    const tidioKey    = parts[1]
+    const accentColor = parts[2] || null
+
+    if (!slug || !tidioKey) {
+      await message.reply(
+        "**Usage:** `!chatbot setup <slug> <tidioKey> [accentColor]`\n\n" +
+        "**How to get your Tidio key:**\n" +
+        "1. Create a free account at tidio.com\n" +
+        "2. Go to **Settings → Developer**\n" +
+        "3. Copy the **Public Key**\n\n" +
+        "**Example:**\n" +
+        "`!chatbot setup rc-bounce-llc abcdef123456 #ef4444`"
+      )
+      return
+    }
+
+    try {
+      await message.reply(`💬 Setting up Tidio chatbot for **${slug}**...`)
+      const result = await chatbotManager.setupClientChatbot(slug, { tidioKey, accentColor })
+      await message.reply(
+        `**✅ Chatbot Live: ${slug}**\n\n` +
+        `📦 Provider: Tidio\n` +
+        `🔑 Key: \`${tidioKey}\`\n` +
+        `🔄 Site re-rendered: ${result.rerendered ? "Yes" : "No"}\n\n` +
+        `**Next steps:**\n` +
+        `• Visit [Tidio Automations](${result.setupUrl}) to set up response flows\n` +
+        `• Customize responses: \`!chatbot update ${slug} greeting "Welcome!"\`\n` +
+        `• View chatbot: \`!chatbot list\``
+      )
+    } catch (err) {
+      await message.reply(`❌ Setup failed: ${err.message}`)
+    }
+    return
+  }
+
+  // !chatbot update <slug> <field> <"value">
+  // Fields: greeting, hours, services, contact, appointment, pricing, location, fallback
+  if (content.startsWith("!chatbot update")) {
+    const rest  = content.replace("!chatbot update", "").trim()
+    const match = rest.match(/^(\S+)\s+(\S+)\s+"(.+)"$/)
+
+    if (!match) {
+      await message.reply(
+        "**Usage:** `!chatbot update <slug> <field> \"<response text>\"`\n\n" +
+        "**Fields:** `greeting` `hours` `services` `contact` `appointment` `pricing` `location` `fallback`\n\n" +
+        "**Placeholders you can use:**\n" +
+        "`{{BUSINESS_NAME}}` `{{PHONE}}` `{{EMAIL}}` `{{CITY}}` `{{SERVICES}}`\n\n" +
+        "**Example:**\n" +
+        '`!chatbot update rc-bounce-llc greeting "Welcome to RC Bounce! Ready to make your party epic? 🎉"`'
+      )
+      return
+    }
+
+    const [, slug, field, value] = match
+    const validFields = ["greeting","hours","services","contact","appointment","pricing","location","fallback"]
+    if (!validFields.includes(field)) {
+      await message.reply(`❌ Unknown field: \`${field}\`\nValid fields: ${validFields.map(f => `\`${f}\``).join(", ")}`)
+      return
+    }
+
+    try {
+      const result = await chatbotManager.updateChatbotResponses(slug, { [field]: value })
+      await message.reply(
+        `**✅ Chatbot Response Updated: ${slug}**\n\n` +
+        `📝 \`${field}\`: "${value}"\n` +
+        `🔄 Site updated: ${result.rerendered ? "Yes" : "No"}`
+      )
+    } catch (err) {
+      await message.reply(`❌ ${err.message}`)
+    }
+    return
+  }
+
+  // !chatbot remove <slug>
+  if (content.startsWith("!chatbot remove")) {
+    const slug = content.replace("!chatbot remove", "").trim()
+    if (!slug) {
+      await message.reply("Usage: `!chatbot remove <slug>`")
+      return
+    }
+    try {
+      const result = await chatbotManager.removeChatbot(slug)
+      await message.reply(`✅ Chatbot removed from **${slug}**. Site re-rendered: ${result.rerendered ? "Yes" : "No"}`)
+    } catch (err) {
+      await message.reply(`❌ ${err.message}`)
+    }
+    return
+  }
+
+  // !chatbot list
+  if (content === "!chatbot list" || content === "!chatbot") {
+    const bots = chatbotManager.listChatbots()
+    if (bots.length === 0) {
+      await message.reply(
+        "No chatbots configured yet.\n\n" +
+        "Set one up: `!chatbot setup <slug> <tidioKey>`\n" +
+        "Get a free Tidio key at **tidio.com** → Settings → Developer"
+      )
+      return
+    }
+    const lines = [`**💬 Active Chatbots (${bots.filter(b => b.active).length}/${bots.length})**`, ``]
+    for (const b of bots) {
+      lines.push(chatbotManager.formatChatbotStatus(b))
+    }
+    await message.reply(lines.join("\n"))
+    return
+  }
+
+  // !chatbot responses <slug>
+  if (content.startsWith("!chatbot responses")) {
+    const slug = content.replace("!chatbot responses", "").trim()
+    const config = chatbotManager.getChatbotConfig(slug)
+    if (!config) {
+      await message.reply(`No chatbot found for \`${slug}\`. Use \`!chatbot setup ${slug} <key>\` first.`)
+      return
+    }
+    const lines = [`**💬 Chatbot Responses: ${slug}**`, ``]
+    for (const [key, val] of Object.entries(config.responses)) {
+      lines.push(`**${key}:** ${val}`)
+    }
+    await message.reply(lines.join("\n"))
     return
   }
 

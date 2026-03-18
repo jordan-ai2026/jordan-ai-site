@@ -20,6 +20,8 @@ const leadScraper      = require("./leadScraper")
 const websiteGenerator = require("./websiteGenerator")
 const mediaManager     = require("./mediaManager")
 const assetManager     = require("./assetManager")
+const chatbotManager   = require("./chatbotManager")
+const lessons          = require("./lessonsManager")
 const wp = require("./wordpressManager")
 const email = require("./emailManager")
 const crm = require("./crm")
@@ -643,6 +645,64 @@ const TOOLS = [
       },
       required: ["imageUrl"]
     }
+  },
+  {
+    name: "setup_client_chatbot",
+    description: "Embed a Tidio live chat widget into a client's website. The client needs a free Tidio account (tidio.com) and their public key from Settings → Developer. Re-renders and deploys the site automatically.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:         { type: "string", description: "Client slug e.g. 'green-peak-landscaping'" },
+        tidioKey:     { type: "string", description: "Tidio public key from Settings → Developer (looks like 'abcdef1234...')" },
+        accentColor:  { type: "string", description: "Widget accent color hex to match site (optional)" },
+        greeting:     { type: "string", description: "Custom greeting message (optional, uses default if omitted)" },
+      },
+      required: ["slug", "tidioKey"]
+    }
+  },
+  {
+    name: "update_chatbot_responses",
+    description: "Update the chatbot response templates for a client. Templates support {{PHONE}}, {{EMAIL}}, {{BUSINESS_NAME}}, {{CITY}}, {{SERVICES}} placeholders. Updates are stored in chatbots.json and injected into the site's window.jordanChatConfig.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:        { type: "string", description: "Client slug" },
+        greeting:    { type: "string", description: "Welcome message" },
+        hours:       { type: "string", description: "Business hours response" },
+        services:    { type: "string", description: "Services overview response" },
+        contact:     { type: "string", description: "Contact info response" },
+        appointment: { type: "string", description: "Booking/appointment response" },
+        pricing:     { type: "string", description: "Pricing inquiry response" },
+        location:    { type: "string", description: "Location/service area response" },
+        fallback:    { type: "string", description: "Default fallback response" },
+      },
+      required: ["slug"]
+    }
+  },
+  {
+    name: "learn_lesson",
+    description: "Save a lesson to lessons.json so Jordan never repeats the same mistake. Call this after making an error, after a correction from the user, or when discovering a better approach. Lessons are injected into every future agent prompt automatically.",
+    input_schema: {
+      type: "object",
+      properties: {
+        whatHappened:    { type: "string", description: "What task was being attempted" },
+        whatWentWrong:   { type: "string", description: "What the mistake or problem was" },
+        correctApproach: { type: "string", description: "The correct way to handle this in the future — clear and actionable" },
+        category:        { type: "string", description: "Category: assets | discord | tools | workflow | client | email | general" },
+      },
+      required: ["correctApproach"]
+    }
+  },
+  {
+    name: "check_lessons",
+    description: "Search lessons.json for lessons relevant to the current task. Call this at the start of any complex task to make sure you're not about to repeat a past mistake. Returns matching lessons with their correct approaches.",
+    input_schema: {
+      type: "object",
+      properties: {
+        taskDescription: { type: "string", description: "Describe what you're about to do — keywords are matched against stored lessons" },
+      },
+      required: ["taskDescription"]
+    }
   }
 ]
 
@@ -1132,6 +1192,64 @@ Write a short, friendly cold outreach email (3-4 short paragraphs) that:
         }
       }
 
+      case "setup_client_chatbot": {
+        const responses = {}
+        if (toolInput.greeting) responses.greeting = toolInput.greeting
+        const result = await chatbotManager.setupClientChatbot(toolInput.slug, {
+          tidioKey:    toolInput.tidioKey,
+          accentColor: toolInput.accentColor || null,
+          responses,
+        })
+        return {
+          ...result,
+          summary: `Tidio chatbot embedded on ${toolInput.slug}. Visit ${result.setupUrl} to configure automations.`
+        }
+      }
+
+      case "update_chatbot_responses": {
+        const responses = {}
+        const fields = ["greeting","hours","services","contact","appointment","pricing","location","fallback"]
+        for (const f of fields) {
+          if (toolInput[f]) responses[f] = toolInput[f]
+        }
+        const result = await chatbotManager.updateChatbotResponses(toolInput.slug, responses)
+        return {
+          ...result,
+          summary: `Updated ${Object.keys(responses).length} chatbot responses for ${toolInput.slug}`
+        }
+      }
+
+      case "learn_lesson": {
+        const result = lessons.addLesson({
+          whatHappened:    toolInput.whatHappened    || "",
+          whatWentWrong:   toolInput.whatWentWrong   || "",
+          correctApproach: toolInput.correctApproach,
+          category:        toolInput.category        || "general",
+          source:          "jordan",
+        })
+        return {
+          ...result,
+          summary: result.added
+            ? `Lesson saved: "${toolInput.correctApproach}"`
+            : `Duplicate — lesson already exists: "${result.existing?.correctApproach}"`
+        }
+      }
+
+      case "check_lessons": {
+        const matching = lessons.findMatchingLessons(toolInput.taskDescription)
+        if (matching.length === 0) {
+          return { found: 0, summary: "No matching lessons found. Proceed with the task." }
+        }
+        const summary = matching.map((l, i) =>
+          `${i+1}. [${l.category}] ${l.correctApproach}`
+        ).join("\n")
+        return {
+          found:   matching.length,
+          lessons: matching,
+          summary: `Found ${matching.length} relevant lesson(s):\n${summary}`,
+        }
+      }
+
       default:
         return { error: `Unknown tool: ${toolName}` }
     }
@@ -1189,7 +1307,8 @@ When you call write_file, you MUST include the complete file content in that sam
 - For HTML files: write the ENTIRE document (<!DOCTYPE html> ... </html>) in the content parameter.
 - Do not write a placeholder. Do not split into two calls. Just write the whole thing.
 
-MEMORY: ${persona.memory || "No lessons saved yet."}
+${lessons.formatLessonsForPrompt(goal)}
+MEMORY: ${persona.memory || "No memory saved yet."}
 
 Keep responses brief. Take action. Don't over-explain.`
 
@@ -1331,8 +1450,7 @@ When the message contains a "[Discord attachments]" section with URLs, those are
 - Then use place_asset_on_site to apply it to the site
 - You CAN download any URL — treat it exactly like any other file URL
 
-Keep responses brief. Take action when needed.
-
+${lessons.formatLessonsForPrompt(message)}
 ${persona.memory || ""}`
 
   const messages = [...conversationHistory, { role: "user", content: message }]

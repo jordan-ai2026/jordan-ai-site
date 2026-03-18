@@ -20,7 +20,7 @@ leadScraper.js        — Google Places → CRM leads (needs GOOGLE_PLACES_API_K
 followUpSystem.js     — Auto follow-up loop: runs daily at 10am, targets stage="contacted"
 aiBrain.js            — Dual AI: Claude Sonnet (strategy) + GPT-4o-mini (volume)
 subAgents.js          — 5 specialist sub-agents (Scout, Ink, Iris, Rex, Ralph)
-websiteBuilder.js     — Generates HTML pages for website/
+websiteGenerator.js   — Premium HTML templates + client site builder
 gitDeploy.js          — git add/commit/push → triggers Vercel deploy
 reporter.js           — Sends Discord reports to configured channel
 ceoBrain.js           — Persona/memory loader
@@ -31,6 +31,9 @@ socialManager.js      — Twitter/social posting
 wordpressManager.js   — WordPress REST API client
 fulfillment.js        — Product delivery (Gumroad/Stripe)
 taskQueue.js          — Sub-agent task queue
+mediaManager.js       — Unsplash/Pexels image & video fetching for client sites
+assetManager.js       — Client asset library (logo/images/videos per client)
+chatbotManager.js     — Tidio live chat embed + response templates per client
 testEmail.js          — Run: node testEmail.js you@email.com to test SMTP
 ```
 
@@ -102,6 +105,33 @@ All API calls (thinkDeep, quickWrite, etc.) now retry automatically.
 - `startFollowUpLoop()` in index.js schedules daily run at 10am
 - Discord: `!followup run [limit]`, `!followup status`
 
+### ✅ Fix 9 — Client Website & Asset System
+**Done.** Full client site pipeline operational.
+- `websiteGenerator.js` — premium templates (service, party), `createClientWebsite()`, `designWebsiteFromImage()`
+- `mediaManager.js` — Unsplash API + curated CDN fallbacks for hero/about/service images
+- `assetManager.js` — organized `assets/{images/hero,about,services,gallery,team,misc}/videos/{hero,content}/logo/` per client
+- `createClientFolders(slug)` scaffolds full structure on every new site
+- Client assets override stock photos (priority: client upload → Unsplash → curated)
+- `{{LOGO_HTML}}` — renders `<img>` tag if logo uploaded, styled text otherwise
+- `analyzeImageStyle()` — Claude vision extracts hex colors, style, mood, industry from any image
+- `designWebsiteFromImage()` — full pipeline: analyze → extract colors → build matching site
+- Discord: `!website create`, `!website list`, `!design`, `!assets upload/place/list`
+- Agent tools: `create_client_website`, `upload_client_assets`, `place_asset_on_site`, `design_website_from_image`, `analyze_image_style`
+
+### ✅ Fix 10 — chatbotManager.js — Tidio live chat per client site
+**Done.** New module `chatbotManager.js`.
+- `setupClientChatbot(slug, { tidioKey })` — embeds Tidio widget into client's `index.html`
+- `updateChatbotResponses(slug, responses)` — updates templates, re-renders site
+- `removeChatbot(slug)` — deactivates widget, re-renders
+- Config stored in `chatbots.json` (one entry per client)
+- `{{CHATBOT_SCRIPT}}` template variable injected into both HTML templates before `</body>`
+- Response templates support `{{BUSINESS_NAME}}`, `{{PHONE}}`, `{{EMAIL}}`, `{{CITY}}`, `{{SERVICES}}`
+- Welcome message sent to visitor via `tidioChatApi.messageFromOperator()` on page load
+- `window.jordanChatConfig` injected with all response templates for future custom widget use
+- Discord: `!chatbot setup`, `!chatbot update`, `!chatbot remove`, `!chatbot list`, `!chatbot responses`
+- Agent tools: `setup_client_chatbot`, `update_chatbot_responses`
+- **Upgrade path:** ElevenLabs voice AI — add `ELEVENLABS_API_KEY` when ready
+
 ---
 
 ## Key Files to Never Break
@@ -136,13 +166,34 @@ All keys are set in `.env`. Current status:
 | FROM_NAME | ✅ Jordan |
 | REPLY_TO | ✅ info@jordan-ai.co |
 | GOOGLE_PLACES_API_KEY | ❌ Not set — needed for !leads scrape |
+| UNSPLASH_ACCESS_KEY | ❌ Not set — needed for real images (curated fallbacks work without it) |
+| ELEVENLABS_API_KEY | ❌ Not set — future voice AI upgrade for chatbots |
 
 **Mailgun removed** — email now uses Zoho SMTP via nodemailer.
+
+---
+
+## Lessons Learned
+These are loaded from `lessons.json` and injected into every agent prompt automatically.
+Jordan checks these before every task — update the file if new mistakes are discovered.
+
+| # | Category | Lesson |
+|---|----------|--------|
+| 1 | assets | When user uploads images via Discord, call `upload_client_assets` with the attachment URL FIRST, then build/re-render |
+| 2 | assets | Always check `website/clients/[slug]/assets.json` for client-uploaded images before using Unsplash — client assets have highest priority |
+| 3 | assets | Before building any client site, check `website/clients/[slug]/assets/` for uploaded files — these override all defaults |
+| 4 | discord | When message contains `[Discord attachments]`, NEVER say "I cannot see the image" — use `upload_client_assets` with the URL |
+
+Add new lessons via:
+- `!learn "lesson text"` (Discord command)
+- `learn_lesson` tool (Jordan saves mid-task)
+- Edit `lessons.json` directly
 
 ---
 
 ## How to Resume in a New Session
 1. Read this file first
 2. Check Fix Status above to see where we left off
-3. Read the specific file(s) for the next TODO fix before editing
-4. Update this file after each fix is confirmed working
+3. Read `lessons.json` — Jordan's learned mistakes and fixes
+4. Read the specific file(s) for the next TODO fix before editing
+5. Update this file after each fix is confirmed working

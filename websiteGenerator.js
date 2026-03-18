@@ -20,6 +20,7 @@ const path = require("path")
 const { deployWebsite }  = require("./gitDeploy")
 const { fetchClientMedia, getCuratedMedia } = require("./mediaManager")
 const { getClientAssets, createClientFolders } = require("./assetManager")
+const chatbotManager = require("./chatbotManager")
 
 const TEMPLATES_DIR = path.join(__dirname, "website", "templates")
 const CLIENTS_DIR   = path.join(__dirname, "website", "clients")
@@ -470,6 +471,15 @@ async function createClientWebsite(options) {
 
     // Form
     FORMSPREE_ID: formspreeId,
+
+    // Chatbot — Tidio script block (empty string if not configured)
+    CHATBOT_SCRIPT: chatbotManager.buildChatbotScript(slug, {
+      businessName: businessName,
+      phone:        phone,
+      email:        email,
+      city:         city,
+      services:     svcList.map(s => s.name),
+    }),
   }
 
   // Fill and write

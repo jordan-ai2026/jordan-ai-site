@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "category": "assets",
+    "whatHappened": "User uploaded images to Discord but Jordan used Unsplash stock photos",
+    "whatWentWrong": "Jordan did not download Discord attachment URLs before building the site",
+    "correctApproach": "When user uploads images via Discord, call upload_client_assets with the attachment URL FIRST, then build or re-render the website",
+    "keywords": [
+      "image",
+      "photo",
+      "asset",
+      "upload",
+      "discord",
+      "attachment",
+      "website",
+      "client",
+      "unsplash",
+      "stock",
+      "download",
+      "build"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T04:52:02.125Z"
+  },
+  {
+    "id": 2,
+    "category": "assets",
+    "whatHappened": "Client had uploaded their own logo and photos but site showed generic stock images",
+    "whatWentWrong": "Jordan called fetchClientMedia instead of checking assets.json placements first",
+    "correctApproach": "Always check website/clients/[slug]/assets.json for client-uploaded images before using Unsplash or curated fallbacks — client assets have highest priority",
+    "keywords": [
+      "image",
+      "photo",
+      "logo",
+      "asset",
+      "upload",
+      "website",
+      "client",
+      "slug",
+      "unsplash",
+      "stock",
+      "media"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T04:52:02.127Z"
+  },
+  {
+    "id": 3,
+    "category": "assets",
+    "whatHappened": "Ran create_client_website without checking if client had existing assets",
+    "whatWentWrong": "Overwrote placements because existing client assets were not loaded before render",
+    "correctApproach": "Before building or re-rendering any client site, check website/clients/[slug]/assets/ for uploaded files and website/clients/[slug]/assets.json for placements — these override all defaults",
+    "keywords": [
+      "asset",
+      "upload",
+      "website",
+      "client",
+      "slug",
+      "file",
+      "build",
+      "create"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T04:52:02.127Z"
+  },
+  {
+    "id": 4,
+    "category": "discord",
+    "whatHappened": "User said 'Jordan can't see the image' when attaching a photo",
+    "whatWentWrong": "Jordan replied 'I cannot view images' instead of using upload_client_assets with the attachment URL",
+    "correctApproach": "When a message contains [Discord attachments], NEVER say you cannot see the image — use upload_client_assets with the URL to download it. You do not need to see it visually, just download it via tool.",
+    "keywords": [
+      "image",
+      "photo",
+      "asset",
+      "upload",
+      "discord",
+      "attachment",
+      "client",
+      "download",
+      "tool"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T04:52:02.128Z"
+  }
+]
