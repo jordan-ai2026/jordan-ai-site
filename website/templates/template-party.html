@@ -308,13 +308,25 @@
       box-shadow: 8px 9px 0 var(--yel-dk);
     }
 
-    /* Bouncing bouncy castle graphic */
+    /* Bouncing bouncy castle graphic (emoji fallback) */
     .hero-graphic {
       font-size: 9rem;
       animation: bounce-hero 1.2s ease-in-out infinite;
       filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.3));
       line-height: 1;
       user-select: none;
+    }
+
+    /* Hero photo (when client image provided) */
+    .hero-photo {
+      width: 420px;
+      max-width: 42vw;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 24px;
+      border: 5px solid var(--dark);
+      box-shadow: 8px 8px 0 var(--dark);
+      animation: bounce-hero 1.2s ease-in-out infinite;
     }
 
     @keyframes bounce-hero {
@@ -1140,6 +1152,7 @@
 
       .hero-inner { grid-template-columns: 1fr; }
       .hero-graphic { font-size: 5rem; text-align: center; }
+      .hero-photo { width: 100%; max-width: 100%; aspect-ratio: 16/9; }
 
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .stat-item:nth-child(2) { border-right: none; }
@@ -1220,7 +1233,7 @@
           <a href="tel:{{PHONE_RAW}}" class="btn-party btn-yellow">📞 {{PHONE}}</a>
         </div>
       </div>
-      <div class="hero-graphic" aria-hidden="true">🏰</div>
+      {{HERO_GRAPHIC_HTML}}
     </div>
   </div>
 </section>
