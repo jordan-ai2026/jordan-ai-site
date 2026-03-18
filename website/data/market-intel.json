@@ -1,0 +1,142 @@
+{
+  "scans": [
+    {
+      "date": "2026-03-18",
+      "selling": [],
+      "ideasToSteal": [
+        {
+          "idea": "Highlight potential cost savings with AI",
+          "why": "Shows tangible benefits to businesses",
+          "action": "Create case studies demonstrating cost reductions"
+        },
+        {
+          "idea": "Showcase quick turnaround times for services",
+          "why": "Emphasizes efficiency and speed",
+          "action": "Promote rapid deployment of chatbots and automation"
+        },
+        {
+          "idea": "Engage audience with interactive AI demos",
+          "why": "Encourages hands-on experience and interest",
+          "action": "Develop interactive chatbot demos on the website"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation workflows",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI chatbots",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in business proposals",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "AI-generated content",
+          "momentum": "stable",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [],
+      "partners": [],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop case studies showcasing AI cost savings for small businesses.",
+        "Create engaging content around AI automation benefits.",
+        "Launch interactive demos to attract potential clients."
+      ],
+      "rawCount": 36,
+      "filteredCount": 5
+    }
+  ],
+  "trendHistory": {
+    "AI automation workflows": [
+      {
+        "date": "2026-03-18",
+        "momentum": "growing"
+      }
+    ],
+    "AI chatbots": [
+      {
+        "date": "2026-03-18",
+        "momentum": "growing"
+      }
+    ],
+    "AI in business proposals": [
+      {
+        "date": "2026-03-18",
+        "momentum": "growing"
+      }
+    ],
+    "AI-generated content": [
+      {
+        "date": "2026-03-18",
+        "momentum": "stable"
+      }
+    ]
+  },
+  "serviceHistory": {
+    "AI chatbots": [
+      {
+        "date": "2026-03-18",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      }
+    ],
+    "automation workflows": [
+      {
+        "date": "2026-03-18",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
+      }
+    ],
+    "website management": [
+      {
+        "date": "2026-03-18",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
+      }
+    ],
+    "SEO content": [
+      {
+        "date": "2026-03-18",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      }
+    ]
+  }
+}
