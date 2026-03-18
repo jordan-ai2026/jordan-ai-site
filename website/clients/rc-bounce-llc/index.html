@@ -3,1717 +3,790 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RC Bounce LLC — Party Rentals in Your City</title>
-  <meta name="description" content="Bounce Houses, Inflatables & Party Rentals. Bounce houses, inflatable slides, tables & chairs. Serving Your City. Call (555) 000-0000!">
+  <title>RC Bounce LLC - Premium Bounce House Rentals | Columbia, SC</title>
+  <meta name="description" content="Columbia's premier bounce house rental company. Professional inflatables, slides, and party rentals for events of all sizes. Licensed & insured.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
-
-    /* ================================================
-       COLOR PALETTE
-       ================================================ */
+    /* Modern Professional Design System */
     :root {
-      --red:    #FF2525;
-      --red-dk: #CC0000;
-      --blue:   #1B4FFF;
-      --blue-dk:#0033CC;
-      --yellow: #FFD700;
-      --yel-dk: #E6B800;
-      --orange: #FF7A00;
-      --green:  #00C853;
-      --white:  #FFFFFF;
-      --cream:  #FFFCF0;
-      --dark:   #1A1A2E;
-      --shadow-red:  5px 6px 0 #CC0000;
-      --shadow-blue: 5px 6px 0 #0033CC;
-      --shadow-yel:  5px 6px 0 #E6B800;
+      --primary-red: #DC2626;
+      --primary-blue: #2563EB;
+      --dark-blue: #1E40AF;
+      --light-red: #FEE2E2;
+      --light-blue: #DBEAFE;
+      --black: #111827;
+      --gray-900: #1F2937;
+      --gray-700: #374151;
+      --gray-500: #6B7280;
+      --gray-100: #F3F4F6;
+      --white: #FFFFFF;
     }
 
-    /* ================================================
-       RESET & BASE
-       ================================================ */
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--cream);
-      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--gray-900);
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    h1, h2, h3, .logo-text {
-      font-family: 'Fredoka One', cursive;
-      letter-spacing: 0.5px;
-    }
-
     .container {
-      max-width: 1160px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* ================================================
-       CONFETTI BURST (top-of-page decoration)
-       ================================================ */
-    .confetti-strip {
-      height: 8px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--red)    0px, var(--red)    20px,
-        var(--yellow) 20px,var(--yellow) 40px,
-        var(--blue)   40px,var(--blue)   60px,
-        var(--green)  60px,var(--green)  80px,
-        var(--orange) 80px,var(--orange) 100px
-      );
-    }
-
-    /* ================================================
-       NAVIGATION
-       ================================================ */
+    /* Header */
     header {
       background: var(--white);
-      border-bottom: 4px solid var(--dark);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 0 var(--yellow);
     }
 
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 70px;
+      height: 80px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
     }
 
-    .logo-icon {
-      font-size: 2rem;
-      animation: wobble 3s ease-in-out infinite;
+    .logo img {
+      height: 50px;
+      width: auto;
     }
-
-    @keyframes wobble {
-      0%, 100% { transform: rotate(-5deg); }
-      50%       { transform: rotate(5deg);  }
-    }
-
-    .logo-text {
-      font-size: 1.5rem;
-      color: var(--red);
-      -webkit-text-stroke: 1px var(--dark);
-      text-shadow: 3px 3px 0 var(--dark);
-    }
-
-    .logo-text span { color: var(--blue); }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2rem;
       list-style: none;
     }
 
     .nav-links a {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: var(--dark);
+      font-weight: 500;
+      color: var(--gray-700);
       text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover {
+      color: var(--primary-red);
+    }
 
     .nav-cta {
-      background: var(--red) !important;
+      background: var(--primary-red);
       color: var(--white) !important;
-      padding: 10px 22px;
-      border-radius: 50px;
-      border: 3px solid var(--dark) !important;
-      box-shadow: 3px 3px 0 var(--dark);
-      transition: transform 0.15s, box-shadow 0.15s !important;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.2s;
     }
 
     .nav-cta:hover {
-      transform: translate(-2px, -2px) !important;
-      box-shadow: 5px 5px 0 var(--dark) !important;
-      color: var(--white) !important;
+      background: var(--primary-red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
     }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
       background: none;
       border: none;
       cursor: pointer;
+      padding: 8px;
     }
 
     .hamburger span {
       display: block;
-      width: 26px;
-      height: 3px;
-      background: var(--dark);
-      border-radius: 3px;
+      width: 24px;
+      height: 2px;
+      background: var(--gray-700);
       transition: all 0.3s;
     }
 
-    .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-    /* ================================================
-       HERO
-       ================================================ */
+    /* Hero Section */
     .hero {
-      background: var(--blue);
-      background-image:
-        radial-gradient(circle at 15% 50%, rgba(255,37,37,0.35) 0%, transparent 45%),
-        radial-gradient(circle at 85% 20%, rgba(255,215,0,0.40) 0%, transparent 40%),
-        radial-gradient(circle at 60% 80%, rgba(0,200,83,0.20) 0%, transparent 35%);
-      border-bottom: 5px solid var(--dark);
-      padding: 80px 0 60px;
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+      padding: 100px 0;
       position: relative;
       overflow: hidden;
     }
 
-    /* Polka dots background */
     .hero::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.08) 2px, transparent 2px);
-      background-size: 36px 36px;
-      pointer-events: none;
-    }
-
-    /* Floating stars */
-    .hero-stars {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .star {
-      position: absolute;
-      font-size: 1.4rem;
-      animation: float-star 6s ease-in-out infinite;
-      opacity: 0.75;
-    }
-
-    @keyframes float-star {
-      0%, 100% { transform: translateY(0) rotate(0deg);   }
-      33%       { transform: translateY(-18px) rotate(15deg); }
-      66%       { transform: translateY(10px) rotate(-10deg); }
+      top: 0;
+      right: -20%;
+      width: 60%;
+      height: 100%;
+      background: url('/clients/rc-bounce-llc/assets/hero/hero.jpg') center/cover;
+      opacity: 0.1;
+      transform: skewX(-10deg);
     }
 
     .hero-inner {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
     }
 
-    .hero-label {
-      display: inline-block;
-      background: var(--yellow);
-      color: var(--dark);
-      font-family: 'Fredoka One', cursive;
-      font-size: 1rem;
-      letter-spacing: 1px;
-      padding: 6px 18px;
-      border-radius: 50px;
-      border: 3px solid var(--dark);
-      box-shadow: 3px 3px 0 var(--dark);
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
       margin-bottom: 20px;
     }
 
-    .hero h1 {
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
-      color: var(--white);
-      line-height: 1.05;
-      -webkit-text-stroke: 2px var(--dark);
-      text-shadow: 4px 4px 0 var(--dark);
-      margin-bottom: 16px;
+    .hero-content h1 span {
+      color: var(--primary-red);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
 
-    .hero h1 em {
-      font-style: normal;
-      color: var(--yellow);
-      -webkit-text-stroke: 2px var(--dark);
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.92);
-      max-width: 500px;
+    .hero-content p {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.9);
       margin-bottom: 32px;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+      max-width: 500px;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .btn-party {
+    .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
-      padding: 14px 30px;
-      border-radius: 50px;
+      padding: 16px 32px;
+      font-size: 1rem;
+      font-weight: 600;
       text-decoration: none;
-      border: 3px solid var(--dark);
+      border-radius: 6px;
+      transition: all 0.2s;
       cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
+      border: none;
     }
 
-    .btn-red {
-      background: var(--red);
+    .btn-primary {
+      background: var(--primary-red);
       color: var(--white);
-      box-shadow: var(--shadow-red);
     }
 
-    .btn-red:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 8px 9px 0 var(--red-dk);
+    .btn-primary:hover {
+      background: #B91C1C;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
     }
 
-    .btn-yellow {
-      background: var(--yellow);
-      color: var(--dark);
-      box-shadow: var(--shadow-yel);
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary-blue);
     }
 
-    .btn-yellow:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 8px 9px 0 var(--yel-dk);
+    .btn-secondary:hover {
+      background: var(--gray-100);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
 
-    /* Bouncing bouncy castle graphic */
-    .hero-graphic {
-      font-size: 9rem;
-      animation: bounce-hero 1.2s ease-in-out infinite;
-      filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.3));
-      line-height: 1;
-      user-select: none;
+    .hero-image {
+      position: relative;
     }
 
-    @keyframes bounce-hero {
-      0%, 100% { transform: translateY(0) scale(1);    }
-      50%       { transform: translateY(-20px) scale(1.04); }
-    }
-
-    /* ================================================
-       WAVE DIVIDER
-       ================================================ */
-    .wave-divider {
-      display: block;
+    .hero-image img {
       width: 100%;
-      overflow: hidden;
-      line-height: 0;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
 
-    .wave-divider svg { display: block; }
-
-    /* ================================================
-       STATS BAR
-       ================================================ */
-    .stats-bar {
-      background: var(--yellow);
-      border-bottom: 4px solid var(--dark);
-      padding: 0;
+    /* Trust Badges */
+    .trust-badges {
+      background: var(--gray-100);
+      padding: 40px 0;
     }
 
-    .stats-grid {
+    .badges-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .stat-item {
-      padding: 24px 16px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
       text-align: center;
-      border-right: 3px solid rgba(0,0,0,0.15);
     }
 
-    .stat-item:last-child { border-right: none; }
-
-    .stat-emoji {
-      font-size: 1.8rem;
-      display: block;
-      margin-bottom: 4px;
-      animation: pop 2s ease-in-out infinite;
+    .badge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
-    @keyframes pop {
-      0%, 100% { transform: scale(1); }
-      50%       { transform: scale(1.12); }
+    .badge-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-red);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
     }
 
-    .stat-number {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2rem;
-      color: var(--dark);
-      line-height: 1;
-      -webkit-text-stroke: 1px var(--dark);
+    .badge-item h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gray-900);
     }
 
-    .stat-label {
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: rgba(26,26,46,0.7);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .badge-item p {
+      color: var(--gray-700);
+      font-size: 0.95rem;
     }
 
-    /* ================================================
-       SECTION HEADERS
-       ================================================ */
+    /* Services Section */
+    .services {
+      padding: 80px 0;
+    }
+
     .section-header {
       text-align: center;
-      margin-bottom: 52px;
+      margin-bottom: 60px;
     }
 
-    .section-tag {
+    .section-label {
       display: inline-block;
-      font-family: 'Fredoka One', cursive;
+      background: var(--light-red);
+      color: var(--primary-red);
+      font-weight: 600;
       font-size: 0.9rem;
-      letter-spacing: 2px;
+      padding: 6px 20px;
+      border-radius: 30px;
+      margin-bottom: 16px;
       text-transform: uppercase;
-      color: var(--white);
-      background: var(--blue);
-      border: 3px solid var(--dark);
-      border-radius: 50px;
-      padding: 5px 18px;
-      box-shadow: 3px 3px 0 var(--dark);
-      margin-bottom: 14px;
+      letter-spacing: 0.5px;
     }
 
     .section-header h2 {
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--dark);
-      -webkit-text-stroke: 1px var(--dark);
-      line-height: 1.1;
-      margin-bottom: 12px;
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-bottom: 16px;
     }
 
     .section-header p {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #555;
-      max-width: 500px;
+      font-size: 1.125rem;
+      color: var(--gray-700);
+      max-width: 600px;
       margin: 0 auto;
     }
 
-    /* ================================================
-       RENTALS — PRODUCT CARDS
-       ================================================ */
-    .rentals {
-      padding: 80px 0 60px;
-      background: var(--white);
-    }
-
-    .rentals-grid {
+    .services-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
     }
 
-    .rental-card {
+    .service-card {
       background: var(--white);
-      border: 4px solid var(--dark);
-      border-radius: 20px;
-      padding: 28px 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .service-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .service-content {
+      padding: 32px;
+    }
+
+    .service-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 12px;
+    }
+
+    .service-content p {
+      color: var(--gray-700);
+      margin-bottom: 20px;
+    }
+
+    .service-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-red);
+      margin-bottom: 4px;
+    }
+
+    .service-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gray-500);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-red) 0%, #991B1B 100%);
+      padding: 80px 0;
       text-align: center;
-      transition: transform 0.15s, box-shadow 0.15s;
       position: relative;
       overflow: hidden;
     }
 
-    .rental-card:nth-child(1) { box-shadow: var(--shadow-red); }
-    .rental-card:nth-child(2) { box-shadow: var(--shadow-blue); }
-    .rental-card:nth-child(3) { box-shadow: var(--shadow-yel); }
-    .rental-card:nth-child(4) { box-shadow: var(--shadow-blue); }
-    .rental-card:nth-child(5) { box-shadow: var(--shadow-red); }
-    .rental-card:nth-child(6) { box-shadow: var(--shadow-yel); }
-
-    .rental-card:hover {
-      transform: translate(-4px, -4px);
-    }
-
-    .rental-card:nth-child(1):hover { box-shadow: 9px 10px 0 var(--red-dk); }
-    .rental-card:nth-child(2):hover { box-shadow: 9px 10px 0 var(--blue-dk); }
-    .rental-card:nth-child(3):hover { box-shadow: 9px 10px 0 var(--yel-dk); }
-    .rental-card:nth-child(4):hover { box-shadow: 9px 10px 0 var(--blue-dk); }
-    .rental-card:nth-child(5):hover { box-shadow: 9px 10px 0 var(--red-dk); }
-    .rental-card:nth-child(6):hover { box-shadow: 9px 10px 0 var(--yel-dk); }
-
-    /* Top color stripe per card */
-    .rental-card::before {
+    .cta-section::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 8px;
+      top: -50%;
+      right: -10%;
+      width: 40%;
+      height: 200%;
+      background: rgba(255,255,255,0.05);
+      transform: rotate(-35deg);
     }
 
-    .rental-card:nth-child(odd)::before  { background: var(--red); }
-    .rental-card:nth-child(even)::before { background: var(--blue); }
-    .rental-card:nth-child(3n)::before   { background: var(--yellow); }
-
-    .rental-icon {
-      font-size: 3.5rem;
-      display: block;
-      margin-bottom: 12px;
-      animation: bounce-icon 2.5s ease-in-out infinite;
-    }
-
-    @keyframes bounce-icon {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
-
-    .rental-card h3 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.4rem;
-      color: var(--dark);
-      margin-bottom: 8px;
-    }
-
-    .rental-card p {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 14px;
-    }
-
-    .rental-features {
-      list-style: none;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .rental-features li {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--dark);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .rental-features li::before {
-      content: '🎉';
-      font-size: 0.75rem;
-    }
-
-    /* ================================================
-       WAVE UP
-       ================================================ */
-
-    /* ================================================
-       HOW IT WORKS
-       ================================================ */
-    .how-it-works {
-      padding: 70px 0;
-      background: var(--cream);
-      position: relative;
-    }
-
-    /* Diagonal stripe background */
-    .how-it-works::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        transparent, transparent 20px,
-        rgba(255,215,0,0.12) 20px, rgba(255,215,0,0.12) 40px
-      );
-      pointer-events: none;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+    .cta-content {
       position: relative;
       z-index: 1;
     }
 
-    .step-card {
-      background: var(--white);
-      border: 4px solid var(--dark);
-      border-radius: 20px;
-      padding: 32px 24px;
-      text-align: center;
+    .cta-content h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
     }
 
-    .step-card:nth-child(1) { box-shadow: var(--shadow-red); }
-    .step-card:nth-child(2) { box-shadow: var(--shadow-blue); }
-    .step-card:nth-child(3) { box-shadow: var(--shadow-yel); }
-
-    .step-number {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 4px solid var(--dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.8rem;
-      margin: 0 auto 16px;
+    .cta-content p {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+      margin: 0 auto 32px;
     }
 
-    .step-card:nth-child(1) .step-number { background: var(--red);    color: var(--white); box-shadow: 3px 3px 0 var(--red-dk); }
-    .step-card:nth-child(2) .step-number { background: var(--blue);   color: var(--white); box-shadow: 3px 3px 0 var(--blue-dk); }
-    .step-card:nth-child(3) .step-number { background: var(--yellow); color: var(--dark);  box-shadow: 3px 3px 0 var(--yel-dk); }
-
-    .step-card h3 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.4rem;
-      color: var(--dark);
-      margin-bottom: 10px;
-    }
-
-    .step-card p {
-      font-size: 0.93rem;
-      font-weight: 600;
-      color: #555;
-      line-height: 1.65;
-    }
-
-    /* ================================================
-       TRUST / ABOUT
-       ================================================ */
+    /* About Section */
     .about {
       padding: 80px 0;
-      background: var(--blue);
-      border-top: 5px solid var(--dark);
-      border-bottom: 5px solid var(--dark);
-      position: relative;
-      overflow: hidden;
+      background: var(--gray-100);
     }
 
-    .about::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 2px, transparent 2px);
-      background-size: 30px 30px;
-    }
-
-    .about-grid {
+    .about-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
       align-items: center;
-      position: relative;
-      z-index: 1;
     }
 
-    .about-image-wrap {
-      position: relative;
-    }
-
-    .about-image-wrap img {
+    .about-image img {
       width: 100%;
-      border-radius: 20px;
-      border: 5px solid var(--dark);
-      box-shadow: 8px 8px 0 var(--dark);
-      display: block;
-    }
-
-    .about-badge {
-      position: absolute;
-      bottom: -16px;
-      right: -16px;
-      background: var(--yellow);
-      border: 4px solid var(--dark);
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 4px 4px 0 var(--dark);
-    }
-
-    .about-badge .big-num {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.8rem;
-      color: var(--dark);
-      line-height: 1;
-    }
-
-    .about-badge .label {
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--dark);
-      text-align: center;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
     }
 
     .about-content h2 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2.4rem;
-      color: var(--white);
-      -webkit-text-stroke: 1px var(--dark);
-      text-shadow: 3px 3px 0 var(--dark);
-      margin-bottom: 16px;
-      line-height: 1.1;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-bottom: 20px;
+    }
+
+    .about-content h2 span {
+      color: var(--primary-blue);
     }
 
     .about-content p {
-      font-size: 1rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.88);
-      line-height: 1.75;
-      margin-bottom: 28px;
+      color: var(--gray-700);
+      margin-bottom: 20px;
+      font-size: 1.1rem;
     }
 
-    .trust-badges {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .trust-badge {
-      background: var(--white);
-      border: 3px solid var(--dark);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 3px 3px 0 var(--dark);
-    }
-
-    .trust-badge-icon { font-size: 1.5rem; }
-
-    .trust-badge h4 {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--dark);
-    }
-
-    .trust-badge p {
-      font-size: 0.75rem;
-      color: #555;
-      font-weight: 600;
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    /* ================================================
-       TESTIMONIALS
-       ================================================ */
-    .testimonials {
-      padding: 80px 0;
-      background: var(--cream);
-    }
-
-    .testimonials-grid {
+    .about-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 24px;
+      margin-top: 40px;
     }
 
-    .testimonial-card {
-      background: var(--white);
-      border: 4px solid var(--dark);
-      border-radius: 20px;
-      padding: 28px;
-      position: relative;
-    }
-
-    .testimonial-card:nth-child(1) { box-shadow: var(--shadow-red); }
-    .testimonial-card:nth-child(2) { box-shadow: var(--shadow-blue); }
-    .testimonial-card:nth-child(3) { box-shadow: var(--shadow-yel); }
-
-    /* Speech bubble tail */
-    .testimonial-card::after {
-      content: '';
-      position: absolute;
-      bottom: -18px;
-      left: 36px;
-      border: 9px solid transparent;
-      border-top-color: var(--dark);
-    }
-
-    .stars {
-      display: flex;
-      gap: 2px;
-      margin-bottom: 12px;
-    }
-
-    .stars span {
-      font-size: 1.1rem;
-      color: var(--yellow);
-      -webkit-text-stroke: 0.5px var(--dark);
-    }
-
-    .testimonial-text {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--dark);
-      line-height: 1.65;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .reviewer {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 24px;
-    }
-
-    .reviewer-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 3px solid var(--dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
-    .testimonial-card:nth-child(1) .reviewer-avatar { background: var(--red);    color: var(--white); }
-    .testimonial-card:nth-child(2) .reviewer-avatar { background: var(--blue);   color: var(--white); }
-    .testimonial-card:nth-child(3) .reviewer-avatar { background: var(--yellow); color: var(--dark);  }
-
-    .reviewer-name {
-      font-weight: 800;
-      font-size: 0.9rem;
-      color: var(--dark);
-    }
-
-    .reviewer-detail {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #777;
-    }
-
-    /* ================================================
-       CTA BAND
-       ================================================ */
-    .cta-band {
-      padding: 70px 0;
-      background: var(--red);
-      border-top: 5px solid var(--dark);
-      border-bottom: 5px solid var(--dark);
-      position: relative;
-      overflow: hidden;
+    .stat {
       text-align: center;
     }
 
-    .cta-band::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.07) 2px, transparent 2px);
-      background-size: 28px 28px;
-    }
-
-    .cta-band-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-band h2 {
-      font-family: 'Fredoka One', cursive;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: var(--white);
-      -webkit-text-stroke: 1.5px var(--dark);
-      text-shadow: 4px 4px 0 var(--dark);
-      margin-bottom: 10px;
-    }
-
-    .cta-band h2 em {
-      font-style: normal;
-      color: var(--yellow);
-    }
-
-    .cta-band p {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 30px;
-    }
-
-    .cta-band-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-white {
-      background: var(--white);
-      color: var(--red);
-      box-shadow: 5px 6px 0 var(--red-dk);
-    }
-
-    .btn-white:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 8px 9px 0 var(--red-dk);
-    }
-
-    /* ================================================
-       CONTACT / BOOKING FORM
-       ================================================ */
-    .contact {
-      padding: 80px 0;
-      background: var(--white);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 56px;
-      align-items: start;
-    }
-
-    .contact-info h2 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 2rem;
-      color: var(--dark);
-      margin-bottom: 12px;
-      line-height: 1.15;
-    }
-
-    .contact-info p {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #555;
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
-
-    .contact-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .contact-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: var(--cream);
-      border: 3px solid var(--dark);
-      border-radius: 14px;
-      padding: 14px 18px;
-      box-shadow: 3px 3px 0 var(--dark);
-      text-decoration: none;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    .contact-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 5px 5px 0 var(--dark);
-    }
-
-    .contact-card-icon {
-      font-size: 1.6rem;
-      flex-shrink: 0;
-    }
-
-    .contact-card-label {
-      font-size: 0.72rem;
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #888;
+      color: var(--primary-red);
     }
 
-    .contact-card-value {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.05rem;
-      color: var(--dark);
-    }
-
-    /* Form */
-    .booking-form {
-      background: var(--cream);
-      border: 4px solid var(--dark);
-      border-radius: 20px;
-      padding: 36px;
-      box-shadow: 6px 6px 0 var(--dark);
-    }
-
-    .booking-form h3 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.6rem;
-      color: var(--dark);
-      margin-bottom: 24px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--dark);
-      margin-bottom: 6px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      background: var(--white);
-      border: 3px solid var(--dark);
-      border-radius: 10px;
-      padding: 11px 14px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--dark);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      -webkit-appearance: none;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 3px 3px 0 var(--blue);
-    }
-
-    .form-group textarea { resize: vertical; min-height: 100px; }
-
-    .form-group select option { background: var(--white); }
-
-    .form-submit { width: 100%; font-size: 1.1rem; }
-
-    /* ================================================
-       FOOTER
-       ================================================ */
-    footer {
-      background: var(--dark);
-      border-top: 5px solid var(--yellow);
-      padding: 56px 0 28px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr;
-      gap: 48px;
-      padding-bottom: 40px;
-      border-bottom: 2px solid rgba(255,255,255,0.1);
-      margin-bottom: 28px;
-    }
-
-    .footer-brand .logo-text { -webkit-text-stroke: 0; text-shadow: none; font-size: 1.4rem; }
-
-    .footer-brand > .logo { margin-bottom: 14px; }
-
-    .footer-brand p {
+    .stat-label {
       font-size: 0.9rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.7;
-      max-width: 280px;
+      color: var(--gray-700);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .footer-col h4 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1rem;
-      color: var(--yellow);
-      margin-bottom: 14px;
-      letter-spacing: 0.5px;
+    /* Footer */
+    footer {
+      background: var(--gray-900);
+      color: var(--white);
+      padding: 60px 0 30px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo {
+      margin-bottom: 16px;
+    }
+
+    .footer-logo img {
+      height: 40px;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-section h3 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .footer-section p,
+    .footer-section a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-section a:hover {
+      color: var(--white);
     }
 
     .footer-links {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
-
-    .footer-links a {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--yellow); }
 
     .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+      text-align: center;
+      color: rgba(255,255,255,0.5);
     }
 
-    .footer-bottom p {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .footer-bottom a { color: var(--yellow); text-decoration: none; }
-
-    /* ================================================
-       RESPONSIVE
-       ================================================ */
-    @media (max-width: 900px) {
-      .rentals-grid { grid-template-columns: 1fr 1fr; }
-      .about-grid   { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .footer-grid  { grid-template-columns: 1fr 1fr; }
-    }
-
+    /* Responsive */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
-        position: fixed;
-        top: 74px; left: 0; right: 0;
-        background: var(--white);
-        flex-direction: column;
-        padding: 20px 24px;
-        gap: 0;
-        border-bottom: 4px solid var(--dark);
-        box-shadow: 0 8px 0 var(--yellow);
       }
 
-      .nav-links.open { display: flex; }
-      .nav-links li { width: 100%; }
-
-      .nav-links a {
-        display: block;
-        padding: 14px 0;
-        border-bottom: 2px dashed rgba(0,0,0,0.1);
+      .hamburger {
+        display: flex;
       }
 
-      .nav-links li:last-child a {
-        border: 3px solid var(--dark);
-        border-radius: 50px;
-        text-align: center;
-        margin-top: 12px;
-        background: var(--red);
-        color: var(--white) !important;
-        box-shadow: 3px 3px 0 var(--dark);
-      }
-
-      .hamburger { display: flex; }
-
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-graphic { font-size: 5rem; text-align: center; }
-
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stat-item:nth-child(2) { border-right: none; }
-
-      .rentals-grid { grid-template-columns: 1fr; }
-      .steps-grid   { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .testimonial-card::after { display: none; }
-
-      .cta-band-buttons { flex-direction: column; align-items: center; }
-
-      .form-row { grid-template-columns: 1fr; }
-      .booking-form { padding: 24px 18px; }
-      .footer-grid { grid-template-columns: 1fr; }
-
-      .footer-bottom {
-        flex-direction: column;
-        gap: 8px;
+      .hero-inner {
+        grid-template-columns: 1fr;
         text-align: center;
       }
-    }
 
-    @media (max-width: 480px) {
-      .hero-buttons { flex-direction: column; }
-      .btn-party { justify-content: center; }
-      .trust-badges { grid-template-columns: 1fr; }
-    }
+      .hero-image {
+        display: none;
+      }
 
+      .about-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
-
-<!-- Rainbow strip -->
-<div class="confetti-strip"></div>
-
-<!-- ================================================
-     NAVIGATION
-     ================================================ -->
-<header>
-  <nav class="container">
-    <a href="#" class="logo"><img src="/clients/rc-bounce-llc/assets/logo/logo.jpg" alt="RC Bounce LLC" style="max-height:48px;display:block;"></a>
-    <ul class="nav-links" id="nav-menu">
-      <li><a href="#rentals">Rentals</a></li>
-      <li><a href="#about">About Us</a></li>
-      <li><a href="#reviews">Reviews</a></li>
-      <li><a href="#booking" class="nav-cta">Book Now 🎉</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-</header>
-
-<!-- ================================================
-     HERO
-     ================================================ -->
-<section class="hero" id="home">
-
-  <!-- Floating stars decoration -->
-  <div class="hero-stars" aria-hidden="true">
-    <span class="star" style="top:10%; left:8%;  animation-delay:0s;   color:#FFD700;">⭐</span>
-    <span class="star" style="top:20%; right:12%;animation-delay:1s;   color:#FF2525;">🌟</span>
-    <span class="star" style="top:60%; left:5%;  animation-delay:1.5s; color:#fff;">✨</span>
-    <span class="star" style="top:75%; right:8%; animation-delay:0.5s; color:#FFD700;">⭐</span>
-    <span class="star" style="top:40%; right:20%;animation-delay:2s;   color:#fff;">🎈</span>
-    <span class="star" style="top:85%; left:18%; animation-delay:0.8s; color:#FF2525;">🎊</span>
-    <span class="star" style="top:30%; left:60%; animation-delay:1.8s; color:#FFD700;">🎁</span>
-  </div>
-
-  <div class="container">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-label">🎪 Serving Your City</div>
-        <h1>The Party Starts<br><em>Right Here!</em></h1>
-        <p>Bounce houses, giant slides, tables, chairs, and more — delivered and set up at your door. Serving your area for the most epic parties ever!</p>
-        <div class="hero-buttons">
-          <a href="#booking" class="btn-party btn-red">🎉 Book Your Party!</a>
-          <a href="tel:5550000000" class="btn-party btn-yellow">📞 (555) 000-0000</a>
-        </div>
-      </div>
-      <div class="hero-graphic" aria-hidden="true">🏰</div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================
-     STATS BAR
-     ================================================ -->
-<div class="stats-bar">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <span class="stat-emoji">🎪</span>
-        <div class="stat-number">10+</div>
-        <div class="stat-label">Years of Fun</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-emoji">🎉</span>
-        <div class="stat-number">500+</div>
-        <div class="stat-label">Parties Rocked</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-emoji">😄</span>
-        <div class="stat-number">300+</div>
-        <div class="stat-label">Happy Kids</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-emoji">⭐</span>
-        <div class="stat-number">4.9★</div>
-        <div class="stat-label">Star Rating</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Wave divider -->
-<div class="wave-divider" style="background:#FFD700;">
-  <svg viewBox="0 0 1200 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:50px; fill:#fff;">
-    <path d="M0,30 C300,0 900,50 1200,20 L1200,50 L0,50 Z"/>
-  </svg>
-</div>
-
-<!-- ================================================
-     RENTALS
-     ================================================ -->
-<section id="rentals" class="rentals">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag">🏰 What We Rent</div>
-      <h2>Everything You Need<br>for an Epic Party!</h2>
-      <p>Delivery, setup, and pickup included. You just focus on the fun!</p>
-    </div>
-    <div class="rentals-grid">
-
-      <div class="rental-card">
-        <span class="rental-icon">🏰</span>
-        <h3>Bounce Houses</h3>
-        <p>Classic and themed bounce houses for all ages — the centerpiece of any great party.</p>
-        <ul class="rental-features">
-          <li>Multiple sizes & themes</li>
-          <li>Safe for kids of all ages</li>
-          <li>Setup & takedown included</li>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">
+          <img src="/clients/rc-bounce-llc/assets/logo/logo.jpg" alt="RC Bounce LLC">
+        </a>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="tel:8032909005" class="nav-cta">Call (803) 290-9005</a></li>
         </ul>
-      </div>
-
-      <div class="rental-card">
-        <span class="rental-icon">🌊</span>
-        <h3>Inflatable Slides</h3>
-        <p>Towering dry slides and splash-zone water slides that kids will line up for all day.</p>
-        <ul class="rental-features">
-          <li>Dry & wet slide options</li>
-          <li>Safe enclosed climb lanes</li>
-          <li>Available with water hookup</li>
-        </ul>
-      </div>
-
-      <div class="rental-card">
-        <span class="rental-icon">🪑</span>
-        <h3>Tables & Chairs</h3>
-        <p>Everything you need to seat your guests comfortably — folding tables and chairs for any event size.</p>
-        <ul class="rental-features">
-          <li>6ft & 8ft folding tables</li>
-          <li>White & natural chair options</li>
-          <li>Delivery & pickup included</li>
-        </ul>
-      </div>
-
-      <div class="rental-card">
-        <span class="rental-icon">🎠</span>
-        <h3>Combo Units</h3>
-        <p>Bounce house + slide combos for double the fun in one unit — perfect for bigger parties.</p>
-        <ul class="rental-features">
-          <li>Bounce area + attached slide</li>
-          <li>Obstacle course styles</li>
-          <li>Water & dry configurations</li>
-        </ul>
-      </div>
-
-      <div class="rental-card">
-        <span class="rental-icon">🎪</span>
-        <h3>Obstacle Courses</h3>
-        <p>Giant inflatable obstacle courses perfect for birthday competitions and team events.</p>
-        <ul class="rental-features">
-          <li>Multiple course lengths</li>
-          <li>Side-by-side race format</li>
-          <li>Great for all age groups</li>
-        </ul>
-      </div>
-
-      <div class="rental-card">
-        <span class="rental-icon">🎊</span>
-        <h3>Party Packages</h3>
-        <p>Bundle everything together and save — we handle the full setup so your party is perfect.</p>
-        <ul class="rental-features">
-          <li>Custom bundles & discounts</li>
-          <li>Full delivery & setup crew</li>
-          <li>Linens & extras available</li>
-        </ul>
-      </div>
-
+        <button class="hamburger" onclick="this.classList.toggle('open')">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- Wave divider -->
-<div class="wave-divider" style="background:#fff;">
-  <svg viewBox="0 0 1200 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:50px; fill:#FFFCF0;">
-    <path d="M0,20 C400,50 800,0 1200,30 L1200,50 L0,50 Z"/>
-  </svg>
-</div>
-
-<!-- ================================================
-     HOW IT WORKS
-     ================================================ -->
-<section class="how-it-works">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag" style="background:var(--red);">🎈 How It Works</div>
-      <h2>Booking Is Super Easy!</h2>
-      <p>Three simple steps and your party is ready to go.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-number">1</div>
-        <h3>Pick Your Inflatables</h3>
-        <p>Browse our selection of bounce houses, slides, and party gear. Pick what you love — or let us help you choose!</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">2</div>
-        <h3>Book Your Date</h3>
-        <p>Call or fill out the form below. We confirm availability instantly and lock in your date with a small deposit.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">3</div>
-        <h3>We Do The Rest!</h3>
-        <p>We deliver, set up, and tear down everything. You just show up and have the best party ever!</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================
-     ABOUT / TRUST
-     ================================================ -->
-<section id="about" class="about">
-  <div class="container">
-    <div class="about-grid">
-
-      <div class="about-image-wrap">
-        <img src="./images/about.jpg" alt="RC Bounce LLC party setup" loading="lazy">
-        <div class="about-badge">
-          <div class="big-num">10+</div>
-          <div class="label">Yrs of Fun!</div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <h1>Columbia's Premier <span>Bounce House</span> Rental Company</h1>
+          <p>Transform your event with our premium inflatables and party rentals. Professional service, competitive prices, and unforgettable fun!</p>
+          <div class="hero-buttons">
+            <a href="tel:8032909005" class="btn btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              Call Now
+            </a>
+            <a href="#services" class="btn btn-secondary">View Services</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="/clients/rc-bounce-llc/assets/hero/hero.jpg" alt="RC Bounce Premium Rentals">
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="about-content">
-        <h2>We Live for the Party!</h2>
-        <p>We're a family-owned party rental company that has been making birthdays, backyard bashes, and community events unforgettable. Every inflatable is cleaned, inspected, and set up by our friendly crew — so all you have to do is have fun.</p>
+  <!-- Trust Badges -->
+  <section class="trust-badges">
+    <div class="container">
+      <div class="badges-grid">
+        <div class="badge-item">
+          <div class="badge-icon">✓</div>
+          <h3>Licensed & Insured</h3>
+          <p>Full liability coverage for your peace of mind</p>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">⚡</div>
+          <h3>Same Day Delivery</h3>
+          <p>Quick response for last-minute events</p>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">⭐</div>
+          <h3>5-Star Service</h3>
+          <p>Trusted by hundreds of happy customers</p>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🎯</div>
+          <h3>Professional Setup</h3>
+          <p>Expert installation and safety checks</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="trust-badges">
-          <div class="trust-badge">
-            <span class="trust-badge-icon">✅</span>
-            <div>
-              <h4>Fully Insured</h4>
-              <p>Licensed &amp; covered for your protection</p>
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Our Services</span>
+        <h2>Premium Party Rentals</h2>
+        <p>Choose from our wide selection of safe, clean, and exciting inflatables</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <img src="/clients/rc-bounce-llc/assets/service/service1.jpg" alt="Bounce Houses" class="service-image">
+          <div class="service-content">
+            <h3>Bounce Houses</h3>
+            <p>Classic bounce houses in various themes and sizes. Perfect for kids' parties and events.</p>
+            <div class="service-price">$150 <span>/day</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/clients/rc-bounce-llc/assets/service/service2.jpg" alt="Water Slides" class="service-image">
+          <div class="service-content">
+            <h3>Water Slides</h3>
+            <p>Beat the heat with our thrilling water slides. Great for summer parties!</p>
+            <div class="service-price">$250 <span>/day</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/clients/rc-bounce-llc/assets/service/service3.jpg" alt="Combo Units" class="service-image">
+          <div class="service-content">
+            <h3>Combo Units</h3>
+            <p>Bounce houses with slides and obstacles. Maximum fun in one rental!</p>
+            <div class="service-price">$200 <span>/day</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/clients/rc-bounce-llc/assets/service/service4.jpg" alt="Obstacle Courses" class="service-image">
+          <div class="service-content">
+            <h3>Obstacle Courses</h3>
+            <p>Challenge your guests with exciting inflatable obstacle courses.</p>
+            <div class="service-price">$300 <span>/day</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/clients/rc-bounce-llc/assets/service/service5.jpg" alt="Party Add-Ons" class="service-image">
+          <div class="service-content">
+            <h3>Tables & Chairs</h3>
+            <p>Complete your party setup with our rental tables and chairs.</p>
+            <div class="service-price">$10 <span>/each</span></div>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/clients/rc-bounce-llc/assets/service/service6.jpg" alt="Concessions" class="service-image">
+          <div class="service-content">
+            <h3>Concessions</h3>
+            <p>Popcorn machines, cotton candy, and more for the perfect party!</p>
+            <div class="service-price">$75 <span>/day</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Make Your Event Unforgettable?</h2>
+        <p>Book your bounce house rental today and create memories that last a lifetime!</p>
+        <a href="tel:8032909005" class="btn btn-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call (803) 290-9005
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-image">
+          <img src="/clients/rc-bounce-llc/assets/about/about.jpg" alt="RC Bounce Team">
+        </div>
+        <div class="about-content">
+          <h2>Your Trusted <span>Party Partner</span> in Columbia</h2>
+          <p>RC Bounce LLC has been bringing joy to Columbia families for over 10 years. We're not just a rental company – we're your partners in creating magical moments.</p>
+          <p>Our commitment to safety, cleanliness, and exceptional service has made us the go-to choice for birthday parties, school events, church gatherings, and corporate functions throughout the Midlands.</p>
+          <div class="about-stats">
+            <div class="stat">
+              <div class="stat-number">2,500+</div>
+              <div class="stat-label">Happy Customers</div>
             </div>
-          </div>
-          <div class="trust-badge">
-            <span class="trust-badge-icon">🧼</span>
-            <div>
-              <h4>Cleaned &amp; Sanitized</h4>
-              <p>Every rental cleaned after every use</p>
+            <div class="stat">
+              <div class="stat-number">10+</div>
+              <div class="stat-label">Years Experience</div>
             </div>
-          </div>
-          <div class="trust-badge">
-            <span class="trust-badge-icon">🚚</span>
-            <div>
-              <h4>Free Delivery</h4>
-              <p>Setup &amp; teardown included always</p>
-            </div>
-          </div>
-          <div class="trust-badge">
-            <span class="trust-badge-icon">☎️</span>
-            <div>
-              <h4>Same-Day Support</h4>
-              <p>We answer when you need us</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ================================================
-     TESTIMONIALS
-     ================================================ -->
-<section id="reviews" class="testimonials">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-tag" style="background:var(--orange);">⭐ Reviews</div>
-      <h2>Parents Love Us!</h2>
-      <p>Real reviews from real parties in Your City.</p>
-    </div>
-    <div class="testimonials-grid">
-
-      <div class="testimonial-card">
-        <div class="stars">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-        </div>
-        <p class="testimonial-text">"My daughter's birthday was INCREDIBLE. The bounce house was huge, set up perfectly, and the kids didn't want to leave. Booking again next year for sure!"</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">AR</div>
-          <div>
-            <div class="reviewer-name">Ashley R.</div>
-            <div class="reviewer-detail">Birthday Mom, Local Area</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="stars">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-        </div>
-        <p class="testimonial-text">"Used them for our block party. Tables, chairs, AND two bounce houses — all on time, clean, and the crew was super friendly. Made our life so easy!"</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">MT</div>
-          <div>
-            <div class="reviewer-name">Marcus T.</div>
-            <div class="reviewer-detail">Block Party Host</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="stars">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-        </div>
-        <p class="testimonial-text">"Best party rental company around! They showed up an hour early, set everything up beautifully, and the kids absolutely loved the water slide. 10/10!"</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">PK</div>
-          <div>
-            <div class="reviewer-name">Priya K.</div>
-            <div class="reviewer-detail">Birthday Mom</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ================================================
-     CTA BAND
-     ================================================ -->
-<section class="cta-band">
-  <div class="container">
-    <div class="cta-band-inner">
-      <h2>Ready to Make <em>Memories?</em> 🎊</h2>
-      <p>Book today — slots fill up fast, especially weekends!</p>
-      <div class="cta-band-buttons">
-        <a href="#booking" class="btn-party btn-white">🎉 Book Your Party Now</a>
-        <a href="tel:5550000000" class="btn-party btn-yellow">📞 Call (555) 000-0000</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================
-     BOOKING FORM
-     ================================================ -->
-<section id="booking" class="contact">
-  <div class="container">
-    <div class="contact-grid">
-
-      <div class="contact-info">
-        <div class="section-tag" style="background:var(--green);">📞 Get In Touch</div>
-        <h2>Let's Plan<br>Your Party!</h2>
-        <p>Fill out the form and we'll reach out within the hour to confirm your booking and answer any questions.</p>
-
-        <div class="contact-cards">
-          <a href="tel:5550000000" class="contact-card">
-            <span class="contact-card-icon">📞</span>
-            <div>
-              <div class="contact-card-label">Call or Text</div>
-              <div class="contact-card-value">(555) 000-0000</div>
-            </div>
-          </a>
-          <a href="mailto:info@rcbouncellc.com" class="contact-card">
-            <span class="contact-card-icon">✉️</span>
-            <div>
-              <div class="contact-card-label">Email Us</div>
-              <div class="contact-card-value">info@rcbouncellc.com</div>
-            </div>
-          </a>
-          <div class="contact-card">
-            <span class="contact-card-icon">📍</span>
-            <div>
-              <div class="contact-card-label">We Deliver To</div>
-              <div class="contact-card-value">Your City &amp; Nearby Areas</div>
+            <div class="stat">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Safety Record</div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="booking-form">
-        <h3>🎈 Request a Quote</h3>
-        <form id="party-form" action="https://formspree.io/f/xwkgjpzl" method="POST">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Your Name</label>
-              <input type="text" name="name" placeholder="Jane Smith" required>
-            </div>
-            <div class="form-group">
-              <label>Phone Number</label>
-              <input type="tel" name="phone" placeholder="(555) 000-0000" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" placeholder="you@email.com" required>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Party Date</label>
-              <input type="date" name="date" required>
-            </div>
-            <div class="form-group">
-              <label>Party Time</label>
-              <input type="time" name="time">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>What Would You Like to Rent?</label>
-            <select name="rental_type">
-              <option value="">Pick your favorite 🎉</option>
-              <option>Bounce Houses</option>
-              <option>Inflatable Slides</option>
-              <option>Tables & Chairs</option>
-              <option>Combo Units</option>
-              <option>Obstacle Courses</option>
-              <option>Party Packages</option>
-              <option>Multiple / Full Package</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Tell Us About Your Party!</label>
-            <textarea name="message" placeholder="Number of kids, backyard or park, theme ideas, any questions..."></textarea>
-          </div>
-          <button type="submit" class="btn-party btn-red form-submit">
-            🎊 Send My Request!
-          </button>
-        </form>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ================================================
-     FOOTER
-     ================================================ -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-
-      <div class="footer-brand">
-        <a href="#" class="logo"><img src="/clients/rc-bounce-llc/assets/logo/logo.jpg" alt="RC Bounce LLC" style="max-height:48px;display:block;"></a>
-        <p>Bounce Houses, Inflatables & Party Rentals. Making birthday parties and backyard events unforgettable in Your City and surrounding areas.</p>
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="/clients/rc-bounce-llc/assets/logo/logo.jpg" alt="RC Bounce LLC">
+          </div>
+          <p>Columbia's premier bounce house rental company. Making every event unforgettable!</p>
+          <p style="margin-top: 20px;">
+            <strong>Call:</strong> <a href="tel:8032909005">(803) 290-9005</a><br>
+            <strong>Email:</strong> <a href="mailto:info@rcbouncellc.com">info@rcbouncellc.com</a>
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#services">Our Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Safety Guidelines</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Service Area</h3>
+          <p>Columbia, SC and surrounding areas including Lexington, Irmo, Chapin, and Blythewood</p>
+        </div>
       </div>
-
-      <div class="footer-col">
-        <h4>Our Rentals</h4>
-        <ul class="footer-links">
-          <li><a href="#rentals">Bounce Houses</a></li>
-          <li><a href="#rentals">Inflatable Slides</a></li>
-          <li><a href="#rentals">Tables & Chairs</a></li>
-          <li><a href="#rentals">Combo Units</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <p>&copy; 2024 RC Bounce LLC. All rights reserved.</p>
       </div>
-
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <ul class="footer-links">
-          <li><a href="tel:5550000000">(555) 000-0000</a></li>
-          <li><a href="mailto:info@rcbouncellc.com">info@rcbouncellc.com</a></li>
-          <li><a href="#booking">Book a Party</a></li>
-        </ul>
-      </div>
-
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 RC Bounce LLC. All rights reserved.</p>
-      <p>Website by <a href="https://jordan-ai.co" target="_blank">Jordan AI</a></p>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- ================================================
-     JAVASCRIPT
-     ================================================ -->
-<script>
-  // Sticky nav class (already sticky, just for shadow)
-  const header = document.querySelector('header')
+  <script>
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
 
-  // Hamburger
-  const hamburger = document.getElementById('hamburger')
-  const navMenu   = document.getElementById('nav-menu')
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open')
-    navMenu.classList.toggle('open')
-  })
-  navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open')
-      navMenu.classList.remove('open')
-    })
-  })
-
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'))
-      if (target) {
-        e.preventDefault()
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    })
-  })
-
-  // Animate stat numbers on scroll
-  const statNums = document.querySelectorAll('.stat-number')
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animation = 'pop 0.4s ease forwards'
-        io.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.5 })
-  statNums.forEach(el => io.observe(el))
-
-  // Stagger rental cards on scroll
-  const cards = document.querySelectorAll('.rental-card')
-  const cardObserver = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.opacity = '1'
-          entry.target.style.transform = 'translateY(0)'
-        }, i * 80)
-        cardObserver.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.1 })
-  cards.forEach(c => {
-    c.style.opacity = '0'
-    c.style.transform = 'translateY(20px)'
-    c.style.transition = 'opacity 0.4s ease, transform 0.4s ease, box-shadow 0.15s, border-color 0.15s'
-    cardObserver.observe(c)
-  })
-
-  // Form submit feedback
-  const form = document.getElementById('party-form')
-  if (form) {
-    form.addEventListener('submit', () => {
-      const btn = form.querySelector('button[type="submit"]')
-      btn.textContent = '🎉 Sending...'
-      btn.disabled = true
-    })
-  }
-</script>
-
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger?.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
