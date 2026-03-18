@@ -82,5 +82,44 @@
     ],
     "source": "human",
     "learnedAt": "2026-03-18T04:52:02.128Z"
+  },
+  {
+    "id": 5,
+    "category": "assets",
+    "whatHappened": "Client image was uploaded and placed but never appeared on the live site",
+    "whatWentWrong": "place_asset_on_site re-rendered the HTML locally but site.json stores deploy:false, so the update was never pushed to Vercel",
+    "correctApproach": "place_asset_on_site now always deploys automatically after re-rendering. The mandatory order is: (1) create_client_website, (2) upload_client_assets, (3) place_asset_on_site. Never reverse this order.",
+    "keywords": [
+      "image", "photo", "asset", "upload", "place", "site", "deploy", "vercel",
+      "hero", "logo", "client", "website", "render", "build", "create"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T12:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "category": "assets",
+    "whatHappened": "Jordan used Unsplash stock photos on a client website instead of the client's actual photos",
+    "whatWentWrong": "mediaManager had Unsplash as a fallback whenever no client image existed, so random stock photos appeared on the live site",
+    "correctApproach": "NEVER use Unsplash, Pexels, or any stock photos — not as fallbacks, not for anything. Only use images the client actually provides. If no client images exist, leave the image area empty or show a placeholder. When client sends images via Discord, call upload_client_assets with the URL as the VERY FIRST action.",
+    "keywords": [
+      "image", "photo", "unsplash", "stock", "pexels", "asset", "upload",
+      "discord", "client", "hero", "about", "service", "website", "build"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T20:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "category": "assets",
+    "whatHappened": "Jordan called place_asset_on_site before create_client_website existed, causing it to fail",
+    "whatWentWrong": "place_asset_on_site requires site.json which only exists after create_client_website runs",
+    "correctApproach": "ALWAYS run create_client_website BEFORE upload_client_assets and place_asset_on_site. If site already exists, still call place_asset_on_site AFTER create_client_website, not before.",
+    "keywords": [
+      "image", "photo", "asset", "place", "site.json", "create", "order",
+      "hero", "logo", "client", "website", "build", "first"
+    ],
+    "source": "human",
+    "learnedAt": "2026-03-18T12:00:00.000Z"
   }
 ]

@@ -146,8 +146,6 @@ function getServiceDefaults(industry) {
     heroHeadline:       "Beautiful Yards,",
     heroHeadlineAccent: "Zero Hassle",
     heroSubtext:        "We handle everything from weekly lawn maintenance to full landscape transformations. Licensed, insured, and trusted by hundreds of homeowners.",
-    heroImageUrl:       "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80",
-    aboutImageUrl:      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80",
     aboutHeadline:      "Your Neighborhood Landscaping Experts",
     aboutText:          "We're a locally owned and operated landscaping company serving this community for over a decade. Our team brings professional-grade equipment and genuine care to every yard we touch — because your home deserves to look its best.",
     guarantee:          "Satisfaction",
@@ -169,8 +167,6 @@ function getServiceDefaults(industry) {
     heroHeadline:       "A Spotless Home,",
     heroHeadlineAccent: "Every Time",
     heroSubtext:        "Trusted cleaning professionals who treat your home like their own. Fully vetted, insured, and background-checked.",
-    heroImageUrl:       "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1920&q=80",
-    aboutImageUrl:      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=900&q=80",
     aboutHeadline:      "Cleaning You Can Actually Trust",
     aboutText:          "Every member of our team is background-checked, insured, and trained to our high standards. We use eco-friendly products that are safe for your family and pets — without sacrificing results.",
     guarantee:          "Satisfaction",
@@ -192,8 +188,6 @@ function getServiceDefaults(industry) {
     heroHeadline:       "The Party Starts",
     heroHeadlineAccent: "Right Here!",
     heroSubtext:        "Bounce houses, giant slides, tables, chairs, and more — delivered and set up at your door. Serving " + (industry.includes(",") ? industry : "your area") + " for the most epic parties ever!",
-    heroImageUrl:       "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1920&q=80",
-    aboutImageUrl:      "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=900&q=80",
     aboutHeadline:      "We Live for the Party!",
     aboutText:          "We're a family-owned party rental company that has been making birthdays, backyard bashes, and community events unforgettable. Every inflatable is cleaned, inspected, and set up by our friendly crew — so all you have to do is have fun.",
     guarantee:          "Satisfaction",
@@ -218,8 +212,6 @@ function getServiceDefaults(industry) {
     heroHeadline:       "Quality Work,",
     heroHeadlineAccent: "Guaranteed Results",
     heroSubtext:        "Licensed and insured professionals delivering expert service to homeowners in your area. Done right the first time.",
-    heroImageUrl:       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80",
-    aboutImageUrl:      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80",
     aboutHeadline:      "Trusted Professionals in Your Community",
     aboutText:          "We're a locally owned company with years of experience serving homeowners throughout this area. Our team is licensed, insured, and committed to delivering quality results on every job.",
     guarantee:          "Satisfaction",
@@ -317,25 +309,23 @@ async function createClientWebsite(options) {
   const clientDir0 = path.join(CLIENTS_DIR, slug)
   fs.writeFileSync(path.join(clientDir0, "site.json"), JSON.stringify({ ...options, deploy: false }, null, 2), "utf8")
 
+  // ── APPLY CLIENT ASSET OVERRIDES ──────────────
+  // Load client-uploaded assets FIRST so we can skip downloading slots
+  // that the client has already provided — no wasted Unsplash downloads
+  const clientAssets = getClientAssets(slug)
+
   // ── FETCH MEDIA ──────────────────────────────
+  // Skip downloading any slot already covered by a client upload
   console.log(`📸 Fetching media for ${slug} (${industry})...`)
   let media
   try {
-    media = fetchMedia
-      ? await fetchClientMedia(slug, industry, {
-          downloadImages: downloadMedia,
-          numServices:    minServices,
-          fetchVideo,
-        })
-      : getCuratedMedia(industry, minServices)
+    media = await fetchClientMedia(slug, industry, { numServices: minServices })
   } catch (err) {
-    console.log(`   ⚠️  Media fetch error: ${err.message} — using curated fallbacks`)
-    media = getCuratedMedia(industry, minServices)
+    console.log(`   ⚠️  Media check error: ${err.message} — continuing with no images`)
+    media = { hero: null, about: null, services: Array(minServices).fill(null), video: null }
   }
 
-  // ── APPLY CLIENT ASSET OVERRIDES ──────────────
-  // Client-provided assets (uploaded via !assets upload) take priority
-  const clientAssets = getClientAssets(slug)
+  // Apply client uploads (overrides anything fetchClientMedia returned)
   if (clientAssets.hero)     media.hero    = clientAssets.hero
   if (clientAssets.about)    media.about   = clientAssets.about
   if (clientAssets.service1) media.services[0] = clientAssets.service1
@@ -381,6 +371,11 @@ async function createClientWebsite(options) {
     HERO_SUBTEXT:         defaults.heroSubtext,
     HERO_IMAGE_URL:       media.hero,        // ← real media
     HERO_IMAGE:           media.hero,
+
+    // Party template: photo if available, placeholder if not
+    HERO_GRAPHIC_HTML:    media.hero
+      ? `<img src="${media.hero}" alt="${businessName} in action" class="hero-photo">`
+      : `<div class="hero-graphic image-placeholder" aria-hidden="true" style="background:rgba(255,255,255,0.15);border:3px dashed rgba(255,255,255,0.4);border-radius:16px;padding:2rem;text-align:center;color:rgba(255,255,255,0.7);font-size:1rem;font-weight:700;">📷<br>Upload hero photo</div>`,
 
     // Stats (service template)
     YEARS:     years,
@@ -493,6 +488,15 @@ async function createClientWebsite(options) {
 
   console.log(`✅ Website created: website/clients/${slug}/index.html`)
   console.log(`   Template: ${templateType} | Color: ${color} | Industry: ${industry}`)
+
+  // Generate sitemap.json for client requests system
+  try {
+    const { generateSitemap } = require("./clientRequests")
+    generateSitemap(slug)
+    console.log(`   📋 Sitemap generated for ${slug}`)
+  } catch (err) {
+    // Non-fatal — sitemap generation is best-effort
+  }
 
   // Deploy via git
   let deployResult = null

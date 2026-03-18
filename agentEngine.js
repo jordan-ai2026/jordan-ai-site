@@ -3,9 +3,9 @@
 // The core brain that makes Jordan AI autonomous
 //
 // MODEL SELECTION:
-// - Opus = client work, creative, building (most powerful)
-// - Sonnet = routine tasks, daily checks (cheaper)
-// - GPT-4o-mini = sub-agents, content generation (cheapest)
+// - Opus   = proposals, complex business decisions, user-requested deep thinking
+// - Sonnet = default for all agent runs, code gen, analysis, client work
+// - GPT-4o-mini = sub-agents, blogs, email content, bulk/repetitive tasks
 // ============================================
 
 require("dotenv").config()
@@ -47,18 +47,24 @@ const MODELS = {
   sonnet: "claude-sonnet-4-20250514"
 }
 
+// Opus is reserved for high-stakes work only.
+// Everything else defaults to Sonnet.
 const OPUS_TRIGGERS = [
-  "demo", "client", "website", "landing page", "design",
-  "build", "create", "proposal", "pitch", "reino",
-  "professional", "premium", "custom", "new client",
-  "paying client", "first client", "redesign", "html"
+  "write proposal",
+  "send proposal",
+  "draft proposal",
+  "client proposal",
+  "business decision",
+  "think deeply",
+  "deep analysis",
+  "opus",
 ]
 
 function selectModel(goal) {
   const goalLower = goal.toLowerCase()
   const needsOpus = OPUS_TRIGGERS.some(trigger => goalLower.includes(trigger))
   const model = needsOpus ? MODELS.opus : MODELS.sonnet
-  console.log(`   🧠 Model: ${needsOpus ? "OPUS (client work)" : "SONNET (routine)"}`)
+  console.log(`   🧠 Model: ${needsOpus ? "OPUS (proposal/decision)" : "SONNET (default)"}`)
   return model
 }
 
@@ -592,7 +598,7 @@ const TOOLS = [
   },
   {
     name: "upload_client_assets",
-    description: "Upload a client-provided logo, photo, or video into the correct subfolder of their organized asset library. Source can be a URL (Discord attachment, Google Drive, Dropbox) or local path. After uploading, call place_asset_on_site to apply it.",
+    description: "Upload a client-provided logo, photo, or video into the correct subfolder of their organized asset library. Source can be a URL (Discord attachment, Google Drive, Dropbox) or local path. CRITICAL: When the user sends images in Discord, call this IMMEDIATELY as the very first action — before building or re-rendering the site. NEVER use Unsplash or any stock photos. ONLY use images provided by the client. Order: (1) create_client_website, (2) upload_client_assets, (3) place_asset_on_site.",
     input_schema: {
       type: "object",
       properties: {
@@ -606,7 +612,7 @@ const TOOLS = [
   },
   {
     name: "place_asset_on_site",
-    description: "Place an uploaded client asset on their website at a specific location (hero, about, logo, service1..6). Re-renders and deploys the site automatically.",
+    description: "Place an uploaded client asset on their website at a specific location (hero, about, logo, service1..6). Re-renders AND deploys the site automatically. REQUIRED: create_client_website must have been called first or this will fail. Use the exact filename returned by upload_client_assets.",
     input_schema: {
       type: "object",
       properties: {
@@ -702,6 +708,51 @@ const TOOLS = [
         taskDescription: { type: "string", description: "Describe what you're about to do — keywords are matched against stored lessons" },
       },
       required: ["taskDescription"]
+    }
+  },
+  {
+    name: "get_market_intel",
+    description: "Read the latest X/Twitter market intelligence. Returns what AI services are selling, price ranges competitors are charging, trending topics, ideas to steal, and 3 strategic recommendations. Call this before making pricing decisions, adding services, or planning outreach.",
+    input_schema: { type: "object", properties: {}, required: [] }
+  },
+  {
+    name: "run_x_scan",
+    description: "Trigger an X/Twitter market scan right now. Searches all configured keywords, analyzes posts with GPT-4o-mini, and returns categorized intelligence: what's selling, competitors, trends, ideas to steal, and strategy recommendations. Updates market-intel.json.",
+    input_schema: { type: "object", properties: {}, required: [] }
+  },
+  {
+    name: "process_client_request",
+    description: "Process a client's change request for their website. Parses the natural language request, applies the change to their HTML, deploys, and logs it. Use when a client asks to change their phone, headline, add a service, update hours, etc.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:        { type: "string",  description: "Client slug e.g. 'rc-bounce'" },
+        request:     { type: "string",  description: "The client's request in plain text e.g. 'Change phone number to 555-123-4567'" },
+        from_email:  { type: "string",  description: "Client's email address (for confirmation email)" },
+      },
+      required: ["slug", "request"]
+    }
+  },
+  {
+    name: "generate_client_sitemap",
+    description: "Scan a client's index.html and generate/update their sitemap.json — maps section names to line numbers, editable fields (phone, email, hours), and images. Run this after creating or updating any client site.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug: { type: "string", description: "Client slug e.g. 'rc-bounce'" },
+      },
+      required: ["slug"]
+    }
+  },
+  {
+    name: "publish_newsletter",
+    description: "Publish today's newsletter entry to website/newsletter.html. Gathers real business data (CRM, agent logs, lessons), generates content with Claude, injects into the newsletter page, and deploys. Skips if already published today unless force=true.",
+    input_schema: {
+      type: "object",
+      properties: {
+        force: { type: "boolean", description: "Set true to publish even if already published today" },
+      },
+      required: []
     }
   }
 ]
@@ -1007,7 +1058,7 @@ async function executeTool(toolName, toolInput) {
       
       case "think_deeply": {
         const response = await anthropic.messages.create({
-          model: MODELS.opus,
+          model: MODELS.sonnet,
           max_tokens: 2048,
           messages: [{
             role: "user",
@@ -1250,6 +1301,70 @@ Write a short, friendly cold outreach email (3-4 short paragraphs) that:
         }
       }
 
+      case "get_market_intel": {
+        const xc = require("./xCrawler")
+        const brief = xc.getStrategyBrief()
+        const intel = xc.getMarketIntel()
+        const lastReport = xc.loadLastReport()
+        return {
+          brief,
+          lastScan:     lastReport?.dateDisplay || "Never",
+          totalScans:   intel?.scans?.length    || 0,
+          latestTrends: lastReport?.trends?.map(t => t.topic) || [],
+          topSelling:   lastReport?.selling?.slice(0, 5)      || [],
+          pricePoints:  lastReport?.pricePoints               || [],
+          strategy:     lastReport?.strategyInsights          || [],
+        }
+      }
+
+      case "run_x_scan": {
+        const xc = require("./xCrawler")
+        if (!xc.isConfigured()) return { error: "RAPIDAPI_KEY not set in .env" }
+        const report = await xc.runScan()
+        return {
+          success:          true,
+          date:             report.dateDisplay,
+          rawCount:         report.rawCount,
+          filteredCount:    report.filteredCount,
+          topSelling:       report.selling.slice(0, 5),
+          trends:           report.trends,
+          competitors:      report.competitors,
+          strategyInsights: report.strategyInsights,
+          ideasToSteal:     report.ideasToSteal,
+        }
+      }
+
+      case "publish_newsletter": {
+        const newsletterMgr = require("./newsletterManager")
+        const result = await newsletterMgr.runDailyNewsletter(toolInput.force === true)
+        return result
+      }
+
+      case "process_client_request": {
+        const cr = require("./clientRequests")
+        const result = await cr.processRequest(toolInput.slug, toolInput.request, toolInput.from_email || null)
+        return {
+          ...result,
+          summary: result.success
+            ? `✅ Applied: ${result.result?.description || "change applied"}. Deployed: ${result.deployed}`
+            : `❌ Failed: ${result.error}`
+        }
+      }
+
+      case "generate_client_sitemap": {
+        const cr = require("./clientRequests")
+        const sitemap = cr.generateSitemap(toolInput.slug)
+        if (!sitemap) return { error: `No index.html found for ${toolInput.slug}` }
+        return {
+          success: true,
+          slug: toolInput.slug,
+          sections: Object.keys(sitemap.sections),
+          editableFields: Object.keys(sitemap.editable),
+          imageCount: Object.values(sitemap.images).flat().length,
+          summary: `Sitemap generated: ${Object.keys(sitemap.sections).length} sections, ${Object.keys(sitemap.editable).length} editable fields`
+        }
+      }
+
       default:
         return { error: `Unknown tool: ${toolName}` }
     }
@@ -1443,12 +1558,20 @@ When using write_file, you MUST provide BOTH parameters:
 2. content: the COMPLETE file content (for HTML, the full document)
 Never call write_file without the content parameter filled in.
 
-IMPORTANT FOR DISCORD ATTACHMENTS:
-When the message contains a "[Discord attachments]" section with URLs, those are DIRECT DOWNLOAD LINKS to files the user sent.
-- Do NOT say you cannot see images — you don't need to see them visually
-- Use upload_client_assets with the URL to download the file to the client's folder
-- Then use place_asset_on_site to apply it to the site
-- You CAN download any URL — treat it exactly like any other file URL
+IMAGES — CRITICAL RULES (read every time):
+1. NEVER use Unsplash, Pexels, or ANY stock photos. Not as fallbacks, not as placeholders, not ever.
+2. ONLY use images the client has actually provided. If no client images exist, leave the image slot empty.
+3. When the user sends images in Discord ([Discord attachments] section), call upload_client_assets with the URL as the VERY FIRST action — before anything else.
+4. Do NOT say you cannot see images — you don't need to see them. Just download the URL via upload_client_assets.
+
+MANDATORY ORDER when building a client site with images:
+1. create_client_website FIRST — creates site.json which place_asset_on_site requires
+2. upload_client_assets SECOND — download the client's image into their asset folder
+3. place_asset_on_site THIRD — use the EXACT filename from step 2, re-renders AND deploys
+
+NEVER call place_asset_on_site before create_client_website — it will fail.
+NEVER call create_client_website after upload_client_assets — site renders without the image.
+ALWAYS use the exact filename returned by upload_client_assets when calling place_asset_on_site.
 
 ${lessons.formatLessonsForPrompt(message)}
 ${persona.memory || ""}`
