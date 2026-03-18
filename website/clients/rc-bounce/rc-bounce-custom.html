@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RC Bounce LLC | Bounce House & Water Slide Rentals | 252-203-3540</title>
+  <meta name="description" content="Bounce House, Water Slide & Party Rentals. Bounce • Slide • Splash • Celebrate! Serving NC with delivery & setup included. Call 252-203-3540">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #E31837;
+      --red-dark: #B81430;
+      --blue: #1E5AA8;
+      --blue-dark: #164785;
+      --blue-light: #4A90D9;
+      --yellow: #FFD93D;
+      --yellow-dark: #F5C800;
+      --gold: #D4A017;
+      --green: #2ECC71;
+      --white: #FFFFFF;
+      --light: #F8FAFC;
+      --dark: #1A1A2E;
+      --gray: #64748B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    .fun-font {
+      font-family: 'Bangers', cursive;
+      letter-spacing: 2px;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Confetti Background */
+    .confetti-bg {
+      position: relative;
+      overflow: hidden;
+    }
+    .confetti-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 10% 20%, var(--red) 2px, transparent 2px),
+        radial-gradient(circle at 90% 80%, var(--blue) 2px, transparent 2px),
+        radial-gradient(circle at 50% 10%, var(--yellow) 3px, transparent 3px),
+        radial-gradient(circle at 30% 70%, var(--green) 2px, transparent 2px),
+        radial-gradient(circle at 70% 30%, var(--red) 2px, transparent 2px),
+        radial-gradient(circle at 85% 15%, var(--yellow) 2px, transparent 2px),
+        radial-gradient(circle at 15% 85%, var(--blue) 2px, transparent 2px);
+      background-size: 100px 100px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-text {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      color: var(--white);
+      text-shadow: 3px 3px 0 var(--red), 5px 5px 0 rgba(0,0,0,0.2);
+      letter-spacing: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover {
+      color: var(--yellow);
+      transform: scale(1.05);
+    }
+
+    .nav-cta {
+      background: var(--yellow);
+      color: var(--dark) !important;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(255,217,61,0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .nav-cta:hover {
+      background: var(--yellow-dark);
+      color: var(--dark) !important;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 50%, #87CEEB 100%);
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 0;
+    }
+
+    /* Grass at bottom */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, #228B22, #32CD32, transparent);
+      z-index: 1;
+    }
+
+    /* Clouds */
+    .cloud {
+      position: absolute;
+      background: white;
+      border-radius: 100px;
+      opacity: 0.9;
+      z-index: 0;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+    .cloud-1 {
+      width: 200px;
+      height: 60px;
+      top: 15%;
+      left: 10%;
+      animation: float 20s ease-in-out infinite;
+    }
+    .cloud-2 {
+      width: 150px;
+      height: 45px;
+      top: 25%;
+      right: 15%;
+      animation: float 25s ease-in-out infinite reverse;
+    }
+    .cloud-3 {
+      width: 120px;
+      height: 35px;
+      top: 10%;
+      right: 40%;
+      animation: float 18s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      25% { transform: translateX(20px) translateY(-10px); }
+      50% { transform: translateX(0) translateY(-5px); }
+      75% { transform: translateX(-20px) translateY(-10px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-text {
+      color: var(--white);
+    }
+
+    .tagline {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(227,24,55,0.4);
+    }
+
+    .hero h1 {
+      font-family: 'Bangers', cursive;
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      text-shadow: 4px 4px 0 var(--red), 6px 6px 0 rgba(0,0,0,0.2);
+      letter-spacing: 3px;
+    }
+
+    .hero h1 span {
+      color: var(--yellow);
+      display: block;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      font-weight: 600;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: var(--yellow);
+      color: var(--dark);
+      box-shadow: 0 6px 20px rgba(255,217,61,0.5);
+    }
+
+    .btn-primary:hover {
+      background: var(--yellow-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(255,217,61,0.6);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--blue);
+      box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.4);
+    }
+
+    .hero-image {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-image img {
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border: 5px solid var(--white);
+    }
+
+    /* Phone Banner */
+    .phone-banner {
+      background: var(--red);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .phone-banner a {
+      color: var(--yellow);
+      text-decoration: none;
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    .phone-banner a:hover {
+      text-decoration: underline;
+    }
+
+    /* Pricing Section */
+    .pricing {
+      padding: 5rem 0;
+      background: var(--light);
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      color: var(--blue);
+      text-shadow: 3px 3px 0 var(--yellow);
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      font-size: 1.2rem;
+      color: var(--gray);
+      font-weight: 600;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .price-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+      border: 3px solid transparent;
+    }
+
+    .price-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--yellow);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .price-card.featured {
+      border-color: var(--red);
+      transform: scale(1.05);
+    }
+
+    .price-card.featured:hover {
+      transform: scale(1.05) translateY(-10px);
+    }
+
+    .price-card-header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .price-card.featured .price-card-header {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    }
+
+    .price-card-header h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card-body {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .price-table {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-table th, .price-table td {
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .price-table th {
+      background: var(--light);
+      font-weight: 800;
+      color: var(--blue);
+      font-size: 0.9rem;
+    }
+
+    .price-table td {
+      border-bottom: 1px solid #eee;
+      font-weight: 600;
+    }
+
+    .price-amount {
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      color: var(--red);
+    }
+
+    /* Combo Deal Banner */
+    .combo-banner {
+      background: linear-gradient(135deg, var(--red) 0%, #FF6B6B 100%);
+      padding: 4rem 0;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .combo-banner::before {
+      content: '🎈';
+      position: absolute;
+      font-size: 4rem;
+      top: 20%;
+      left: 5%;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .combo-banner::after {
+      content: '🎉';
+      position: absolute;
+      font-size: 4rem;
+      top: 30%;
+      right: 5%;
+      animation: bounce 2s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .combo-banner h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+    }
+
+    .combo-banner .price-big {
+      font-family: 'Bangers', cursive;
+      font-size: 5rem;
+      color: var(--yellow);
+      text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+    }
+
+    .combo-banner p {
+      font-size: 1.3rem;
+      margin: 1rem 0 2rem;
+      font-weight: 600;
+    }
+
+    .bonus-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--dark);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+    }
+
+    /* Services/Events Section */
+    .events {
+      padding: 5rem 0;
+      background: white;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .event-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--light);
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+
+    .event-card:hover {
+      background: var(--blue);
+      color: white;
+      transform: translateY(-5px);
+    }
+
+    .event-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .event-card h3 {
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: white;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .contact-info h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 3rem;
+      letter-spacing: 3px;
+      margin-bottom: 2rem;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--yellow);
+      color: var(--dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .contact-details h3 {
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-details p {
+      opacity: 0.9;
+    }
+
+    .contact-details a {
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    .contact-form {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 20px;
+      color: var(--dark);
+    }
+
+    .contact-form h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      color: var(--blue);
+      letter-spacing: 2px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 1.25rem;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .form-submit:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(227,24,55,0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 0 1.5rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      color: var(--yellow);
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+
+    .footer-tagline {
+      color: var(--gray);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid #333;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .delivery-note {
+      background: var(--yellow);
+      color: var(--dark);
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 800;
+      margin-top: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .combo-banner h2 {
+        font-size: 2rem;
+      }
+
+      .combo-banner .price-big {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav class="container">
+      <a href="#" class="logo">
+        <span class="logo-text">RC BOUNCE LLC</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="tel:2522033540" class="nav-cta">📞 252-203-3540</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="tagline">🎈 Bounce • Slide • Splash • Celebrate!</span>
+          <h1>
+            The Ultimate
+            <span>Party Rentals!</span>
+          </h1>
+          <p>Bounce houses, water slides, tables, chairs & more! Professional delivery & setup included with every rental.</p>
+          <div class="hero-buttons">
+            <a href="tel:2522033540" class="btn btn-primary">📞 Call Now: 252-203-3540</a>
+            <a href="#pricing" class="btn btn-secondary">View Pricing</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="./assets/images/promo/spring-summer-2026.jpg" alt="RC Bounce LLC Spring & Summer 2026 Lineup">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phone Banner -->
+  <div class="phone-banner">
+    📞 Book Your Party Today! Call or Text: <a href="tel:2522033540">252-203-3540</a>
+  </div>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing confetti-bg">
+    <div class="container">
+      <div class="section-header">
+        <h2>🎪 Rental Pricing</h2>
+        <p>All prices include FREE delivery & professional setup!</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Inflatable Rentals -->
+        <div class="price-card">
+          <div class="price-card-header">
+            <h3>🏰 Bounce House</h3>
+          </div>
+          <div class="price-card-body">
+            <table class="price-table">
+              <tr>
+                <th>1 Day</th>
+                <th>2 Days</th>
+                <th>Extra Day</th>
+              </tr>
+              <tr>
+                <td><span class="price-amount">$275</span></td>
+                <td><span class="price-amount">$350</span></td>
+                <td><span class="price-amount">$75</span></td>
+              </tr>
+            </table>
+            <p>15' x 15' Classic Bounce House</p>
+            <a href="#contact" class="btn btn-primary" style="margin-top: 1rem;">Book Now</a>
+          </div>
+        </div>
+
+        <div class="price-card">
+          <div class="price-card-header">
+            <h3>🛝 Dry Slide</h3>
+          </div>
+          <div class="price-card-body">
+            <table class="price-table">
+              <tr>
+                <th>1 Day</th>
+                <th>2 Days</th>
+                <th>Extra Day</th>
+              </tr>
+              <tr>
+                <td><span class="price-amount">$375</span></td>
+                <td><span class="price-amount">$500</span></td>
+                <td><span class="price-amount">$75</span></td>
+              </tr>
+            </table>
+            <p>Giant inflatable slide for all ages</p>
+            <a href="#contact" class="btn btn-primary" style="margin-top: 1rem;">Book Now</a>
+          </div>
+        </div>
+
+        <div class="price-card">
+          <div class="price-card-header">
+            <h3>💦 Wet Slide</h3>
+          </div>
+          <div class="price-card-body">
+            <table class="price-table">
+              <tr>
+                <th>1 Day</th>
+                <th>2 Days</th>
+                <th>Extra Day</th>
+              </tr>
+              <tr>
+                <td><span class="price-amount">$450</span></td>
+                <td><span class="price-amount">$650</span></td>
+                <td><span class="price-amount">$75</span></td>
+              </tr>
+            </table>
+            <p>19' Dual Lane Water Slide</p>
+            <a href="#contact" class="btn btn-primary" style="margin-top: 1rem;">Book Now</a>
+          </div>
+        </div>
+
+        <!-- Party Equipment -->
+        <div class="price-card">
+          <div class="price-card-header">
+            <h3>🎪 Party Equipment</h3>
+          </div>
+          <div class="price-card-body">
+            <table class="price-table">
+              <tr>
+                <th>Item</th>
+                <th>1 Day</th>
+                <th>2 Days</th>
+              </tr>
+              <tr>
+                <td>20x20 Tent</td>
+                <td><span class="price-amount">$350</span></td>
+                <td><span class="price-amount">$500</span></td>
+              </tr>
+              <tr>
+                <td>Tables</td>
+                <td colspan="2"><span class="price-amount">$10</span>/each</td>
+              </tr>
+              <tr>
+                <td>Chairs</td>
+                <td colspan="2"><span class="price-amount">$2.50</span>/each</td>
+              </tr>
+            </table>
+            <a href="#contact" class="btn btn-primary" style="margin-top: 1rem;">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ultimate Combo Banner -->
+  <section class="combo-banner">
+    <div class="container">
+      <h2>⭐ ULTIMATE COMBO DEAL! ⭐</h2>
+      <p>Bounce House + 19' Water Slide</p>
+      <div class="price-big">$675</div>
+      <p>for 1 Day Rental (Save $50!)</p>
+      <div class="bonus-badge">🏀 BONUS: Book 2 Days ($751) & Get Inflatable Basketball Game FREE!</div>
+      <br><br>
+      <a href="tel:2522033540" class="btn btn-primary" style="font-size: 1.3rem;">📞 Book This Deal: 252-203-3540</a>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events" class="events">
+    <div class="container">
+      <div class="section-header">
+        <h2>🎉 Perfect For Every Event!</h2>
+        <p>More fun. More time. More memories for the kids!</p>
+      </div>
+
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-icon">🎂</div>
+          <h3>Birthday Parties</h3>
+        </div>
+        <div class="event-card">
+          <div class="event-icon">👨‍👩‍👧‍👦</div>
+          <h3>Family Gatherings</h3>
+        </div>
+        <div class="event-card">
+          <div class="event-icon">⛪</div>
+          <h3>Church Events</h3>
+        </div>
+        <div class="event-card">
+          <div class="event-icon">🎪</div>
+          <h3>Community Festivals</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2>Book Your Party!</h2>
+          
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-details">
+              <h3>Call or Text</h3>
+              <a href="tel:2522033540">252-203-3540</a>
+              <p>Available 7 days a week!</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-details">
+              <h3>Service Area</h3>
+              <p>North Carolina</p>
+              <p>Delivery & Setup Included!</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">⏰</div>
+            <div class="contact-details">
+              <h3>Booking Hours</h3>
+              <p>Mon-Sun: 8AM - 8PM</p>
+            </div>
+          </div>
+
+          <div class="delivery-note">✓ All Prices Include Delivery & Set Up!</div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Request a Quote</h3>
+          <form>
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="Your phone number" required>
+            </div>
+            <div class="form-group">
+              <label>Event Date</label>
+              <input type="date" required>
+            </div>
+            <div class="form-group">
+              <label>What Are You Interested In?</label>
+              <select>
+                <option>Bounce House ($275)</option>
+                <option>Dry Slide ($375)</option>
+                <option>Wet Slide ($450)</option>
+                <option>Ultimate Combo Deal ($675)</option>
+                <option>Tables & Chairs</option>
+                <option>Full Party Package</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message (Optional)</label>
+              <textarea rows="3" placeholder="Tell us about your event..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Get Free Quote! 🎉</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">RC BOUNCE LLC</div>
+      <p class="footer-tagline">Bounce • Slide • Splash • Celebrate!</p>
+      <p><a href="tel:2522033540" style="color: var(--yellow); font-size: 1.5rem; text-decoration: none; font-weight: bold;">📞 252-203-3540</a></p>
+      <div class="footer-bottom">
+        <p>&copy; 2026 RC Bounce LLC. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">Website by <a href="https://jordan-ai.co" style="color: var(--blue-light);">Jordan AI</a></p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
