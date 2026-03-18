@@ -459,7 +459,35 @@
           "auto": false
         }
       ]
+    },
+    "rc-bounce-llc": {
+      "id": 8,
+      "slug": "rc-bounce-llc",
+      "contactName": "Ryan Carroll",
+      "email": "",
+      "phone": "",
+      "businessName": "RC Bounce LLC",
+      "industry": "party rental",
+      "website": "",
+      "location": "",
+      "services": [],
+      "monthlyValue": 0,
+      "setupFee": 0,
+      "stage": "lead",
+      "wpSlug": "rc-bounce-llc",
+      "createdAt": "2026-03-18T04:06:08.220Z",
+      "lastContact": "2026-03-18T04:06:08.220Z",
+      "nextFollowUp": null,
+      "signedAt": null,
+      "notes": [],
+      "activity": [
+        {
+          "date": "2026-03-18T04:06:08.220Z",
+          "action": "Client added to CRM",
+          "auto": true
+        }
+      ]
     }
   },
-  "nextId": 8
+  "nextId": 9
 }

@@ -44,6 +44,7 @@ const leadScraper = require("./leadScraper")
 const outreach = require("./outboundOutreach")
 const followUp = require("./followUpSystem")
 const websiteGenerator = require("./websiteGenerator")
+const assetManager     = require("./assetManager")
 
 // ============================================
 // DUAL AI SETUP
@@ -725,6 +726,135 @@ client.on("messageCreate", async (message) => {
       lines.push(`• **${s.slug}** — ${s.url}`)
     }
     await message.reply(lines.join("\n"))
+    return
+  }
+
+  // ========================================
+  // CLIENT ASSET COMMANDS
+  // ========================================
+
+  // !assets upload <slug> <type> <URL or attachment>
+  // Types: hero | about | service | gallery | team | misc | video-hero | video-content | logo
+  if (content.startsWith("!assets upload")) {
+    const parts = content.replace("!assets upload", "").trim().split(/\s+/)
+    const slug = parts[0]
+    const type = parts[1]
+    let source = parts.slice(2).join(" ")
+
+    // Support Discord attachment (no URL needed when file is attached)
+    if (!source && message.attachments.size > 0) {
+      source = message.attachments.first().url
+    }
+
+    if (!slug || !type || !source) {
+      await message.reply(
+        "**Usage:** `!assets upload <slug> <type> <URL>`\n" +
+        "Or attach a file: `!assets upload <slug> <type>` (Discord attachment)\n\n" +
+        "**Image types:** `hero` `about` `service` `gallery` `team` `misc`\n" +
+        "**Video types:** `video-hero` `video-content`\n" +
+        "**Logo types:** `logo`\n\n" +
+        "**Examples:**\n" +
+        "`!assets upload green-peak logo https://...logo.png`\n" +
+        "`!assets upload rc-bounce hero https://...hero.jpg`\n" +
+        "`!assets upload green-peak about` ← attach photo in Discord"
+      )
+      return
+    }
+
+    try {
+      await message.reply(`⬆️ Uploading \`${type}\` asset for **${slug}**...`)
+      const result = await assetManager.uploadClientAsset(slug, type, source)
+      const placeLoc = type === "logo" ? "logo" : type.startsWith("video") ? "hero" : type.split("-")[0]
+      await message.reply(
+        `**✅ Asset Uploaded**\n\n` +
+        `📁 Folder: \`${result.subfolder.replace(/\\/g, "/")}/\`\n` +
+        `💾 File: \`${result.filename}\`\n` +
+        `🔗 Path: \`${result.relUrl}\`\n\n` +
+        `**Next step:** \`!assets place ${slug} ${result.filename} ${placeLoc}\``
+      )
+    } catch (err) {
+      await message.reply(`❌ Upload failed: ${err.message}`)
+    }
+    return
+  }
+
+  // !assets place <slug> <filename> <location>
+  // Locations: hero | about | logo | service1..6 | gallery | team
+  if (content.startsWith("!assets place")) {
+    const parts = content.replace("!assets place", "").trim().split(/\s+/)
+    const slug     = parts[0]
+    const filename = parts[1]
+    const location = parts[2]
+
+    if (!slug || !filename || !location) {
+      await message.reply(
+        "**Usage:** `!assets place <slug> <filename> <location>`\n\n" +
+        "**Locations:** `hero` `about` `logo` `service1`–`service6` `gallery` `team`\n\n" +
+        "**Examples:**\n" +
+        "`!assets place green-peak main.png logo`\n" +
+        "`!assets place green-peak hero-12345.jpg hero`\n" +
+        "`!assets place rc-bounce-llc about-12345.jpg about`"
+      )
+      return
+    }
+
+    try {
+      await message.reply(`🎨 Placing **${filename}** → **${location}** on **${slug}**'s site...`)
+      const result = await assetManager.placeAssetOnSite(slug, filename, location)
+      await message.reply(
+        `**✅ Asset Placed & Site Updated**\n\n` +
+        `📍 Location: \`${result.location}\`\n` +
+        `🖼️ File: \`${result.relUrl}\`\n` +
+        `🔄 Re-rendered: ${result.rerendered ? "Yes ✅" : "No ⚠️"}\n` +
+        `🔗 ${result.url}`
+      )
+    } catch (err) {
+      await message.reply(`❌ Failed: ${err.message}`)
+    }
+    return
+  }
+
+  // !assets list <slug>
+  if (content.startsWith("!assets list")) {
+    const slug = content.replace("!assets list", "").trim()
+    if (!slug) {
+      await message.reply("Usage: `!assets list <slug>`")
+      return
+    }
+
+    try {
+      const info = assetManager.listClientAssets(slug)
+      const lines = [`**📂 Asset Library: ${slug}**`, ``]
+
+      // Show files grouped by subfolder
+      let totalFiles = 0
+      for (const [folder, files] of Object.entries(info.tree)) {
+        if (files.length > 0) {
+          lines.push(`**${folder}/** (${files.length})`)
+          files.forEach(f => lines.push(`  • \`${f}\``))
+          totalFiles += files.length
+        }
+      }
+
+      if (totalFiles === 0) {
+        lines.push("No assets uploaded yet.")
+        lines.push(``, `Upload one: \`!assets upload ${slug} logo https://...\``)
+      }
+
+      // Show active placements
+      const placements = Object.entries(info.placements).filter(([k]) => k !== "updatedAt")
+      if (placements.length > 0) {
+        lines.push(``, `**📌 Placed on site (${placements.length}):**`)
+        placements.forEach(([loc, url]) => {
+          const file = url.split("/").pop()
+          lines.push(`  • \`${loc}\` ← \`${file}\``)
+        })
+      }
+
+      await message.reply(lines.join("\n"))
+    } catch (err) {
+      await message.reply(`❌ ${err.message}`)
+    }
     return
   }
 
@@ -2183,13 +2313,23 @@ I'll use tools automatically when I need to.`
 
   // !agent <goal> - Run the agent with a specific goal (NON-BLOCKING)
   if (content.startsWith("!agent") && content !== "!agent status" && content !== "!agents") {
-    const goal = content.replace("!agent", "").trim()
+    let goal = content.replace("!agent", "").trim()
     if (!goal) {
       await message.reply(`**🧠 Agent Mode**\n\nGive Jordan a goal and watch it work autonomously.\n\n**Examples:**\n\`!agent Check on all clients and handle overdue follow-ups\`\n\`!agent Write and publish a blog post about AI for landscaping businesses\`\n\`!agent Review revenue and find the highest impact action for today\`\n\`!agent Onboard lakemurray and create their first 2 blog posts\`\n\n**Status:** \`!agent status\` | **Queue:** \`!queue\``)
       return
     }
-    
-    await message.reply(`🧠 **Agent starting in background...**\nGoal: ${goal}\n\nI'll update this channel as I work. You can keep chatting — I'm not blocked.`)
+
+    // Attach any Discord file URLs as a direct instruction for the agent
+    if (message.attachments.size > 0) {
+      const urls = [...message.attachments.values()]
+        .map(a => `  filename: "${a.name || "file"}", url: "${a.url}"`)
+        .join("\n")
+      goal = goal
+        + `\n\n[Discord attachments detected — ACTION REQUIRED: call upload_client_assets with the URL below. Do NOT say you cannot see the image. Download it with the tool.]\n`
+        + urls
+    }
+
+    await message.reply(`🧠 **Agent starting in background...**\nGoal: ${goal.split("\n")[0]}\n\nI'll update this channel as I work. You can keep chatting — I'm not blocked.`)
     
     // Run in background — does NOT block the bot
     agent.runAgent(goal, {
@@ -2252,19 +2392,30 @@ I'll use tools automatically when I need to.`
     if (!conversationHistory.has(message.channel.id)) {
       conversationHistory.set(message.channel.id, [])
     }
-    
+
     const history = conversationHistory.get(message.channel.id)
-    
+
     // Keep last 20 messages for context
     if (history.length > 20) {
       history.splice(0, history.length - 20)
     }
-    
-    const result = await agent.agentChat(content, history)
-    
+
+    // Append Discord attachments as direct instructions so Jordan uses the tool
+    let chatContent = content
+    if (message.attachments.size > 0) {
+      const urls = [...message.attachments.values()]
+        .map(a => `  filename: "${a.name || "file"}", url: "${a.url}"`)
+        .join("\n")
+      chatContent = content
+        + `\n\n[Discord attachments detected — ACTION REQUIRED: call upload_client_assets with the URL below. Do NOT say you cannot see the image. The URL is a direct download link, not something you need to view visually.]\n`
+        + urls
+    }
+
+    const result = await agent.agentChat(chatContent, history)
+
     if (result.success && result.response) {
       // Update conversation history
-      history.push({ role: "user", content: content })
+      history.push({ role: "user", content: chatContent })
       history.push({ role: "assistant", content: result.response })
       
       // Show what tools were used

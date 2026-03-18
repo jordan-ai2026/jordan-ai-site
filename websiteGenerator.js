@@ -17,7 +17,9 @@
 
 const fs   = require("fs")
 const path = require("path")
-const { deployWebsite } = require("./gitDeploy")
+const { deployWebsite }  = require("./gitDeploy")
+const { fetchClientMedia, getCuratedMedia } = require("./mediaManager")
+const { getClientAssets, createClientFolders } = require("./assetManager")
 
 const TEMPLATES_DIR = path.join(__dirname, "website", "templates")
 const CLIENTS_DIR   = path.join(__dirname, "website", "clients")
@@ -251,6 +253,9 @@ async function createClientWebsite(options) {
     rating        = "4.9",
     formspreeId   = "xwkgjpzl",  // fallback Formspree ID
     deploy        = true,
+    fetchMedia    = true,   // fetch real images via mediaManager
+    downloadMedia = true,   // download to disk (true) or CDN URLs (false)
+    fetchVideo    = false,  // fetch hero video from Pexels (needs PEXELS_API_KEY)
   } = options
 
   if (!slug)         throw new Error("slug is required")
@@ -288,11 +293,59 @@ async function createClientWebsite(options) {
 
   const clr = resolveColor(color)
 
+  // ── SCAFFOLD CLIENT FOLDER STRUCTURE ─────────
+  createClientFolders(slug)   // idempotent — skips existing dirs
+
+  // ── SAVE SITE.JSON (stores options for re-render) ────────────
+  const clientDir0 = path.join(CLIENTS_DIR, slug)
+  fs.writeFileSync(path.join(clientDir0, "site.json"), JSON.stringify({ ...options, deploy: false }, null, 2), "utf8")
+
+  // ── FETCH MEDIA ──────────────────────────────
+  console.log(`📸 Fetching media for ${slug} (${industry})...`)
+  let media
+  try {
+    media = fetchMedia
+      ? await fetchClientMedia(slug, industry, {
+          downloadImages: downloadMedia,
+          numServices:    minServices,
+          fetchVideo,
+        })
+      : getCuratedMedia(industry, minServices)
+  } catch (err) {
+    console.log(`   ⚠️  Media fetch error: ${err.message} — using curated fallbacks`)
+    media = getCuratedMedia(industry, minServices)
+  }
+
+  // ── APPLY CLIENT ASSET OVERRIDES ──────────────
+  // Client-provided assets (uploaded via !assets upload) take priority
+  const clientAssets = getClientAssets(slug)
+  if (clientAssets.hero)     media.hero    = clientAssets.hero
+  if (clientAssets.about)    media.about   = clientAssets.about
+  if (clientAssets.service1) media.services[0] = clientAssets.service1
+  if (clientAssets.service2) media.services[1] = clientAssets.service2
+  if (clientAssets.service3) media.services[2] = clientAssets.service3
+  if (clientAssets.service4) media.services[3] = clientAssets.service4
+  if (clientAssets.service5) media.services[4] = clientAssets.service5
+  if (clientAssets.service6) media.services[5] = clientAssets.service6
+
+  // ── LOGO HTML ──────────────────────────────────
+  // If client has uploaded a logo, use <img>; otherwise use styled text
+  const logoImgUrl = clientAssets.logo
+  let LOGO_HTML
+  if (logoImgUrl) {
+    LOGO_HTML = `<img src="${logoImgUrl}" alt="${businessName}" style="max-height:48px;display:block;">`
+  } else if (isParty) {
+    LOGO_HTML = `<span class="logo-icon">🎪</span><span class="logo-text">${businessName}<span>!</span></span>`
+  } else {
+    LOGO_HTML = `${businessName}<span>.</span>`
+  }
+
   // Build substitution map
   const vars = {
     // Business identity
     BUSINESS_NAME: businessName,
     LOGO_TEXT:     businessName,
+    LOGO_HTML,
     TAGLINE:       defaults.tagline,
     CITY:          city,
     PHONE:         phone || "(555) 000-0000",
@@ -309,7 +362,8 @@ async function createClientWebsite(options) {
     HERO_HEADLINE:        defaults.heroHeadline,
     HERO_HEADLINE_ACCENT: defaults.heroHeadlineAccent,
     HERO_SUBTEXT:         defaults.heroSubtext,
-    HERO_IMAGE_URL:       defaults.heroImageUrl,
+    HERO_IMAGE_URL:       media.hero,        // ← real media
+    HERO_IMAGE:           media.hero,
 
     // Stats (service template)
     YEARS:     years,
@@ -321,10 +375,22 @@ async function createClientWebsite(options) {
     HAPPY_KIDS: clients,
 
     // About
-    ABOUT_IMAGE_URL: defaults.aboutImageUrl,
+    ABOUT_IMAGE_URL: media.about,            // ← real media
+    ABOUT_IMAGE:     media.about,
     ABOUT_HEADLINE:  defaults.aboutHeadline,
     ABOUT_TEXT:      defaults.aboutText,
     GUARANTEE:       defaults.guarantee,
+
+    // Service images
+    SERVICE_1_IMAGE: media.services[0] || "",
+    SERVICE_2_IMAGE: media.services[1] || "",
+    SERVICE_3_IMAGE: media.services[2] || "",
+    SERVICE_4_IMAGE: media.services[3] || "",
+    SERVICE_5_IMAGE: media.services[4] || "",
+    SERVICE_6_IMAGE: media.services[5] || "",
+
+    // Video (optional — empty string if not fetched)
+    HERO_VIDEO_SRC: media.video?.src || "",
 
     // Services
     SERVICE_1_ICON:   svcList[0].icon,

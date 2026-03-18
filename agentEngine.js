@@ -16,8 +16,10 @@ const path = require("path")
 const { execSync } = require("child_process")
 
 // Import all existing modules as tools
-const leadScraper = require("./leadScraper")
+const leadScraper      = require("./leadScraper")
 const websiteGenerator = require("./websiteGenerator")
+const mediaManager     = require("./mediaManager")
+const assetManager     = require("./assetManager")
 const wp = require("./wordpressManager")
 const email = require("./emailManager")
 const crm = require("./crm")
@@ -570,6 +572,48 @@ const TOOLS = [
       },
       required: ["slug", "businessName"]
     }
+  },
+  {
+    name: "fetch_client_media",
+    description: "Fetch and download industry-relevant photos for a client website. Downloads real images from Unsplash (with API key) or uses curated CDN fallbacks (no key needed). Call this before or after create_client_website to refresh images.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:          { type: "string",  description: "Client slug matching their website folder" },
+        industry:      { type: "string",  description: "Industry: landscaping, cleaning, dental, restaurant, bounce house, contractor, etc." },
+        numServices:   { type: "number",  description: "Number of service images to fetch (default 4)" },
+        downloadImages:{ type: "boolean", description: "Download images to disk (true, default) or just return CDN URLs (false)" },
+        fetchVideo:    { type: "boolean", description: "Also fetch a hero background video from Pexels (needs PEXELS_API_KEY)" },
+      },
+      required: ["slug", "industry"]
+    }
+  },
+  {
+    name: "upload_client_assets",
+    description: "Upload a client-provided logo, photo, or video into the correct subfolder of their organized asset library. Source can be a URL (Discord attachment, Google Drive, Dropbox) or local path. After uploading, call place_asset_on_site to apply it.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:     { type: "string", description: "Client slug e.g. 'green-peak-landscaping'" },
+        type:     { type: "string", description: "Asset category: 'hero' | 'about' | 'service' | 'gallery' | 'team' | 'misc' | 'video-hero' | 'video-content' | 'logo'" },
+        source:   { type: "string", description: "URL to download or absolute local file path" },
+        filename: { type: "string", description: "Override filename e.g. 'main.png' or 'hero.jpg'. Auto-generated if omitted." },
+      },
+      required: ["slug", "type", "source"]
+    }
+  },
+  {
+    name: "place_asset_on_site",
+    description: "Place an uploaded client asset on their website at a specific location (hero, about, logo, service1..6). Re-renders and deploys the site automatically.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:     { type: "string", description: "Client slug e.g. 'green-peak-landscaping'" },
+        filename: { type: "string", description: "The asset filename e.g. 'hero.jpg' or 'logo.png'" },
+        location: { type: "string", description: "'hero' | 'about' | 'logo' | 'service1' | 'service2' | 'service3' | 'service4' | 'service5' | 'service6'" },
+      },
+      required: ["slug", "filename", "location"]
+    }
   }
 ]
 
@@ -970,6 +1014,27 @@ Write a short, friendly cold outreach email (3-4 short paragraphs) that:
         }
       }
 
+      case "fetch_client_media": {
+        const media = await mediaManager.fetchClientMedia(
+          toolInput.slug,
+          toolInput.industry,
+          {
+            downloadImages: toolInput.downloadImages !== false,
+            numServices:    toolInput.numServices || 4,
+            fetchVideo:     toolInput.fetchVideo  || false,
+          }
+        )
+        return {
+          success:  true,
+          source:   media.source,
+          hero:     media.hero,
+          about:    media.about,
+          services: media.services,
+          video:    media.video,
+          summary:  `Fetched ${media.services.length} service images + hero + about (${media.source})`
+        }
+      }
+
       case "create_client_website": {
         const result = await websiteGenerator.createClientWebsite({
           slug:         toolInput.slug,
@@ -986,6 +1051,31 @@ Write a short, friendly cold outreach email (3-4 short paragraphs) that:
           deploy:       toolInput.deploy !== false,
         })
         return result
+      }
+
+      case "upload_client_assets": {
+        const result = await assetManager.uploadClientAsset(
+          toolInput.slug,
+          toolInput.type,
+          toolInput.source,
+          toolInput.filename || null
+        )
+        return {
+          ...result,
+          summary: `Uploaded ${result.filename} (${result.type}) for ${result.slug} → ${result.relUrl}`
+        }
+      }
+
+      case "place_asset_on_site": {
+        const result = await assetManager.placeAssetOnSite(
+          toolInput.slug,
+          toolInput.filename,
+          toolInput.location
+        )
+        return {
+          ...result,
+          summary: `Placed ${result.filename} at ${result.location} on ${result.slug}. Site re-rendered: ${result.rerendered}`
+        }
       }
 
       default:
@@ -1178,8 +1268,14 @@ IMPORTANT FOR FILE CREATION:
 When using write_file, you MUST provide BOTH parameters:
 1. filepath: where to save the file
 2. content: the COMPLETE file content (for HTML, the full document)
-
 Never call write_file without the content parameter filled in.
+
+IMPORTANT FOR DISCORD ATTACHMENTS:
+When the message contains a "[Discord attachments]" section with URLs, those are DIRECT DOWNLOAD LINKS to files the user sent.
+- Do NOT say you cannot see images — you don't need to see them visually
+- Use upload_client_assets with the URL to download the file to the client's folder
+- Then use place_asset_on_site to apply it to the site
+- You CAN download any URL — treat it exactly like any other file URL
 
 Keep responses brief. Take action when needed.
 

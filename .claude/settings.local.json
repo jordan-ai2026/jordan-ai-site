@@ -8,7 +8,13 @@
       "Bash(grep -rn @ /c/Users/Jordan/Desktop/jordan-ai-bot --include=*.js --include=*.json --include=*.md --include=*.env --include=.env --exclude-dir=node_modules --exclude-dir=.git)",
       "Bash(grep -E \"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}\")",
       "Bash(grep -v \"//.*@\")",
-      "Bash(grep -v \"^\\\\s*//\")"
+      "Bash(grep -v \"^\\\\s*//\")",
+      "Bash(node -e \":*)",
+      "Bash(node -e \"require\\(''https''\\); require\\(''fs''\\); require\\(''path''\\); console.log\\(''Node builtins OK''\\)\")",
+      "Bash(node -e \"require\\(''./assetManager''\\); require\\(''./websiteGenerator''\\); console.log\\(''OK''\\)\")",
+      "Bash(node -e \"require\\(''''./agentEngine''''\\); require\\(''''./index''''\\); console.log\\(''''OK''''\\)\")",
+      "Bash(node -e \"const am = require\\(''''./assetManager''''\\); console.log\\(''''OK'''', Object.keys\\(am.ASSET_PATHS\\).join\\('''', ''''\\)\\)\")",
+      "Bash(node -e \"require\\(''''./index''''\\)\")"
     ]
   }
 }
