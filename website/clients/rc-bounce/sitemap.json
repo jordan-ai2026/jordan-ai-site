@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "home": {
+      "line_start": 1212,
+      "line_end": 1280,
+      "description": "Main hero banner with headline"
+    },
+    "rentals": {
+      "line_start": 1281,
+      "line_end": 1399,
+      "description": "Rental items and packages"
+    },
+    "about": {
+      "line_start": 1400,
+      "line_end": 1528,
+      "description": "About section with company story"
+    },
+    "booking": {
+      "line_start": 1529,
+      "line_end": 1734,
+      "description": "Booking/inquiry form"
+    }
+  },
+  "editable": {
+    "phone": {
+      "current": "(252) 203-3540",
+      "lines": [
+        7,
+        1233,
+        1520,
+        1543,
+        1642
+      ]
+    },
+    "email": {
+      "current": "ryancarroll725@gmail.com",
+      "lines": [
+        1546,
+        1550,
+        1643,
+        1643
+      ]
+    }
+  },
+  "images": {
+    "hero": [
+      "/clients/rc-bounce/assets/images/hero/bounce-house-kids.jpg"
+    ],
+    "about": [
+      "./images/about.jpg"
+    ],
+    "gallery": [],
+    "logo": [],
+    "other": []
+  },
+  "generatedAt": "2026-03-18T17:38:30.577Z"
+}

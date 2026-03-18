@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "home": {
+      "line_start": 1093,
+      "line_end": 1140,
+      "description": "Main hero banner with headline"
+    },
+    "services": {
+      "line_start": 1141,
+      "line_end": 1200,
+      "description": "Services offered"
+    },
+    "about": {
+      "line_start": 1201,
+      "line_end": 1294,
+      "description": "About section with company story"
+    },
+    "testimonials": {
+      "line_start": 1295,
+      "line_end": 1367,
+      "description": "Customer reviews"
+    },
+    "contact": {
+      "line_start": 1368,
+      "line_end": 1558,
+      "description": "Contact form and business info"
+    }
+  },
+  "editable": {
+    "phone": {
+      "current": "(512) 555-0194",
+      "lines": [
+        7,
+        1105,
+        1382,
+        1472
+      ]
+    },
+    "email": {
+      "current": "info@greenpeak.com",
+      "lines": [
+        1389,
+        1389,
+        1473,
+        1473
+      ]
+    }
+  },
+  "images": {
+    "hero": [
+      "./images/hero.jpg"
+    ],
+    "about": [
+      "./images/about.jpg"
+    ],
+    "gallery": [],
+    "logo": [],
+    "other": []
+  },
+  "generatedAt": "2026-03-18T16:51:41.740Z"
+}

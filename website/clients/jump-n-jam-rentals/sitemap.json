@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "home": {
+      "line_start": 1202,
+      "line_end": 1270,
+      "description": "Main hero banner with headline"
+    },
+    "rentals": {
+      "line_start": 1271,
+      "line_end": 1389,
+      "description": "Rental items and packages"
+    },
+    "about": {
+      "line_start": 1390,
+      "line_end": 1518,
+      "description": "About section with company story"
+    },
+    "booking": {
+      "line_start": 1519,
+      "line_end": 1726,
+      "description": "Booking/inquiry form"
+    }
+  },
+  "editable": {
+    "phone": {
+      "current": "(803) 555-0172",
+      "lines": [
+        7,
+        1223,
+        1510,
+        1533,
+        1635
+      ]
+    },
+    "email": {
+      "current": "info@jumpnjam.com",
+      "lines": [
+        1536,
+        1540,
+        1636,
+        1636
+      ]
+    }
+  },
+  "images": {
+    "hero": [],
+    "about": [
+      "./images/about.jpg"
+    ],
+    "gallery": [],
+    "logo": [],
+    "other": []
+  },
+  "generatedAt": "2026-03-18T16:51:41.754Z"
+}
