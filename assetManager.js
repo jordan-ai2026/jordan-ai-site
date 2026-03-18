@@ -322,6 +322,41 @@ function listClientAssets(slug) {
   return { slug, tree, placements }
 }
 
+// ── IMAGE → BASE64 ────────────────────────────
+/**
+ * Download an image URL and return { base64, mediaType }.
+ * Used to send images to Claude vision API.
+ */
+function imageUrlToBase64(url) {
+  return new Promise((resolve, reject) => {
+    const lib = url.startsWith("https") ? https : http
+    lib.get(url, { timeout: 20000 }, res => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        return imageUrlToBase64(res.headers.location).then(resolve).catch(reject)
+      }
+      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode} fetching image`))
+
+      // Detect media type from content-type or URL
+      const ct = res.headers["content-type"] || ""
+      let mediaType = "image/jpeg"
+      if (ct.includes("png"))  mediaType = "image/png"
+      if (ct.includes("gif"))  mediaType = "image/gif"
+      if (ct.includes("webp")) mediaType = "image/webp"
+      // Also check URL extension as fallback
+      const urlLower = url.split("?")[0].toLowerCase()
+      if (urlLower.endsWith(".png"))  mediaType = "image/png"
+      if (urlLower.endsWith(".gif"))  mediaType = "image/gif"
+      if (urlLower.endsWith(".webp")) mediaType = "image/webp"
+
+      const chunks = []
+      res.on("data", c => chunks.push(c))
+      res.on("end",  () => resolve({ base64: Buffer.concat(chunks).toString("base64"), mediaType }))
+      res.on("error", reject)
+    }).on("error", reject)
+      .on("timeout", () => reject(new Error("Image download timed out")))
+  })
+}
+
 // ── EXPORTS ───────────────────────────────────
 
 module.exports = {
@@ -332,5 +367,6 @@ module.exports = {
   getClientAssets,
   findAsset,
   siteJsonPath,
+  imageUrlToBase64,
   ASSET_PATHS,
 }

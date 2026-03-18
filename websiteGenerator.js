@@ -102,18 +102,34 @@ const COLOR_PRESETS = {
   indigo:  { hex: "#6366f1", dark: "#4f46e5", glow: "rgba(99,102,241,0.12)" },
 }
 
+function hexDarken(hex, amount = 0.18) {
+  const h = hex.replace("#", "")
+  const r = Math.round(parseInt(h.slice(0,2), 16) * (1 - amount))
+  const g = Math.round(parseInt(h.slice(2,4), 16) * (1 - amount))
+  const b = Math.round(parseInt(h.slice(4,6), 16) * (1 - amount))
+  return `#${r.toString(16).padStart(2,"0")}${g.toString(16).padStart(2,"0")}${b.toString(16).padStart(2,"0")}`
+}
+
+function hexGlow(hex) {
+  const h = hex.replace("#", "")
+  const r = parseInt(h.slice(0,2), 16)
+  const g = parseInt(h.slice(2,4), 16)
+  const b = parseInt(h.slice(4,6), 16)
+  return `rgba(${r},${g},${b},0.15)`
+}
+
 function resolveColor(colorInput) {
   if (!colorInput) return COLOR_PRESETS.green
 
   const lower = colorInput.toLowerCase().trim()
   if (COLOR_PRESETS[lower]) return COLOR_PRESETS[lower]
 
-  // Raw hex — derive a slightly darker shade
+  // Raw hex — compute real dark + glow variants
   const hex = colorInput.startsWith("#") ? colorInput : `#${colorInput}`
   return {
     hex,
-    dark: hex,  // fallback: same color
-    glow: `rgba(0,0,0,0.15)`,
+    dark: hexDarken(hex),
+    glow: hexGlow(hex),
   }
 }
 
@@ -492,15 +508,160 @@ async function createClientWebsite(options) {
 }
 
 // ============================================
+// ANALYZE IMAGE STYLE
+// Uses Claude vision to extract colors + style
+// ============================================
+async function analyzeImageStyle(imageUrl) {
+  const Anthropic = require("@anthropic-ai/sdk")
+  const { imageUrlToBase64 } = require("./assetManager")
+
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+  console.log(`🎨 Analyzing image style: ${imageUrl.substring(0, 80)}...`)
+
+  // Download the image and convert to base64
+  const { base64, mediaType } = await imageUrlToBase64(imageUrl)
+
+  const response = await anthropic.messages.create({
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 1024,
+    messages: [{
+      role: "user",
+      content: [
+        {
+          type: "image",
+          source: { type: "base64", media_type: mediaType, data: base64 },
+        },
+        {
+          type: "text",
+          text: `Analyze this image for website design. Extract brand colors and style.
+
+Return ONLY valid JSON (no markdown, no explanation):
+{
+  "primaryHex": "#xxxxxx",
+  "accentHex": "#xxxxxx",
+  "darkHex": "#xxxxxx",
+  "style": "modern|playful|professional|rustic|bold|elegant|minimal",
+  "mood": "one sentence describing the feel",
+  "industry": "most likely industry (e.g. landscaping, party rentals, dental, restaurant)",
+  "templateType": "service|party|professional",
+  "suggestedTagline": "short punchy tagline matching the brand style",
+  "colorName": "one word color name e.g. forest, crimson, navy, gold"
+}
+
+Rules:
+- primaryHex: the most dominant/important color
+- accentHex: a strong accent color good for buttons and highlights
+- darkHex: a darker version of the primary for hover states
+- templateType: "party" for fun/colorful brands, "professional" for clean/corporate, "service" for trades/contractors
+- If this looks like a logo, extract the logo's primary colors
+- Provide real hex codes only`,
+        },
+      ],
+    }],
+  })
+
+  const raw = response.content[0]?.text || "{}"
+  // Strip markdown code fences if Claude wraps it anyway
+  const clean = raw.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
+
+  try {
+    const result = JSON.parse(clean)
+    console.log(`   ✅ Style: ${result.style} | Primary: ${result.primaryHex} | Accent: ${result.accentHex}`)
+    return result
+  } catch {
+    console.log(`   ⚠️  Could not parse style JSON, using defaults`)
+    return { primaryHex: "#22c55e", accentHex: "#22c55e", style: "modern", industry: "service", templateType: "service" }
+  }
+}
+
+// ============================================
+// DESIGN WEBSITE FROM IMAGE
+// Full pipeline: analyze → create → deploy
+// ============================================
+async function designWebsiteFromImage(options) {
+  const {
+    slug,
+    businessName,
+    imageUrl,
+    industry,        // optional override — falls back to image analysis
+    phone   = "",
+    email   = "",
+    city    = "Your City",
+    years   = "10",
+    jobsDone = "500+",
+    clients  = "300",
+    rating   = "4.9",
+    deploy   = true,
+  } = options
+
+  if (!slug)         throw new Error("slug is required")
+  if (!businessName) throw new Error("businessName is required")
+  if (!imageUrl)     throw new Error("imageUrl is required")
+
+  // Analyze the image
+  const style = await analyzeImageStyle(imageUrl)
+
+  // Upload the source image as a brand/misc asset
+  const { uploadClientAsset } = require("./assetManager")
+  let brandAssetUrl = imageUrl  // fallback to original URL if upload fails
+  try {
+    const uploaded = await uploadClientAsset(slug, "misc", imageUrl, "brand-reference.jpg")
+    brandAssetUrl = uploaded.relUrl
+  } catch (err) {
+    console.log(`   ⚠️  Could not save brand image: ${err.message}`)
+  }
+
+  // Build color object from analysis
+  const color = {
+    hex:  style.accentHex  || style.primaryHex || "#22c55e",
+    dark: style.darkHex    || hexDarken(style.accentHex || "#22c55e"),
+    glow: hexGlow(style.accentHex || "#22c55e"),
+  }
+
+  // Determine industry + template — prefer explicit override, fall back to analysis
+  const finalIndustry = industry || style.industry || "service"
+
+  // Create the website with analyzed colors + style
+  const result = await createClientWebsite({
+    slug,
+    businessName,
+    industry:  finalIndustry,
+    phone,
+    email,
+    city,
+    color:     color.hex,      // resolveColor handles raw hex
+    years,
+    jobsDone,
+    clients,
+    rating,
+    deploy,
+    fetchMedia:    true,
+    downloadMedia: true,
+  })
+
+  return {
+    ...result,
+    imageAnalysis: style,
+    colorApplied:  color.hex,
+    templateType:  result.templateType,
+    styleNotes:    `${style.style} / ${style.mood || ""}`.trim(),
+  }
+}
+
+// ============================================
 // LIST CLIENT WEBSITES
 // ============================================
 function listClientWebsites() {
   if (!fs.existsSync(CLIENTS_DIR)) return []
   return fs.readdirSync(CLIENTS_DIR)
-    .filter(f => fs.statSync(path.join(CLIENTS_DIR, f)).isDirectory())
+    .filter(f => {
+      try { return fs.statSync(path.join(CLIENTS_DIR, f)).isDirectory() } catch { return false }
+    })
+    .filter(slug => fs.existsSync(path.join(CLIENTS_DIR, slug, "index.html")))
     .map(slug => ({
       slug,
-      url: `https://jordan-ai.co/clients/${slug}/`,
+      url:     `https://jordan-ai.co/clients/${slug}/`,
       created: fs.statSync(path.join(CLIENTS_DIR, slug, "index.html")).mtime,
     }))
     .sort((a, b) => b.created - a.created)
@@ -512,14 +673,21 @@ function listClientWebsites() {
 function formatWebsiteResult(result) {
   if (!result.success) return `❌ Website creation failed: ${result.error}`
 
-  return [
+  const lines = [
     `**✅ Website Created: ${result.businessName}**`,
     ``,
     `🎨 Template: \`${result.templateType}\``,
     `🔗 URL: ${result.url}`,
     `📁 File: \`website/clients/${result.slug}/index.html\``,
     result.deployed ? `🚀 Live on jordan-ai.co` : `⚠️ Deploy pending — run \`!deploy\` to push`,
-  ].join("\n")
+  ]
+
+  if (result.styleNotes) {
+    lines.splice(3, 0, `🖌️ Style: \`${result.styleNotes}\``)
+    lines.splice(4, 0, `🎨 Color extracted: \`${result.colorApplied}\``)
+  }
+
+  return lines.join("\n")
 }
 
 // ============================================
@@ -527,6 +695,8 @@ function formatWebsiteResult(result) {
 // ============================================
 module.exports = {
   createClientWebsite,
+  designWebsiteFromImage,
+  analyzeImageStyle,
   listClientWebsites,
   formatWebsiteResult,
   pickTemplate,

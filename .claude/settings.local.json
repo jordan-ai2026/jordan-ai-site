@@ -14,7 +14,10 @@
       "Bash(node -e \"require\\(''./assetManager''\\); require\\(''./websiteGenerator''\\); console.log\\(''OK''\\)\")",
       "Bash(node -e \"require\\(''''./agentEngine''''\\); require\\(''''./index''''\\); console.log\\(''''OK''''\\)\")",
       "Bash(node -e \"const am = require\\(''''./assetManager''''\\); console.log\\(''''OK'''', Object.keys\\(am.ASSET_PATHS\\).join\\('''', ''''\\)\\)\")",
-      "Bash(node -e \"require\\(''''./index''''\\)\")"
+      "Bash(node -e \"require\\(''''./index''''\\)\")",
+      "Bash(node -e \"const wg = require\\(''''./websiteGenerator''''\\); console.log\\(Object.keys\\(wg\\)\\)\")",
+      "Bash(node --check websiteGenerator.js)",
+      "Bash(node -e \"const wg = require\\(''''./websiteGenerator''''\\); console.log\\(''''exports:'''', Object.keys\\(wg\\).join\\('''', ''''\\)\\)\")"
     ]
   }
 }

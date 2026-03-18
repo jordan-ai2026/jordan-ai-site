@@ -614,6 +614,35 @@ const TOOLS = [
       },
       required: ["slug", "filename", "location"]
     }
+  },
+  {
+    name: "design_website_from_image",
+    description: "Analyze an image (logo, brand photo, reference design, or inspiration) using Claude vision to extract colors and style, then build a complete website that matches that visual identity. Use this when a client says 'design around my logo' or 'match this style' or sends a brand image.",
+    input_schema: {
+      type: "object",
+      properties: {
+        slug:         { type: "string",  description: "Client slug e.g. 'green-peak-landscaping'" },
+        businessName: { type: "string",  description: "Business display name" },
+        imageUrl:     { type: "string",  description: "URL of the image to analyze (Discord attachment URL, logo URL, etc.)" },
+        industry:     { type: "string",  description: "Override detected industry if known (optional — auto-detected from image if omitted)" },
+        phone:        { type: "string",  description: "Business phone number" },
+        email:        { type: "string",  description: "Business email" },
+        city:         { type: "string",  description: "City/service area" },
+        deploy:       { type: "boolean", description: "Deploy to live site after building (default true)" },
+      },
+      required: ["slug", "businessName", "imageUrl"]
+    }
+  },
+  {
+    name: "analyze_image_style",
+    description: "Analyze an image with Claude vision to extract brand colors, style, mood, and industry. Returns hex colors, style keywords, and template recommendation. Use this to preview what design_website_from_image will produce.",
+    input_schema: {
+      type: "object",
+      properties: {
+        imageUrl: { type: "string", description: "URL of the image to analyze" },
+      },
+      required: ["imageUrl"]
+    }
   }
 ]
 
@@ -1075,6 +1104,31 @@ Write a short, friendly cold outreach email (3-4 short paragraphs) that:
         return {
           ...result,
           summary: `Placed ${result.filename} at ${result.location} on ${result.slug}. Site re-rendered: ${result.rerendered}`
+        }
+      }
+
+      case "analyze_image_style": {
+        const style = await websiteGenerator.analyzeImageStyle(toolInput.imageUrl)
+        return {
+          ...style,
+          summary: `Style: ${style.style} | Primary: ${style.primaryHex} | Accent: ${style.accentHex} | Industry: ${style.industry} | Template: ${style.templateType}`
+        }
+      }
+
+      case "design_website_from_image": {
+        const result = await websiteGenerator.designWebsiteFromImage({
+          slug:         toolInput.slug,
+          businessName: toolInput.businessName,
+          imageUrl:     toolInput.imageUrl,
+          industry:     toolInput.industry     || null,
+          phone:        toolInput.phone        || "",
+          email:        toolInput.email        || "",
+          city:         toolInput.city         || "Your City",
+          deploy:       toolInput.deploy !== false,
+        })
+        return {
+          ...result,
+          summary: `Built ${result.businessName} site (${result.templateType}) with colors from image. Color: ${result.colorApplied}. Style: ${result.styleNotes}. URL: ${result.url}`
         }
       }
 

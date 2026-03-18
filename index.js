@@ -729,6 +729,79 @@ client.on("messageCreate", async (message) => {
     return
   }
 
+  // !design <slug> <name> | <city> | <phone> | <email>
+  // Attach an image (logo, brand photo, inspiration) — Jordan analyzes colors and builds the site
+  if (content.startsWith("!design")) {
+    const rest = content.replace("!design", "").trim()
+    const [slugPart, ...pipes] = rest.split("|").map(p => p.trim())
+    const [slug, ...nameParts] = slugPart.trim().split(" ")
+    const businessName = nameParts.join(" ") || slug
+
+    // Get image URL — attachment first, then URL in message
+    let imageUrl = null
+    if (message.attachments.size > 0) {
+      imageUrl = message.attachments.first().url
+    } else {
+      // Check if any pipe segment looks like a URL
+      const urlPipe = pipes.find(p => p.startsWith("http"))
+      if (urlPipe) imageUrl = urlPipe
+    }
+
+    if (!slug || !businessName) {
+      await message.reply(
+        "**Usage:** Attach an image (logo, photo, or brand reference) then:\n" +
+        "`!design <slug> <name> | <city> | <phone> | <email>`\n\n" +
+        "**Example:**\n" +
+        "`!design rc-bounce-llc RC Bounce LLC | Columbia SC | (803) 555-0199 | info@rcbounce.com`\n\n" +
+        "Jordan will analyze your image, extract the colors and style, and build the entire website to match."
+      )
+      return
+    }
+
+    if (!imageUrl) {
+      await message.reply(
+        "Attach an image to analyze (logo, brand photo, or design inspiration).\n" +
+        "Or include the image URL in the command:\n" +
+        "`!design rc-bounce-llc RC Bounce LLC | Columbia SC | https://...logo.png`"
+      )
+      return
+    }
+
+    try {
+      await message.reply(
+        `🎨 **Analyzing your image...**\n` +
+        `Extracting colors, style, and mood for **${businessName}**.\n` +
+        `Building the site to match — this takes about 30 seconds.`
+      )
+
+      const result = await websiteGenerator.designWebsiteFromImage({
+        slug,
+        businessName,
+        imageUrl,
+        city:    pipes[0] || "Your City",
+        phone:   pipes[1] || "",
+        email:   pipes[2] || "",
+        deploy:  true,
+      })
+
+      const style = result.imageAnalysis
+      await message.reply(
+        `**✅ Website Built from Image**\n\n` +
+        `🖌️ **Style detected:** ${style.style}\n` +
+        `💬 **Mood:** ${style.mood || "N/A"}\n` +
+        `🎨 **Primary color:** \`${style.primaryHex}\`\n` +
+        `🎯 **Accent color:** \`${style.accentHex}\`\n` +
+        `🏗️ **Template:** \`${result.templateType}\`\n` +
+        `🏭 **Industry:** ${style.industry}\n\n` +
+        `🔗 ${result.url}\n` +
+        (result.deployed ? `🚀 Live on jordan-ai.co` : `⚠️ Deploy: \`!deploy\``)
+      )
+    } catch (err) {
+      await message.reply(`❌ Design failed: ${err.message}`)
+    }
+    return
+  }
+
   // ========================================
   // CLIENT ASSET COMMANDS
   // ========================================
