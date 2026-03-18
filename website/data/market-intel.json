@@ -138,5 +138,13 @@
         "unit": "/month"
       }
     ]
-  }
+  },
+  "blogTopics": [
+    {
+      "date": "2026-03-18",
+      "title": "5 Questions Every Small Business Owner Should Ask Before Investing in AI Tools",
+      "source": "evergreen",
+      "url": "https://jordan-ai.co/blog/5-questions-every-small-business-owner-should-ask-before-investing-in-ai-tools.html"
+    }
+  ]
 }
