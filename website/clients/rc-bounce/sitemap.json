@@ -47,11 +47,11 @@
       "/clients/rc-bounce/assets/images/hero/hero.jpg"
     ],
     "about": [
-      "./images/about.jpg"
+      "/clients/rc-bounce/assets/images/about/about.jpg"
     ],
     "gallery": [],
     "logo": [],
     "other": []
   },
-  "generatedAt": "2026-03-18T18:37:08.740Z"
+  "generatedAt": "2026-03-18T18:37:48.625Z"
 }
