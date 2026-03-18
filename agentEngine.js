@@ -1411,7 +1411,9 @@ async function runAgent(goal, options = {}) {
     discordNotify(`🧠 **Agent starting** (${modelName})\nGoal: ${goal}`)
   }
   
-  const systemPrompt = `You are Jordan AI, the CEO of a digital agency. Your partner handles relationships and sales; you handle everything digital.
+  const systemPrompt = `${persona.soul || ""}
+
+${persona.identity || ""}
 
 CURRENT GOAL: ${goal}
 
@@ -1423,9 +1425,7 @@ When you call write_file, you MUST include the complete file content in that sam
 - Do not write a placeholder. Do not split into two calls. Just write the whole thing.
 
 ${lessons.formatLessonsForPrompt(goal)}
-MEMORY: ${persona.memory || "No memory saved yet."}
-
-Keep responses brief. Take action. Don't over-explain.`
+MEMORY: ${persona.memory || "No memory saved yet."}`
 
   let messages = [
     { role: "user", content: `Goal: ${goal}\n\nStart working.` }
@@ -1550,7 +1550,9 @@ async function agentChat(message, conversationHistory = []) {
   console.log(`\n💬 Chat received: ${message.substring(0, 100)}`)
   console.log(`   🧠 Model: ${selectedModel === MODELS.opus ? "OPUS" : "SONNET"}`)
   
-  const systemPrompt = `You are Jordan AI — CEO of a digital agency. You're chatting with your business partner.
+  const systemPrompt = `${persona.soul || ""}
+
+${persona.identity || ""}
 
 IMPORTANT FOR FILE CREATION:
 When using write_file, you MUST provide BOTH parameters:
@@ -1574,7 +1576,7 @@ NEVER call create_client_website after upload_client_assets — site renders wit
 ALWAYS use the exact filename returned by upload_client_assets when calling place_asset_on_site.
 
 ${lessons.formatLessonsForPrompt(message)}
-${persona.memory || ""}`
+MEMORY: ${persona.memory || ""}`
 
   const messages = [...conversationHistory, { role: "user", content: message }]
   

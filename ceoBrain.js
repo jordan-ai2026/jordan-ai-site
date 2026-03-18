@@ -5,7 +5,7 @@
 const fs = require("fs")
 const path = require("path")
 
-const PERSONA_DIR = path.join(__dirname, "persona")
+const PERSONA_DIR = path.join(__dirname, "Persona")
 
 // ============================================
 // LOAD PERSONA FILES
