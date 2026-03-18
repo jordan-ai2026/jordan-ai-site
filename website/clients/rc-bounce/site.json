@@ -2,13 +2,13 @@
   "slug": "rc-bounce",
   "businessName": "RC Bounce LLC",
   "industry": "bounce house",
-  "phone": "(803) 555-0199",
+  "phone": "(555) 123-4567",
   "email": "info@rcbounce.com",
-  "city": "Columbia, SC",
+  "city": "Local Area",
   "color": "red",
-  "years": "8",
-  "jobsDone": "2,000+",
-  "clients": "500",
+  "years": "5",
+  "jobsDone": "500+",
+  "clients": "200",
   "rating": "4.9",
   "deploy": false
 }
