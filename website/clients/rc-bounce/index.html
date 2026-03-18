@@ -490,16 +490,12 @@
     .rental-card:nth-child(even)::before { background: var(--blue); }
     .rental-card:nth-child(3n)::before   { background: var(--yellow); }
 
-    .rental-icon {
-      font-size: 3.5rem;
+    .rental-card-photo {
+      width: calc(100% + 48px);
+      margin: -28px -24px 16px -24px;
+      height: 160px;
+      object-fit: cover;
       display: block;
-      margin-bottom: 12px;
-      animation: bounce-icon 2.5s ease-in-out infinite;
-    }
-
-    @keyframes bounce-icon {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
     }
 
     .rental-card h3 {
@@ -1288,7 +1284,7 @@
     <div class="rentals-grid">
 
       <div class="rental-card">
-        <span class="rental-icon">🏰</span>
+        <img src="/clients/rc-bounce/images/service-1.jpg" alt="Bounce Houses" class="rental-card-photo" loading="lazy">
         <h3>Bounce Houses</h3>
         <p>Classic and themed bounce houses for all ages — the centerpiece of any great party.</p>
         <ul class="rental-features">
@@ -1299,7 +1295,7 @@
       </div>
 
       <div class="rental-card">
-        <span class="rental-icon">🌊</span>
+        <img src="/clients/rc-bounce/images/service-2.jpg" alt="Inflatable Slides" class="rental-card-photo" loading="lazy">
         <h3>Inflatable Slides</h3>
         <p>Towering dry slides and splash-zone water slides that kids will line up for all day.</p>
         <ul class="rental-features">
@@ -1310,7 +1306,7 @@
       </div>
 
       <div class="rental-card">
-        <span class="rental-icon">🪑</span>
+        <img src="/clients/rc-bounce/images/service-3.jpg" alt="Tables & Chairs" class="rental-card-photo" loading="lazy">
         <h3>Tables & Chairs</h3>
         <p>Everything you need to seat your guests comfortably — folding tables and chairs for any event size.</p>
         <ul class="rental-features">
@@ -1321,7 +1317,7 @@
       </div>
 
       <div class="rental-card">
-        <span class="rental-icon">🎠</span>
+        <img src="/clients/rc-bounce/images/service-4.jpg" alt="Combo Units" class="rental-card-photo" loading="lazy">
         <h3>Combo Units</h3>
         <p>Bounce house + slide combos for double the fun in one unit — perfect for bigger parties.</p>
         <ul class="rental-features">
@@ -1332,7 +1328,7 @@
       </div>
 
       <div class="rental-card">
-        <span class="rental-icon">🎪</span>
+        <img src="/clients/rc-bounce/images/service-5.jpg" alt="Obstacle Courses" class="rental-card-photo" loading="lazy">
         <h3>Obstacle Courses</h3>
         <p>Giant inflatable obstacle courses perfect for birthday competitions and team events.</p>
         <ul class="rental-features">
@@ -1343,7 +1339,7 @@
       </div>
 
       <div class="rental-card">
-        <span class="rental-icon">🎊</span>
+        <img src="/clients/rc-bounce/images/service-6.jpg" alt="Party Packages" class="rental-card-photo" loading="lazy">
         <h3>Party Packages</h3>
         <p>Bundle everything together and save — we handle the full setup so your party is perfect.</p>
         <ul class="rental-features">
