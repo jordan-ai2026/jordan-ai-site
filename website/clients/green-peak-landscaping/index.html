@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Peak Landscaping — Austin, TX</title>
+  <meta name="description" content="Professional Landscaping & Lawn Care. Serving Austin, TX and surrounding areas. Call (512) 555-0194 for a free quote.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ================================
+       CSS VARIABLES — swap accent color per client
+       ================================ */
+    :root {
+      --accent:      #22c55e;
+      --accent-dark: #16a34a;
+      --accent-glow: rgba(34,197,94,0.12);
+      --bg:          #0a0a0c;
+      --bg-2:        #111115;
+      --bg-3:        #16161b;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #e8e8ed;
+      --muted:       #8a8a9a;
+      --radius:      12px;
+      --shadow:      0 24px 48px rgba(0,0,0,0.4);
+    }
+
+    /* ================================
+       RESET & BASE
+       ================================ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .logo { font-family: 'Space Grotesk', sans-serif; }
+
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ================================
+       NAVIGATION
+       ================================ */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    header.scrolled {
+      background: rgba(10,10,12,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #000 !important;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ================================
+       HERO
+       ================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(10,10,12,0.88) 0%,
+        rgba(10,10,12,0.65) 50%,
+        rgba(10,10,12,0.82) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      padding: 120px 0 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(232,232,237,0.75);
+      max-width: 520px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ================================
+       STATS BAR
+       ================================ */
+    .stats-bar {
+      background: var(--bg-3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat-item {
+      padding: 28px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+      letter-spacing: -1px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ================================
+       SECTION HEADERS
+       ================================ */
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ================================
+       SERVICES
+       ================================ */
+    .services {
+      padding: 96px 0;
+      background: var(--bg);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(255,255,255,0.12);
+      transform: translateY(-4px);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .service-list li {
+      font-size: 0.9rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .service-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ================================
+       ABOUT / TRUST
+       ================================ */
+    .about {
+      padding: 96px 0;
+      background: var(--bg-2);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .about-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,10,12,0.2), transparent);
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(10,10,12,0.9);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .about-badge .badge-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .about-badge .badge-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .about-content .section-tag { margin-bottom: 8px; }
+
+    .about-content h2 {
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .about-content p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .trust-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .trust-item h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .trust-item p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ================================
+       PROCESS / HOW IT WORKS
+       ================================ */
+    .process {
+      padding: 96px 0;
+      background: var(--bg);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 0 16px;
+    }
+
+    .step-circle {
+      width: 56px;
+      height: 56px;
+      background: var(--bg-3);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .process-step p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ================================
+       TESTIMONIALS
+       ================================ */
+    .testimonials {
+      padding: 96px 0;
+      background: var(--bg-2);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .testimonial-card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s;
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+
+    .stars span {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-glow);
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .author-location {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ================================
+       CTA BAND
+       ================================ */
+    .cta-band {
+      padding: 80px 0;
+      background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .cta-band::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: 5%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .cta-inner h2 {
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      color: #000;
+      letter-spacing: -0.5px;
+      max-width: 460px;
+    }
+
+    .cta-inner p {
+      color: rgba(0,0,0,0.65);
+      margin-top: 8px;
+    }
+
+    .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #000;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-dark:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    /* ================================
+       CONTACT
+       ================================ */
+    .contact {
+      padding: 96px 0;
+      background: var(--bg);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .detail-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .detail-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .detail-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      text-decoration: none;
+    }
+
+    .detail-value:hover { color: var(--accent); }
+
+    .contact-form {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+    }
+
+    .contact-form h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-group select option {
+      background: var(--bg-3);
+    }
+
+    .form-submit {
+      width: 100%;
+    }
+
+    /* ================================
+       FOOTER
+       ================================ */
+    footer {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 60px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .footer-brand .logo {
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .footer-bottom a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ================================
+       RESPONSIVE
+       ================================ */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 72px; left: 0; right: 0;
+        background: rgba(10,10,12,0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 24px;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open { display: flex; }
+
+      .nav-links li { width: 100%; }
+
+      .nav-links a {
+        display: block;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+      }
+
+      .nav-links li:last-child a {
+        border: none;
+        margin-top: 8px;
+        text-align: center;
+        background: var(--accent);
+        color: #000;
+        border-radius: 8px;
+        padding: 14px;
+      }
+
+      .hamburger { display: flex; }
+
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+
+      .process-steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .process-steps::before { display: none; }
+
+      .testimonials-grid { grid-template-columns: 1fr; }
+
+      .cta-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .contact-form { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================
+       NAVIGATION
+       ================================ -->
+  <header id="site-header">
+    <nav class="container">
+      <a href="#" class="logo">Green Peak Landscaping<span>.</span></a>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ================================
+       HERO
+       ================================ -->
+  <section class="hero" id="home">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Serving Austin, TX</div>
+        <h1>Beautiful Yards,<br><em>Zero Hassle</em></h1>
+        <p>We handle everything from weekly lawn maintenance to full landscape transformations. Licensed, insured, and trusted by hundreds of homeowners.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">
+            Get Free Quote →
+          </a>
+          <a href="tel:5125550194" class="btn-secondary">
+            📞 (512) 555-0194
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       STATS BAR
+       ================================ -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Years in Business</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">850+</div>
+          <div class="stat-label">Jobs Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4.9★</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================
+       SERVICES
+       ================================ -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">What We Do</div>
+        <h2>Our Services</h2>
+        <p>Professional services tailored to your needs — done right, on time, every time.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <span class="service-icon">🌿</span>
+          <h3>Lawn Maintenance</h3>
+          <p>Regular mowing, edging, and trimming to keep your lawn looking sharp week after week.</p>
+          <ul class="service-list">
+            <li>Weekly & bi-weekly mowing</li>
+            <li>Edge trimming & blowing</li>
+            <li>Seasonal clean-ups</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-icon">🌳</span>
+          <h3>Landscaping Design</h3>
+          <p>Transform your outdoor space with custom planting, mulching, and garden bed design.</p>
+          <ul class="service-list">
+            <li>Plant selection & installation</li>
+            <li>Mulch & rock beds</li>
+            <li>Garden border design</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-icon">💧</span>
+          <h3>Irrigation Services</h3>
+          <p>Keep your lawn green without the waste. We install, repair, and optimize sprinkler systems.</p>
+          <ul class="service-list">
+            <li>System installation & repair</li>
+            <li>Seasonal startup & winterize</li>
+            <li>Smart controller upgrades</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-icon">🍂</span>
+          <h3>Seasonal Services</h3>
+          <p>From spring clean-ups to fall leaf removal, we keep your property pristine year-round.</p>
+          <ul class="service-list">
+            <li>Spring & fall clean-ups</li>
+            <li>Aeration & overseeding</li>
+            <li>Snow removal (seasonal)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       ABOUT / TRUST
+       ================================ -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=80" alt="Green Peak Landscaping team" loading="lazy">
+          <div class="about-image-overlay"></div>
+          <div class="about-badge">
+            <div class="badge-number">12+</div>
+            <div class="badge-label">Years Trusted</div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <div class="section-tag">About Us</div>
+          <h2>Your Neighborhood Landscaping Experts</h2>
+          <p>We're a locally owned and operated landscaping company serving this community for over a decade. Our team brings professional-grade equipment and genuine care to every yard we touch — because your home deserves to look its best.</p>
+
+          <div class="trust-items">
+            <div class="trust-item">
+              <div class="trust-icon">✓</div>
+              <div>
+                <h4>Licensed &amp; Insured</h4>
+                <p>Full coverage for your peace of mind</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">⭐</div>
+              <div>
+                <h4>5-Star Rated</h4>
+                <p>Consistently top-rated in Austin, TX</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🕐</div>
+              <div>
+                <h4>Always On Time</h4>
+                <p>We respect your schedule</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">💯</div>
+              <div>
+                <h4>Satisfaction Guarantee</h4>
+                <p>Not happy? We make it right</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn-primary">Work With Us →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       PROCESS
+       ================================ -->
+  <section id="process" class="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">How It Works</div>
+        <h2>Simple. Fast. Professional.</h2>
+        <p>Getting started takes less than 5 minutes.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-circle">1</div>
+          <h3>Request a Quote</h3>
+          <p>Fill out our short form or call us directly. We respond within the hour.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-circle">2</div>
+          <h3>Free Consultation</h3>
+          <p>We assess your needs and provide a transparent, no-obligation estimate.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-circle">3</div>
+          <h3>We Get to Work</h3>
+          <p>Our professional team arrives on time and gets the job done right.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-circle">4</div>
+          <h3>You're Delighted</h3>
+          <p>We don't leave until you're 100% satisfied with the results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       TESTIMONIALS
+       ================================ -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Reviews</div>
+        <h2>What Our Customers Say</h2>
+        <p>Don't take our word for it — here's what real customers in Austin, TX think.</p>
+      </div>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-text">"Best landscaping company in the area. My yard has never looked better and they always show up on time. Highly recommend!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SM</div>
+            <div>
+              <div class="author-name">Sarah M.</div>
+              <div class="author-location">Homeowner</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-text">"Called them for a quote on Tuesday and they had a crew out by Thursday. Professional work at a fair price. Will be using them regularly."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">TK</div>
+            <div>
+              <div class="author-name">Tom K.</div>
+              <div class="author-location">Homeowner</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-text">"They transformed my overgrown mess into a beautiful garden. The team was friendly, efficient, and cleaned up everything perfectly."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">LR</div>
+            <div>
+              <div class="author-name">Linda R.</div>
+              <div class="author-location">Homeowner</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       CTA BAND
+       ================================ -->
+  <section class="cta-band">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <h2>Ready to Get Started?</h2>
+          <p>Free estimates — no pressure, no obligation. Call or submit below.</p>
+        </div>
+        <a href="#contact" class="btn-dark">Get Your Free Quote →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       CONTACT
+       ================================ -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <div class="section-tag">Contact Us</div>
+          <h2>Let's Talk About Your Project</h2>
+          <p>Reach out by phone, email, or fill in the form and we'll get back to you the same day.</p>
+
+          <div class="contact-details">
+            <div class="contact-detail">
+              <div class="detail-icon">📞</div>
+              <div>
+                <div class="detail-label">Phone</div>
+                <a href="tel:5125550194" class="detail-value">(512) 555-0194</a>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="detail-icon">✉️</div>
+              <div>
+                <div class="detail-label">Email</div>
+                <a href="mailto:info@greenpeak.com" class="detail-value">info@greenpeak.com</a>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <div class="detail-icon">📍</div>
+              <div>
+                <div class="detail-label">Service Area</div>
+                <span class="detail-value">Austin, TX &amp; Surrounding Areas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Get a Free Quote</h3>
+          <form id="contact-form" action="https://formspree.io/f/xwkgjpzl" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="first_name" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="last_name" placeholder="Smith" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cemail">Email</label>
+                <input type="email" id="cemail" name="email" placeholder="you@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="cphone">Phone</label>
+                <input type="tel" id="cphone" name="phone" placeholder="(555) 000-0000">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="service">Service Needed</label>
+              <select id="service" name="service">
+                <option value="">Select a service...</option>
+                <option>Lawn Maintenance</option>
+                <option>Landscaping Design</option>
+                <option>Irrigation Services</option>
+                <option>Seasonal Services</option>
+                <option>Other / Not Sure</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Tell Us About Your Project</label>
+              <textarea id="message" name="message" placeholder="Describe what you need..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary form-submit">
+              Send Request →
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       FOOTER
+       ================================ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">Green Peak Landscaping<span>.</span></a>
+          <p>Professional Landscaping & Lawn Care. Proudly serving Austin, TX and the surrounding community.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Lawn Maintenance</a></li>
+            <li><a href="#services">Landscaping Design</a></li>
+            <li><a href="#services">Irrigation Services</a></li>
+            <li><a href="#services">Seasonal Services</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get In Touch</h4>
+          <ul class="footer-links">
+            <li><a href="tel:5125550194">(512) 555-0194</a></li>
+            <li><a href="mailto:info@greenpeak.com">info@greenpeak.com</a></li>
+            <li><a href="#contact">Free Quote</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Green Peak Landscaping. All rights reserved.</p>
+        <p>Website by <a href="https://jordan-ai.co" target="_blank">Jordan AI</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================================
+       JAVASCRIPT
+       ================================ -->
+  <script>
+    // Sticky nav on scroll
+    const header = document.getElementById('site-header')
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40)
+    })
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger')
+    const navMenu = document.getElementById('nav-menu')
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open')
+      navMenu.classList.toggle('open')
+    })
+    // Close on nav link click
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open')
+        navMenu.classList.remove('open')
+      })
+    })
+
+    // Subtle hero parallax on load
+    const heroBg = document.getElementById('hero-bg')
+    if (heroBg) {
+      setTimeout(() => { heroBg.style.transform = 'scale(1)' }, 100)
+    }
+
+    // Animate stats on scroll into view
+    const statNums = document.querySelectorAll('.stat-number')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1'
+          entry.target.style.transform = 'translateY(0)'
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.2 })
+    statNums.forEach(el => {
+      el.style.opacity = '0'
+      el.style.transform = 'translateY(10px)'
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease'
+      observer.observe(el)
+    })
+
+    // Form submission
+    const form = document.getElementById('contact-form')
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        const btn = form.querySelector('button[type="submit"]')
+        btn.textContent = 'Sending...'
+        btn.disabled = true
+      })
+    }
+
+    // Smooth scroll polyfill for older iOS
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'))
+        if (target) {
+          e.preventDefault()
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      })
+    })
+  </script>
+
+</body>
+</html>
