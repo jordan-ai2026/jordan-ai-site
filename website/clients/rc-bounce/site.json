@@ -10,5 +10,7 @@
   "jobsDone": "500+",
   "clients": "200+",
   "rating": "4.9",
-  "deploy": false
+  "deploy": false,
+  "protected": true,
+  "note": "Site managed by Cleo — do not rebuild with templates"
 }
