@@ -250,6 +250,36 @@ async function createClientWebsite(options) {
   const {
     slug,
     businessName,
+    // Check for protected flag first — skip rebuild if site is managed by Cleo
+    ...rest
+  } = options
+
+  // ── PROTECTION CHECK ─────────────────────────────────────────────────────
+  if (slug) {
+    const siteJsonPath = path.join(CLIENTS_DIR, slug, 'site.json')
+    if (fs.existsSync(siteJsonPath)) {
+      try {
+        const existing = JSON.parse(fs.readFileSync(siteJsonPath, 'utf8'))
+        if (existing.protected) {
+          console.log(`[WebsiteGenerator] ⛔ ${slug} is protected — skipping rebuild. Managed by Cleo.`)
+          return {
+            success: false,
+            protected: true,
+            message: `${slug} site is protected and managed manually. To make changes, contact Cleo directly.`,
+            slug,
+          }
+        }
+      } catch (e) { /* if can't read, proceed normally */ }
+    }
+  }
+
+  return createClientWebsiteInternal({ slug, businessName, ...rest })
+}
+
+async function createClientWebsiteInternal(options) {
+  const {
+    slug,
+    businessName,
     industry      = "landscaping",
     services      = [],
     phone         = "",

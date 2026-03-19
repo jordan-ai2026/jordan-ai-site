@@ -252,6 +252,23 @@ async function placeAssetOnSite(slug, filename, location) {
     throw new Error(`site.json missing for "${slug}" — run create_client_website first to generate it`)
   }
 
+  // ── PROTECTION CHECK ────────────────────────────────────────────────────
+  try {
+    const siteData = JSON.parse(fs.readFileSync(siteJsonFile, 'utf8'))
+    if (siteData.protected) {
+      console.log(`[AssetManager] ⛔ ${slug} is protected — asset placed in folder but site NOT rebuilt.`)
+      // Still save the asset to disk — just skip the template rebuild
+      // Return early after saving
+      const assetPath = findAsset(slug, filename)
+      if (!assetPath) throw new Error(`Asset not found: ${filename}`)
+      console.log(`[AssetManager] Asset saved: ${filename} (site rebuild skipped — protected)`)
+      return { success: true, protected: true, message: `Asset saved. Site is protected — Cleo manages ${slug} manually.` }
+    }
+  } catch (e) {
+    if (e.message?.includes('protected')) throw e
+    // If can't parse site.json, proceed normally
+  }
+
   const validLocations = [
     "hero","about","logo",
     "service1","service2","service3","service4","service5","service6",
@@ -276,7 +293,19 @@ async function placeAssetOnSite(slug, filename, location) {
   // Re-render (lazy require avoids circular dep with websiteGenerator)
   const websiteGenerator = require("./websiteGenerator")
   const siteOptions = JSON.parse(fs.readFileSync(siteJsonFile, "utf8"))
-  const result = await websiteGenerator.createClientWebsite(siteOptions)
+  // Always re-render with deploy:false (we deploy ourselves below)
+  const result = await websiteGenerator.createClientWebsite({ ...siteOptions, deploy: false })
+
+  // Always deploy after placing an asset — site.json stores deploy:false as a backup
+  // config and should never gate whether a live update gets pushed
+  let deployed = false
+  try {
+    const { deployWebsite } = require("./gitDeploy")
+    await deployWebsite(`Asset update: ${filename} → ${location} on ${slug}`)
+    deployed = true
+  } catch (err) {
+    console.log(`   ⚠️  Deploy failed after asset placement: ${err.message}`)
+  }
 
   return {
     success:    true,
@@ -285,6 +314,7 @@ async function placeAssetOnSite(slug, filename, location) {
     relUrl,
     filename,
     rerendered: result.success,
+    deployed,
     url:        result.url,
   }
 }
