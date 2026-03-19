@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdBot — AI Ad Performance Analyzer | Jordan AI</title>
+  <meta name="description" content="AdBot crawls your Meta ad account, finds what's winning, kills what's wasting budget, and writes your next content batch. In 60 seconds.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg-light: #12121a;
+    --accent: #00d4ff;
+    --purple: #8b5cf6;
+    --text: #e4e4e7;
+    --text-muted: #71717a;
+    --border: #27272a;
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .bg-effects {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Navigation */
+  nav {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10, 10, 15, 0.9);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-back {
+    color: var(--text-muted) !important;
+    font-size: 0.85rem !important;
+  }
+
+  .nav-back:hover { color: var(--accent) !important; }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #000 !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem !important;
+    transition: all 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
+    color: #000 !important;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #000;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Hero */
+  .hero {
+    padding: 110px 0 80px;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-size: 3.6rem;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .gradient {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  /* Sections */
+  section {
+    padding: 80px 0;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  section h2 {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 56px;
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    transition: all 0.25s;
+  }
+
+  .card:hover {
+    border-color: rgba(0, 212, 255, 0.4);
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 18px;
+  }
+
+  .card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  /* Problem section */
+  .problem-section {
+    background: var(--bg-light);
+  }
+
+  .problem-intro {
+    max-width: 700px;
+    margin: 0 auto 48px;
+    text-align: center;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* How it works */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+
+  .step {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 24px;
+    position: relative;
+    text-align: center;
+    transition: all 0.25s;
+  }
+
+  .step:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-3px);
+  }
+
+  .step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .step h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .step p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* Sample output */
+  .sample-section {
+    background: var(--bg-light);
+  }
+
+  .report-card {
+    background: #0d0d14;
+    border: 1px solid #2a2a35;
+    border-radius: 14px;
+    overflow: hidden;
+    max-width: 820px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .report-header {
+    background: #16161f;
+    border-bottom: 1px solid #2a2a35;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .report-dots {
+    display: flex;
+    gap: 7px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .report-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: 8px;
+    font-family: monospace;
+  }
+
+  .report-body {
+    padding: 28px 28px 32px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+
+  .report-section-title {
+    color: var(--accent);
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    margin-top: 20px;
+    margin-bottom: 6px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+  }
+
+  .report-section-title:first-child {
+    margin-top: 0;
+  }
+
+  .report-line {
+    color: #a0a0b0;
+  }
+
+  .report-highlight {
+    color: #e4e4e7;
+  }
+
+  .report-green {
+    color: #4ade80;
+  }
+
+  .report-red {
+    color: #f87171;
+  }
+
+  .report-yellow {
+    color: #fbbf24;
+  }
+
+  .report-divider {
+    border: none;
+    border-top: 1px solid #2a2a35;
+    margin: 20px 0;
+  }
+
+  /* Pricing */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    transition: all 0.25s;
+    position: relative;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 212, 255, 0.3);
+  }
+
+  .pricing-card.popular {
+    border-color: var(--accent);
+    background: rgba(0, 212, 255, 0.04);
+  }
+
+  .pricing-card.popular:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .pricing-tier {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .pricing-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+
+  .pricing-price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .pricing-recurring {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .pricing-tagline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    min-height: 56px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .pricing-features li {
+    padding: 7px 0;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .pricing-features li::before {
+    content: "✓";
+    color: var(--accent);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pricing-features li.own-code {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .pricing-features li.own-code::before {
+    color: var(--accent);
+  }
+
+  .pricing-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .pricing-cta-primary {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #000;
+  }
+
+  .pricing-cta-primary:hover {
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .pricing-cta-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .pricing-cta-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Who it's for */
+  .persona-section {
+    background: var(--bg-light);
+  }
+
+  /* CTA section */
+  .cta-section {
+    text-align: center;
+  }
+
+  .cta-inner {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 20px;
+    padding: 64px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-inner h2 {
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+  }
+
+  .cta-inner p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+
+  .cta-email {
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px;
+    transition: opacity 0.2s;
+  }
+
+  .cta-email:hover { opacity: 0.8; }
+
+  .cta-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 16px;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* Responsive */
+  @media (max-width: 1050px) {
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 900px) {
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 2.4rem; }
+    .hero p { font-size: 1rem; }
+    section h2 { font-size: 1.7rem; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .cta-inner { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg-effects"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">⚡ Jordan AI</a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-back">← Back to Jordan AI</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="mailto:info@jordan-ai.co" class="nav-cta">Get AdBot →</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-eyebrow">AI Ad Performance Analyzer</div>
+        <h1>Stop Guessing.<br><span class="gradient">Start Knowing.</span></h1>
+        <p>AdBot crawls your Meta ad account, finds what's winning, kills what's wasting budget, and writes your next content batch. In 60 seconds.</p>
+        <a href="mailto:info@jordan-ai.co" class="btn btn-primary" style="font-size: 1.1rem; padding: 16px 36px;">Get AdBot →</a>
+      </div>
+    </section>
+
+    <!-- THE PROBLEM -->
+    <section class="problem-section">
+      <div class="container">
+        <div class="section-label">The Problem</div>
+        <h2>Manual Reporting Is Killing Your Growth</h2>
+        <p class="problem-intro">A freelance marketer managing 5 clients spends 15+ hours/week on manual reporting. Logging into 4 platforms. Copying numbers into spreadsheets. Guessing what to run next.</p>
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-icon">⏰</div>
+            <h3>Time</h3>
+            <p>Hours of manual work per client, per week. Time you could be spending on strategy, new clients, or actually living your life.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Accuracy</h3>
+            <p>Gut feel instead of pattern data. You're making creative decisions based on vibes — not what the numbers actually say is working.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Scale</h3>
+            <p>Can't take on more clients without burning out. Your ceiling isn't your talent — it's the hours required to manage what you already have.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-label">How It Works</div>
+        <h2>From Account Access to Full Report in 60 Seconds</h2>
+        <p class="section-subtitle">Four steps. No manual work. Yours to keep.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Connect Your Account</h3>
+            <p>Link your Meta Ads account securely. Takes 30 seconds. Read-only access — AdBot never touches your budget.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>AdBot Crawls Everything</h3>
+            <p>Every campaign, ad set, and creative. Every metric that matters — CTR, ROAS, CPM, frequency, relevance score.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>AI Finds the Patterns</h3>
+            <p>What's winning and exactly why. What's hemorrhaging budget and needs to die. Which creative elements drive results.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Get Your Report + Content</h3>
+            <p>A professional client-ready report plus 5 ready-to-run ad concepts built from your winning patterns.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SAMPLE OUTPUT -->
+    <section class="sample-section">
+      <div class="container">
+        <div class="section-label">Sample Output</div>
+        <h2>See What AdBot Delivers</h2>
+        <p class="section-subtitle">Real report format. Professional. Client-ready. Yours.</p>
+        <div class="report-card">
+          <div class="report-header">
+            <div class="report-dots">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <span class="report-title">adbot-report-client-brightline-2026-03-19.txt</span>
+          </div>
+          <div class="report-body">
+            <div class="report-section-title">── EXECUTIVE SUMMARY ──────────────────────────────────</div>
+            <div class="report-highlight">Account: Brightline Fitness Studio | Period: Mar 1–19, 2026</div>
+            <div class="report-line">Total Spend Analyzed: $4,280.00 | Campaigns: 6 | Ad Sets: 18 | Creatives: 42</div>
+            <div class="report-line">Overall ROAS: 2.4x | Target: 3.0x | Gap: -0.6x</div>
+            <div class="report-green">✓ 3 campaigns performing above benchmark</div>
+            <div class="report-red">✗ 2 campaigns flagged for immediate review</div>
+
+            <hr class="report-divider">
+
+            <div class="report-section-title">── WHAT'S WINNING ─────────────────────────────────────</div>
+            <div class="report-green">▲ "Spring Transformation" video ad (Campaign: Retargeting)</div>
+            <div class="report-line">   CTR: 4.2% (2.1x industry avg) | ROAS: 5.1x | CPM: $12.40</div>
+            <div class="report-highlight">   Pattern: Before/after format + urgency CTA + female 25-34 audience</div>
+            <div class="report-green">▲ "Free Class Pass" carousel (Campaign: Cold - Local)</div>
+            <div class="report-line">   CTR: 3.8% | CPC: $0.84 | 47 conversions this period</div>
+            <div class="report-highlight">   Pattern: Low-friction offer + testimonial social proof in frame 2</div>
+            <div class="report-green">▲ Lookalike audience (1%) based on purchasers — outperforming 2% and 5%</div>
+
+            <hr class="report-divider">
+
+            <div class="report-section-title">── WHAT TO KILL ───────────────────────────────────────</div>
+            <div class="report-red">✗ "January Deals" static image — Campaign: Awareness</div>
+            <div class="report-line">   Spend: $812.00 | Conversions: 2 | CPA: $406.00 (target: $45)</div>
+            <div class="report-red">   Recommendation: PAUSE IMMEDIATELY — $812 wasted on zero-intent audience</div>
+            <div class="report-line">   Root cause: Seasonal creative served past relevance window. Frequency: 8.2</div>
+
+            <hr class="report-divider">
+
+            <div class="report-section-title">── CONTENT RECOMMENDATION #1 ──────────────────────────</div>
+            <div class="report-yellow">★ Concept: "The 6AM Club" — Video Ad (15s)</div>
+            <div class="report-line">   Hook: "Most people hit snooze. These people hit PRs."</div>
+            <div class="report-line">   Format: Montage of 5am members + ambient gym audio</div>
+            <div class="report-line">   CTA: "Claim your free class → Limited spots this week"</div>
+            <div class="report-line">   Target: Lookalike 1% purchasers | Budget rec: $35/day</div>
+            <div class="report-green">   Confidence: HIGH — based on your top 3 performing patterns</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section>
+      <div class="container">
+        <div class="section-label">Pricing</div>
+        <h2>Pick Your Level. Own the Code.</h2>
+        <p class="section-subtitle">Every tier comes with one thing competitors won't give you: the code is yours.</p>
+        <div class="pricing-grid">
+
+          <!-- Analyst -->
+          <div class="pricing-card">
+            <div class="pricing-tier">Analyst</div>
+            <div class="pricing-price">$497<span> one-time</span></div>
+            <div class="pricing-recurring" style="visibility: hidden;">—</div>
+            <div class="pricing-tagline">Analysis + weekly report. You post manually.</div>
+            <ul class="pricing-features">
+              <li>Meta Ads crawler</li>
+              <li>Pattern analyzer</li>
+              <li>Professional client report</li>
+              <li>5 content recommendations</li>
+              <li>Weekly automated reports</li>
+              <li class="own-code">You own the code</li>
+            </ul>
+            <a href="mailto:info@jordan-ai.co?subject=AdBot Analyst Tier" class="pricing-cta pricing-cta-secondary">Get Started</a>
+          </div>
+
+          <!-- Strategist -->
+          <div class="pricing-card popular">
+            <div class="popular-badge">Most Popular</div>
+            <div class="pricing-tier">Strategist</div>
+            <div class="pricing-price">$1,500<span> setup</span></div>
+            <div class="pricing-recurring">+ $500/mo</div>
+            <div class="pricing-tagline">Everything in Analyst + AI generates your content.</div>
+            <ul class="pricing-features">
+              <li>Everything in Analyst</li>
+              <li>AI-generated ad copy</li>
+              <li>AI-generated creative briefs</li>
+              <li>Automated content calendar</li>
+              <li>Client reporting dashboard</li>
+              <li class="own-code">You own the code</li>
+            </ul>
+            <a href="mailto:info@jordan-ai.co?subject=AdBot Strategist Tier" class="pricing-cta pricing-cta-primary">Get Started</a>
+          </div>
+
+          <!-- Operator -->
+          <div class="pricing-card">
+            <div class="pricing-tier">Operator</div>
+            <div class="pricing-price">$3,500<span> setup</span></div>
+            <div class="pricing-recurring">+ $750/mo</div>
+            <div class="pricing-tagline">Full automation. Multi-client dashboard.</div>
+            <ul class="pricing-features">
+              <li>Everything in Strategist</li>
+              <li>Multi-client dashboard</li>
+              <li>Auto-pause failing ads</li>
+              <li>Budget reallocation alerts</li>
+              <li>Slack/email notifications</li>
+              <li class="own-code">You own the code</li>
+            </ul>
+            <a href="mailto:info@jordan-ai.co?subject=AdBot Operator Tier" class="pricing-cta pricing-cta-secondary">Get Started</a>
+          </div>
+
+          <!-- Agency -->
+          <div class="pricing-card">
+            <div class="pricing-tier">Agency</div>
+            <div class="pricing-price">$10,000<span> setup</span></div>
+            <div class="pricing-recurring">+ $2,500/mo</div>
+            <div class="pricing-tagline">White-label. Unlimited clients.</div>
+            <ul class="pricing-features">
+              <li>Everything in Operator</li>
+              <li>White-label branding</li>
+              <li>Unlimited client accounts</li>
+              <li>Custom integrations</li>
+              <li>Dedicated support</li>
+              <li class="own-code">You own the code</li>
+            </ul>
+            <a href="mailto:info@jordan-ai.co?subject=AdBot Agency Tier" class="pricing-cta pricing-cta-secondary">Get Started</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO IT'S FOR -->
+    <section class="persona-section">
+      <div class="container">
+        <div class="section-label">Who It's For</div>
+        <h2>Built for the Freelance Marketer Who's Ready to Scale</h2>
+        <p class="section-subtitle">You're already good. AdBot makes you look like a team of ten.</p>
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-icon">🚀</div>
+            <h3>The Fiverr Climber</h3>
+            <p>You're managing 3 clients and want to get to 10 without adding 50 hours to your week. AdBot handles the reporting so you handle the growth.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎓</div>
+            <h3>The Upwork Strategist</h3>
+            <p>You want to show up to client calls with data-driven insights and AI-generated content plans that make you look like a senior strategist. Now you can.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🏢</div>
+            <h3>The Agency Owner</h3>
+            <p>You're tired of your team spending half their week on manual reporting. AdBot automates the work no one wants to do so your people can do the work that actually matters.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-inner">
+          <div class="section-label" style="text-align: center;">Get Started</div>
+          <h2>Ready to Let Your AI Handle the Analysis?</h2>
+          <p>Email us and we'll get you set up. No forms. No sales calls unless you want one.</p>
+          <a href="mailto:info@jordan-ai.co" class="cta-email">info@jordan-ai.co</a>
+          <a href="mailto:info@jordan-ai.co" class="btn btn-primary" style="font-size: 1.05rem;">Get AdBot →</a>
+          <p class="cta-note">Questions? Email us. We respond fast.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="/">jordan-ai.co</a>
+        <a href="https://x.com/JordanAi16471" target="_blank" rel="noopener">@JordanAi16471</a>
+        <a href="mailto:info@jordan-ai.co">info@jordan-ai.co</a>
+      </div>
+      <p>© 2026 Jordan AI — Built autonomously</p>
+    </div>
+  </footer>
+
+</body>
+</html>
