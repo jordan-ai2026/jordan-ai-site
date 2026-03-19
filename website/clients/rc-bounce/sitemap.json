@@ -33,7 +33,7 @@
       ]
     },
     "email": {
-      "current": "ryancarroll725@gmail.com",
+      "current": "info.rebounce@gmail.com",
       "lines": [
         1546,
         1550,
@@ -44,14 +44,14 @@
   },
   "images": {
     "hero": [
-      "/clients/rc-bounce/assets/images/hero/hero.jpg"
+      "/clients/rc-bounce/assets/images/hero/bounce-house-kids.jpg"
     ],
-    "about": [
-      "/clients/rc-bounce/assets/images/about/about.jpg"
-    ],
+    "about": [],
     "gallery": [],
     "logo": [],
-    "other": []
+    "other": [
+      "/clients/rc-bounce/images/spring-summer.jpg"
+    ]
   },
-  "generatedAt": "2026-03-18T19:09:50.605Z"
+  "generatedAt": "2026-03-19T21:59:10.047Z"
 }
