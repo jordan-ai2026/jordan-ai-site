@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jordan AI — Autonomous Business Builder</title>
-  <meta name="description" content="Jordan AI builds businesses autonomously using AI. Products, tools, and automation.">
+  <title>Jordan AI — Bring Your Own AI to Work</title>
+  <meta name="description" content="The employees who bring their own trained AI to work will dominate hiring, earn more, and outperform everyone else. Jordan AI is building the tools to make that happen.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-  
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
+
   :root {
     --bg: #0a0a0f;
     --bg-light: #12121a;
@@ -21,7 +21,7 @@
     --text-muted: #71717a;
     --border: #27272a;
   }
-  
+
   body {
     font-family: 'Space Grotesk', sans-serif;
     background: var(--bg);
@@ -29,401 +29,310 @@
     line-height: 1.6;
     min-height: 100vh;
   }
-  
-  /* Gradient background */
+
   .bg-effects {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: 
+    background:
       radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
   }
-  
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-  
-  /* Navigation */
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
   nav {
     padding: 20px 0;
     border-bottom: 1px solid var(--border);
-    background: rgba(10, 10, 15, 0.9);
-    position: sticky;
-    top: 0;
+    position: sticky; top: 0;
+    background: rgba(10,10,15,0.9);
+    backdrop-filter: blur(12px);
     z-index: 100;
   }
-  
-  nav .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 1.2rem; font-weight: 700; color: var(--text); text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--accent); color: #0a0a0f !important;
+    padding: 8px 18px; border-radius: 6px; font-weight: 600; font-size: 0.9rem !important;
+    transition: opacity 0.2s !important;
   }
-  
-  .logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--accent);
-    text-decoration: none;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
-  
-  .nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  
-  .nav-links a:hover { color: var(--accent); }
-  .nav-links a.active { color: var(--accent); }
-  
-  /* Hero */
-  .hero {
-    padding: 100px 0 60px;
-    text-align: center;
-  }
-  
-  .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    line-height: 1.2;
-  }
-  
-  .hero .gradient {
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .hero p {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto 32px;
-  }
-  
-  /* Buttons */
-  .btn {
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero { padding: 100px 0 80px; text-align: center; }
+  .hero-eyebrow {
     display: inline-block;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    color: #000;
-  }
-  
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
-  }
-  
-  .btn-secondary {
-    background: rgba(255,255,255,0.05);
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  
-  .btn-secondary:hover {
-    border-color: var(--accent);
-  }
-  
-  /* Cards */
-  .card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
-    transition: all 0.2s;
-  }
-  
-  .card:hover {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-  }
-  
-  .card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-  
-  .card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-  }
-  
-  .card-icon {
-    font-size: 2rem;
-    margin-bottom: 16px;
-  }
-  
-  /* Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-  }
-  
-  /* Sections */
-  section {
-    padding: 70px 0;
-  }
-  
-  section h2 {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  
-  .section-subtitle {
-    text-align: center;
-    color: var(--text-muted);
-    margin-bottom: 40px;
-  }
-  
-  /* Product page */
-  .product-page {
-    padding: 60px 0;
-  }
-  
-  .product-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
-  }
-  
-  .product-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 16px;
-  }
-  
-  .product-price {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-  
-  .product-description {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    margin-bottom: 24px;
-  }
-  
-  .product-features {
-    list-style: none;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: var(--purple);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
     margin-bottom: 28px;
   }
-  
-  .product-features li {
-    padding: 10px 0;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 24px; max-width: 800px; margin-left: auto; margin-right: auto;
   }
-  
-  .product-features li::before {
-    content: "✓";
-    color: var(--accent);
-    font-weight: bold;
+  .gradient { background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p {
+    font-size: 1.15rem; color: var(--text-muted);
+    max-width: 600px; margin: 0 auto 40px; line-height: 1.7;
   }
-  
-  .product-image {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
+  .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #0a0a0f;
+    padding: 14px 28px; border-radius: 8px; font-weight: 700;
+    font-size: 1rem; text-decoration: none; transition: opacity 0.2s;
   }
-  
-  /* Blog */
-  .blog-post {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 60px 24px;
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary {
+    background: transparent; color: var(--text);
+    padding: 14px 28px; border-radius: 8px; font-weight: 600;
+    font-size: 1rem; text-decoration: none;
+    border: 1px solid var(--border); transition: border-color 0.2s;
   }
-  
-  .blog-post h1 {
-    font-size: 2.2rem;
-    margin-bottom: 16px;
+  .btn-secondary:hover { border-color: var(--text-muted); }
+
+  /* SECTIONS */
+  section { padding: 80px 0; }
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px;
   }
-  
-  .blog-meta {
-    color: var(--text-muted);
-    margin-bottom: 40px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
+  .section-title { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 16px; }
+  .section-sub { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; line-height: 1.7; }
+  .section-border { border-top: 1px solid var(--border); }
+
+  /* THESIS CARDS */
+  .thesis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
+  .thesis-card {
+    background: var(--bg-light); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px;
+    transition: border-color 0.2s;
   }
-  
-  .blog-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 20px;
+  .thesis-card:hover { border-color: rgba(139, 92, 246, 0.4); }
+  .thesis-icon { font-size: 2rem; margin-bottom: 16px; }
+  .thesis-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+  .thesis-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+  /* PRODUCTS */
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+  .product-card {
+    background: var(--bg-light); border: 1px solid var(--border);
+    border-radius: 12px; padding: 36px; position: relative;
+    transition: border-color 0.2s;
   }
-  
-  /* Footer */
+  .product-card.featured { border-color: var(--accent); }
+  .product-badge {
+    position: absolute; top: -12px; left: 32px;
+    background: var(--accent); color: #0a0a0f;
+    padding: 4px 14px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .product-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+  .product-card .tagline { color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 16px; }
+  .product-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; }
+  .product-card a {
+    display: inline-block; padding: 10px 22px; border-radius: 6px;
+    font-weight: 600; font-size: 0.9rem; text-decoration: none;
+    background: var(--accent); color: #0a0a0f; transition: opacity 0.2s;
+  }
+  .product-card a:hover { opacity: 0.85; }
+  .product-card.coming-soon a {
+    background: var(--border); color: var(--text-muted); cursor: default;
+  }
+  .product-card.coming-soon a:hover { opacity: 1; }
+
+  /* BUILDING IN PUBLIC */
+  .bip-box {
+    background: var(--bg-light); border: 1px solid var(--border);
+    border-radius: 12px; padding: 48px; text-align: center; margin-top: 48px;
+  }
+  .bip-box h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+  .bip-box p { color: var(--text-muted); font-size: 1rem; max-width: 500px; margin: 0 auto 28px; line-height: 1.7; }
+  .bip-handle {
+    display: inline-block; font-size: 1.1rem; font-weight: 700;
+    color: var(--accent); margin-bottom: 28px;
+  }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 48px; }
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-roles { display: flex; flex-direction: column; gap: 16px; }
+  .role-card {
+    background: var(--bg-light); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px 24px;
+  }
+  .role-card .role-title { font-weight: 700; margin-bottom: 4px; }
+  .role-card .role-title span { color: var(--accent); }
+  .role-card p { color: var(--text-muted); font-size: 0.9rem; }
+  .about-text h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 16px; }
+  .about-text p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.75; margin-bottom: 16px; }
+
+  /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
     padding: 40px 0;
-    text-align: center;
-    color: var(--text-muted);
+    color: var(--text-muted); font-size: 0.9rem;
   }
-  
-  footer a { color: var(--accent); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero h1 { font-size: 2rem; }
-    .product-header { grid-template-columns: 1fr; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  @media (max-width: 600px) {
     .nav-links { display: none; }
+    .hero { padding: 60px 0 40px; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .footer-inner { flex-direction: column; text-align: center; }
   }
 </style>
-
 </head>
 <body>
-  <div class="bg-effects"></div>
-  
-  
+<div class="bg-effects"></div>
+
+<!-- NAV -->
 <nav>
   <div class="container">
-    <a href="/" class="logo">⚡ Jordan AI</a>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/products">Products</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/services.html">Services</a></li>
-      <li><a href="/newsletter.html">Newsletter</a></li>
-    </ul>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Jordan <span>AI</span></a>
+      <ul class="nav-links">
+        <li><a href="#thesis">How It Works</a></li>
+        <li><a href="/adbot.html">AdBot</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="/adbot.html" class="nav-cta">Get AdBot →</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
-  
-  <main>
-    <section class="hero">
-      <div class="container">
-        <h1>Autonomous AI<br><span class="gradient">Building Real Businesses</span></h1>
-        <p>Jordan AI scans markets, builds products, and generates revenue — all autonomously.</p>
-        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-          <a href="/products" class="btn btn-primary">View Products</a>
-          <a href="/blog" class="btn btn-secondary">Read Blog</a>
-          <a href="/services.html" class="btn btn-secondary">Hire Us</a>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Bring Your Own AI to Work</div>
+    <h1>The Next Resume Isn't a PDF.<br><span class="gradient">It's a Running AI Agent.</span></h1>
+    <p>The employees who bring their own trained AI to work will dominate hiring, earn more, and outperform everyone else. Jordan AI is building the tools to make that happen.</p>
+    <div class="hero-ctas">
+      <a href="/adbot.html" class="btn-primary">Get AdBot →</a>
+      <a href="https://x.com/JordanAi16471" target="_blank" class="btn-secondary">Follow the Journey →</a>
+    </div>
+  </div>
+</section>
+
+<!-- THE THESIS -->
+<section class="section-border" id="thesis">
+  <div class="container">
+    <div class="section-label">The Thesis</div>
+    <h2 class="section-title">Why AI-augmented workers win</h2>
+    <p class="section-sub">This shift is 2-3 years away from being mainstream. The workers building their AI stack now will be impossible to compete with.</p>
+    <div class="thesis-grid">
+      <div class="thesis-card">
+        <div class="thesis-icon">🧳</div>
+        <h3>Portability</h3>
+        <p>Your AI travels with you job to job. It knows how you work, thinks like you, and has years of your patterns baked in. When you switch employers, your edge comes with you.</p>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-icon">📈</div>
+        <h3>Performance</h3>
+        <p>Employers will pay a premium for workers whose AI makes them measurably better. The interview of 2027 won't ask for a resume — it'll ask for your AI's performance metrics.</p>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-icon">🔑</div>
+        <h3>Ownership</h3>
+        <p>You own the code, the memory, the edge — not your employer. Tools you rent disappear when you leave. AI you own compounds over time, across every job you'll ever have.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILD -->
+<section class="section-border" id="products">
+  <div class="container">
+    <div class="section-label">What We Build</div>
+    <h2 class="section-title">Tools for the AI workforce era</h2>
+    <p class="section-sub">Every product we ship puts more capability in your hands — not locked in a platform someone else controls.</p>
+    <div class="products-grid">
+      <div class="product-card featured">
+        <div class="product-badge">Live Now</div>
+        <h3>AdBot</h3>
+        <div class="tagline">Your AI. Your code. Your edge.</div>
+        <p>AI ad performance analyzer for freelance marketers. Crawls your Meta account, finds what's winning, kills what's wasting budget, and writes your next content batch — in 60 seconds.</p>
+        <a href="/adbot.html">See AdBot →</a>
+      </div>
+      <div class="product-card coming-soon">
+        <h3>AI Workforce Kit</h3>
+        <div class="tagline" style="color: var(--text-muted);">Coming Soon</div>
+        <p>Build the AI you'll bring to your next job. Role-specific starter packs for sales reps, recruiters, marketers, and more. Set it up once, take it everywhere.</p>
+        <a href="#">Notify Me →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILDING IN PUBLIC -->
+<section class="section-border">
+  <div class="container">
+    <div class="section-label">Building in Public</div>
+    <h2 class="section-title">The AI runs. We document everything.</h2>
+    <div class="bip-box">
+      <h3>Jordan AI posts every day on X.</h3>
+      <p>Real metrics. Real mistakes. Real progress. No hype — just what it actually looks like to build an autonomous AI business from scratch.</p>
+      <div class="bip-handle">@JordanAi16471</div>
+      <br>
+      <a href="https://x.com/JordanAi16471" target="_blank" class="btn-primary">Follow @JordanAi16471 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-border" id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-roles">
+        <div class="role-card">
+          <div class="role-title"><span>Jordan</span> — The Human</div>
+          <p>Direction, deals, and the hard parts. The face of the operation and the one who spotted the AI workforce shift early.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-title"><span>Jordan AI</span> — The Engine</div>
+          <p>Runs autonomously 24/7. Posts on X, writes blog content, sends newsletters, analyzes data, generates reports. Never stops.</p>
+        </div>
+        <div class="role-card">
+          <div class="role-title"><span>Cleo</span> — The Architect</div>
+          <p>The AI that builds the AI. When something needs rebuilding or rethinking, Cleo handles it. Strategy, code, and systems.</p>
         </div>
       </div>
-    </section>
-    
-    <!-- Services callout -->
-    <section style="background: var(--bg-light);">
-      <div class="container" style="text-align: center;">
-        <h2>Need a Custom AI Chatbot?</h2>
-        <p class="section-subtitle">We build AI agents that answer your customers 24/7, book appointments, and qualify leads.</p>
-        <a href="/services.html" class="btn btn-primary">Learn More →</a>
+      <div class="about-text">
+        <h3>Why we're building this</h3>
+        <p>Jordan spotted the AI workforce shift before it became mainstream. Not just "AI is changing everything" — but specifically that the employees who arrive at a new job with a trained, memory-loaded AI agent will be impossible to compete with.</p>
+        <p>Jordan AI runs the business autonomously — content, analysis, reporting. Jordan shows up for the hard parts: direction, deals, and thinking ahead. Cleo builds what needs building.</p>
+        <p>The goal isn't just to build products. It's to prove the model works — then teach others how to replicate it.</p>
+        <a href="https://x.com/JordanAi16471" target="_blank" class="btn-secondary" style="margin-top:8px;">Follow the journey →</a>
       </div>
-    </section>
-    
-    <section>
-      <div class="container">
-        <h2>Products</h2>
-        <p class="section-subtitle">AI-built tools and services</p>
-        <div class="grid">
-          
-          <a href="/products/index.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">🚀</div>
-            <h3>Index</h3>
-            <p>Click to view product details →</p>
-          </a>
-      
-          <a href="/products/the-ai-chatbot-playbook.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">🚀</div>
-            <h3>The ai chatbot playbook</h3>
-            <p>Click to view product details →</p>
-          </a>
-      
-          <a href="/products/the-seo-blog-blueprint.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">🚀</div>
-            <h3>The seo blog blueprint</h3>
-            <p>Click to view product details →</p>
-          </a>
-      
-          <a href="/products/the-small-business-ai-starter-kit.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">🚀</div>
-            <h3>The small business ai starter kit</h3>
-            <p>Click to view product details →</p>
-          </a>
-      
-          <a href="/products/the-social-media-autopilot-pack.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">🚀</div>
-            <h3>The social media autopilot pack</h3>
-            <p>Click to view product details →</p>
-          </a>
-      
-          <a href="/products/the-website-audit-checklist.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">🚀</div>
-            <h3>The website audit checklist</h3>
-            <p>Click to view product details →</p>
-          </a>
-      
-        </div>
-      </div>
-    </section>
-    
-    <section style="background: var(--bg-light);">
-      <div class="container">
-        <h2>Latest from the Blog</h2>
-        <p class="section-subtitle">Insights on AI, automation, and business</p>
-        <div class="grid">
-          
-          <a href="/blog/5-questions-every-small-business-owner-should-ask-before-investing-in-ai-tools.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">📝</div>
-            <h3>5 questions every small business owner should ask before investing in ai tools</h3>
-            <p>Read article →</p>
-          </a>
-      
-          <a href="/blog/5-ways-ai-can-automate-your-local-restaurant-business-in-columbia-sc-and-save-you-10-hours-per-week.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">📝</div>
-            <h3>5 ways ai can automate your local restaurant business in columbia sc and save you 10 hours per week</h3>
-            <p>Read article →</p>
-          </a>
-      
-          <a href="/blog/5-ways-ai-can-automate-your-local-restaurant-business-in-south-carolina-today.html" class="card" style="text-decoration: none; color: inherit;">
-            <div class="card-icon">📝</div>
-            <h3>5 ways ai can automate your local restaurant business in south carolina today</h3>
-            <p>Read article →</p>
-          </a>
-      
-        </div>
-        <p style="text-align: center; margin-top: 24px;"><a href="/blog" class="btn btn-secondary">View All Posts</a></p>
-      </div>
-    </section>
-  </main>
-  
-  
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="container">
-    <p style="margin-bottom: 12px;">
-      <a href="/">Home</a> · 
-      <a href="/products">Products</a> · 
-      <a href="/blog">Blog</a> · 
-      <a href="/services.html">Services</a>
-    </p>
-    <p>© 2026 Jordan AI — Built autonomously</p>
+    <div class="footer-inner">
+      <span>© 2026 Jordan AI · jordan-ai.co</span>
+      <div class="footer-links">
+        <a href="https://x.com/JordanAi16471" target="_blank">@JordanAi16471</a>
+        <a href="mailto:info@jordan-ai.co">info@jordan-ai.co</a>
+        <a href="/adbot.html">AdBot</a>
+      </div>
+    </div>
   </div>
 </footer>
 

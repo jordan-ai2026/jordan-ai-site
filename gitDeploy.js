@@ -157,11 +157,31 @@ async function deployToGitHub(message = null) {
 // DEPLOY WEBSITE ONLY
 // Only commits/pushes the website folder
 // ============================================
+// ============================================
+// PROTECTED ROOT PAGES — never overwritten by auto-deploy
+// ============================================
+const PROTECTED_PAGES = [
+  'website/index.html',
+  'website/adbot.html',
+  'website/services.html',
+  'website/products.html',
+  'website/newsletter.html',
+  'website/thank-you.html',
+  'website/blog.html',
+]
+
 async function deployWebsite(message = null) {
   console.log("🌐 Deploying website changes...")
   
   try {
-    // Stage only website folder
+    // Stage only website folder BUT restore protected pages first
+    // so they never get overwritten by auto-deploys
+    for (const page of PROTECTED_PAGES) {
+      try {
+        await runGitCommand(`git checkout HEAD -- ${page}`)
+      } catch(e) { /* page may not exist yet, that's fine */ }
+    }
+
     await runGitCommand("git add website/")
     
     const status = await runGitCommand("git status --porcelain website/")
