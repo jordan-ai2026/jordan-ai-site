@@ -49,6 +49,8 @@ const xCrawler         = require("./xCrawler")
 const xPoster          = require("./xPoster")
 const { startAdbotWebhook }  = require("./adbotWebhook")
 const { startMorningReport } = require("./morningReport")
+const redditMonitor          = require("./redditMonitor")
+const linkedinEngine         = require("./linkedinArticleEngine")
 
 // ARCHIVED (kept in codebase, not running):
 // leadScraper, outboundOutreach, followUpSystem — old agency model
@@ -337,6 +339,12 @@ client.once("ready", () => {
 
   // Start X poster — 9am, 1pm, 6pm ET daily
   xPoster.startXPosterLoop(client, reporter.getReportsChannel())
+
+  // Start Reddit monitor — scans AI displacement threads daily at 7:30am ET
+  redditMonitor.startRedditMonitor(client, reporter.getReportsChannel())
+
+  // Start LinkedIn article engine — generates one article every Monday at 6am ET
+  linkedinEngine.startLinkedInEngine(client, reporter.getReportsChannel())
 
   // Start AdBot webhook server — catches Stripe payments, sends onboarding emails
   startAdbotWebhook(client)
