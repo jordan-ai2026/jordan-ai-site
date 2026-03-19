@@ -1,14 +1,18 @@
 // ============================================
 // JORDAN AI - MAIN BOT
-// CEO orchestrating autonomous business
-// 
-// BRAIN: Claude Opus (main conversation & CEO decisions)
-// WORKERS: GPT-4o-mini (sub-agents, blogs, products)
-// LOOP: Once per day (not hourly)
-// HOMEPAGE: Protected — never overwritten
+//
+// MISSION: Build the "bring your own AI to work" movement.
+// Target: Fiverr/Upwork marketers, freelancers, knowledge workers.
+// Revenue: $10k/month via AdBot tiers + AI workforce products.
+//
+// BRAIN: Claude Sonnet (strategy, content, decisions)
+// WORKERS: GPT-4o-mini (bulk content, reports)
+// X POSTING: Daily — AI workforce thesis, building in public
+// NEWSLETTER: Daily — audience building
+// STOCK SCANNER: Moved to stockbot (separate repo)
 // ============================================
 
-require("dotenv").config()
+require('dotenv').config({override: true})
 const { Client, GatewayIntentBits } = require("discord.js")
 const OpenAI = require("openai")
 const Anthropic = require("@anthropic-ai/sdk")
@@ -18,7 +22,6 @@ const { buildSystemPrompt, addMemory } = require("./ceoBrain")
 const blogLoop = require("./autonomousLoop")
 const { learnFromFeedback, getLearningResponse } = require("./feedbackLearner")
 const { deployWebsite } = require("./gitDeploy")
-const wp = require("./wordpressManager")
 const email = require("./emailManager")
 const crm = require("./crm")
 const billing = require("./billingManager")
@@ -38,21 +41,26 @@ const { evaluateAndRespond, mightNeedPushBack } = require("./pushBack")
 const { getTrustLevel, setTrustLevel, formatTrustStatus } = require("./trustLadder")
 const { updateDashboard, formatDashboard } = require("./revenueDashboard")
 
-// Reporter
-const reporter = require("./reporter")
-const leadScraper = require("./leadScraper")
-const outreach = require("./outboundOutreach")
-const followUp = require("./followUpSystem")
-const websiteGenerator = require("./websiteGenerator")
-const assetManager     = require("./assetManager")
-const chatbotManager   = require("./chatbotManager")
+// Reporter + active systems
+const reporter         = require("./reporter")
 const lessonsManager   = require("./lessonsManager")
+const newsletter       = require("./newsletterManager")
+const xCrawler         = require("./xCrawler")
+const xPoster          = require("./xPoster")
+const { startAdbotWebhook }  = require("./adbotWebhook")
+const { startMorningReport } = require("./morningReport")
+
+// ARCHIVED (kept in codebase, not running):
+// leadScraper, outboundOutreach, followUpSystem — old agency model
+// websiteGenerator, assetManager, chatbotManager, clientRequests — old agency model
+// stockScanner, btcCharlieScanner, tvWatchlistImport — moved to stockbot repo
+// wordpressManager — not needed for new direction
 
 // ============================================
 // DUAL AI SETUP
 // ============================================
 
-// OPUS — The CEO brain (main conversation, strategic decisions)
+// SONNET — The CEO brain (main conversation, strategic decisions; Opus only for proposals)
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY
 })
@@ -147,101 +155,157 @@ function startBlogLoop() {
 
 // ============================================
 // OUTREACH LOOP — runs once/day at 9am
-// Sends cold emails to new "lead" CRM entries
+// REMOVED: startOutreachLoop — old agency model (cold email to local businesses)
+// REMOVED: startFollowUpLoop — old agency model (lead follow-up)
+
 // ============================================
-function startOutreachLoop() {
+// X CRAWLER LOOP — runs once/day at 9am
+// Scans X for AI market intelligence
+// ============================================
+function startXCrawlerLoop() {
+  if (!xCrawler.isConfigured()) {
+    console.log("⚠️  X Crawler: RAPIDAPI_KEY not set — loop not started")
+    return
+  }
+
   function msUntil9am() {
     const now = new Date()
-    const next9am = new Date(now)
-    next9am.setHours(9, 0, 0, 0)
-    if (next9am <= now) next9am.setDate(next9am.getDate() + 1)
-    return next9am - now
+    const next = new Date(now)
+    next.setHours(9, 0, 0, 0)
+    if (next <= now) next.setDate(next.getDate() + 1)
+    return next - now
   }
 
   function scheduleNextRun() {
     setTimeout(async () => {
-      console.log("📧 Running scheduled outreach...")
+      console.log("🔍 Running scheduled X crawl...")
       try {
-        const result = await outreach.runOutreach({ dailyLimit: 5 })
-        console.log(`✅ Outreach done: ${result.sent} sent`)
+        const report = await xCrawler.runScan()
         const reportsChannel = reporter.getReportsChannel()
-        if (reportsChannel && result.sent > 0) {
+        if (reportsChannel) {
           try {
             const channel = await client.channels.fetch(reportsChannel)
-            if (channel) await channel.send(outreach.formatOutreachReport(result))
+            if (channel) await channel.send(xCrawler.formatDiscordReport(report))
           } catch (err) {}
         }
+        console.log(`✅ X crawl done: ${report.selling.length} sellers, ${report.trends.length} trending topics`)
       } catch (err) {
-        console.log("❌ Outreach error:", err.message)
+        console.log("❌ X crawl error:", err.message)
       }
-      scheduleNextRun()  // schedule the next day's run
+      scheduleNextRun()
     }, msUntil9am())
   }
 
   scheduleNextRun()
   const nextRun = new Date(Date.now() + msUntil9am())
-  console.log(`📅 Outreach loop started — next run at ${nextRun.toLocaleTimeString()} (then daily at 9am)`)
+  console.log(`📅 X Crawler loop started — next run at ${nextRun.toLocaleTimeString()} (then daily at 9am)`)
 }
 
 // ============================================
-// FOLLOW-UP LOOP — runs once/day at 10am
-// Follows up with "contacted" leads after 3 days
+// NEWSLETTER LOOP — runs once/day at 8pm
+// Publishes one entry to website/newsletter.html
 // ============================================
-function startFollowUpLoop() {
-  function msUntil10am() {
+function startNewsletterLoop() {
+  function msUntil8pm() {
     const now = new Date()
-    const next10am = new Date(now)
-    next10am.setHours(10, 0, 0, 0)
-    if (next10am <= now) next10am.setDate(next10am.getDate() + 1)
-    return next10am - now
+    const next8pm = new Date(now)
+    next8pm.setHours(20, 0, 0, 0)
+    if (next8pm <= now) next8pm.setDate(next8pm.getDate() + 1)
+    return next8pm - now
   }
 
   function scheduleNextRun() {
     setTimeout(async () => {
-      console.log("🔁 Running scheduled follow-ups...")
+      console.log("📰 Running scheduled newsletter...")
       try {
-        const result = await followUp.runFollowUps({ dailyLimit: 5 })
-        console.log(`✅ Follow-ups done: ${result.sent} sent, ${result.movedToCold} moved to cold`)
-        const reportsChannel = reporter.getReportsChannel()
-        if (reportsChannel && (result.sent > 0 || result.movedToCold > 0)) {
-          try {
-            const channel = await client.channels.fetch(reportsChannel)
-            if (channel) await channel.send(followUp.formatFollowUpReport(result))
-          } catch (err) {}
+        const result = await newsletter.runDailyNewsletter()
+        if (result.skipped) {
+          console.log("   ✅ Newsletter already published today — skipped")
+        } else if (result.success) {
+          console.log(`   ✅ Newsletter published: ${result.date}`)
+          const reportsChannel = reporter.getReportsChannel()
+          if (reportsChannel) {
+            try {
+              const channel = await client.channels.fetch(reportsChannel)
+              if (channel) await channel.send(`📰 **Daily Newsletter Published**\n${result.date}\n\n**Worked On:** ${result.preview?.workedOn || ""}\n**Tip:** ${result.preview?.tipTitle || ""}`)
+            } catch (err) {}
+          }
+        } else {
+          console.log(`   ❌ Newsletter failed: ${result.error}`)
         }
       } catch (err) {
-        console.log("❌ Follow-up error:", err.message)
+        console.log("❌ Newsletter error:", err.message)
       }
-      scheduleNextRun()  // schedule the next day's run
-    }, msUntil10am())
+      scheduleNextRun()
+    }, msUntil8pm())
   }
 
   scheduleNextRun()
-  const nextRun = new Date(Date.now() + msUntil10am())
-  console.log(`📅 Follow-up loop started — next run at ${nextRun.toLocaleTimeString()} (then daily at 10am)`)
+  const nextRun = new Date(Date.now() + msUntil8pm())
+  console.log(`📅 Newsletter loop started — next run at ${nextRun.toLocaleTimeString()} (then daily at 8pm)`)
 }
+
+// ============================================
+// CLIENT REQUEST LOOP — checks inbox every 2 hours
+
+function startRequestLoop() {
+  if (!clientRequests.isConfigured()) {
+    console.log("⚠️  Client Request Loop: SMTP not configured — loop not started")
+    return
+  }
+
+  function msUntilNext2Hour() {
+    const now = new Date()
+    const minutes = now.getMinutes()
+    const seconds = now.getSeconds()
+    // Run at :00 of every even hour
+    const minutesUntilNext = (120 - (now.getHours() % 2) * 60 - minutes) % 120 || 120
+    return (minutesUntilNext * 60 - seconds) * 1000
+  }
+
+  function scheduleNextCheck() {
+    setTimeout(async () => {
+      console.log("📬 Checking client inbox for change requests...")
+      try {
+        const result = await clientRequests.runInboxCheck()
+        if (result.processed > 0) {
+          console.log(`✅ Inbox check: ${result.processed} requests processed, ${result.skipped} skipped`)
+          const reportsChannel = reporter.getReportsChannel()
+          if (reportsChannel) {
+            try {
+              const ch = await client.channels.fetch(reportsChannel)
+              if (ch) await ch.send(`📬 **Client Requests:** Processed ${result.processed} request(s) from clients.`)
+            } catch {}
+          }
+        }
+      } catch (err) {
+        console.log("❌ Inbox check error:", err.message)
+      }
+      scheduleNextCheck()
+    }, msUntilNext2Hour())
+  }
+
+  scheduleNextCheck()
+  console.log(`📬 Client Request Loop started — checks inbox every 2 hours`)
+}
+// REMOVED: startRequestLoop — old agency model (client email inbox checker)
 
 // ============================================
 // BOT STARTUP
 // ============================================
 client.once("ready", () => {
   console.log("\n" + "=".repeat(60))
-  console.log("🤖 JORDAN AI - CEO MODE")
+  console.log("🤖 JORDAN AI — Bring Your Own AI to Work")
   console.log("=".repeat(60))
-  console.log(`   Discord: ${client.user.tag}`)
-  console.log(`   CEO Brain: Claude Opus (Anthropic)`)
-  console.log(`   Workers: GPT-4o-mini (OpenAI)`)
-  console.log(`   Trust Level: ${getTrustLevel().level}/4 - ${getTrustLevel().name}`)
-  console.log(`   Agents: ${listAgents().map(a => a.name).join(", ")}`)
-  console.log(`   Autonomous: Blog every 4 hours (up to 6/day)`)
-  console.log(`   Homepage: PROTECTED`)
-  console.log(`   Email: ${email.isConfigured() ? "✅ Zoho SMTP connected (info@jordan-ai.co)" : "❌ Not configured (add SMTP_USER/SMTP_PASS to .env)"}`)
-  console.log(`   CRM: ${crm.getDashboardStats().totalClients} clients | $${crm.getDashboardStats().mrr}/mo MRR`)
-  console.log(`   Billing: ${billing.isConfigured() ? "✅ Stripe connected" : "❌ Not configured"}`)
-  console.log(`   Social: ${social.getConnectedPlatforms().length > 0 ? social.getConnectedPlatforms().join(", ") : "❌ No platforms (add API keys to .env)"}`)
-  console.log(`   Products: ${Object.keys(fulfill.listProducts()).length} in catalog | Auto-delivery every 5 min`)
-  console.log(`   Agent: 🧠 Claude Opus brain with ${agent.TOOLS.length} tools`)
-  console.log(`   Sub-agents: Writer, Researcher, Builder, Sales, Support (GPT-4o-mini)`)
+  console.log(`   Discord:   ${client.user.tag}`)
+  console.log(`   Mission:   AI workforce tools — $10k/month target`)
+  console.log(`   Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)`)
+  console.log(`   Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)`)
+  console.log(`   Disabled:  Outreach · Follow-up · Client requests (old model)`)
+  console.log(`   Stocks:    Moved to stockbot (separate repo)`)
+  console.log(`   Email:     ${email.isConfigured() ? "✅ Zoho SMTP (info@jordan-ai.co)" : "❌ Not configured"}`)
+  console.log(`   Billing:   ${billing.isConfigured() ? "✅ Stripe connected" : "❌ Not configured"}`)
+  console.log(`   CRM:       ${crm.getDashboardStats().totalClients} clients | $${crm.getDashboardStats().mrr}/mo MRR`)
   console.log("=".repeat(60) + "\n")
   
   // Seed core lessons (idempotent — skips duplicates)
@@ -262,14 +326,29 @@ client.once("ready", () => {
     }
   })
   
-  // Start blog loop — posts every 4 hours automatically
+  // Start blog loop — posts every 4 hours (AI workforce thesis content)
   startBlogLoop()
 
-  // Start outreach loop — emails new leads once per day at 9am
-  startOutreachLoop()
+  // Start newsletter loop — daily at 8pm
+  startNewsletterLoop()
 
-  // Start follow-up loop — follows up with contacted leads daily at 10am
-  startFollowUpLoop()
+  // Start X crawler loop — market intel daily at 9am
+  startXCrawlerLoop()
+
+  // Start X poster — 9am, 1pm, 6pm ET daily
+  xPoster.startXPosterLoop(client, reporter.getReportsChannel())
+
+  // Start AdBot webhook server — catches Stripe payments, sends onboarding emails
+  startAdbotWebhook(client)
+
+  // Daily morning briefing at 8am + weekly strategy Mondays 6:30am
+  startMorningReport(client, reporter.getReportsChannel())
+
+  // DISABLED — old agency model, not running:
+  // startOutreachLoop()    — cold email to local businesses
+  // startFollowUpLoop()    — follow-up for local leads
+  // startRequestLoop()     — client email inbox checker
+  // stockScanner           — moved to stockbot repo
 
   // Schedule nightly self-review at 3am
   scheduleNightlyRoutine(3)
@@ -477,7 +556,7 @@ client.on("messageCreate", async (message) => {
     const statusMsg = `**🤖 Jordan AI Status**
 
 **Mode:** Autonomous Agent
-**CEO Brain:** Claude Opus (Anthropic)
+**CEO Brain:** Claude Sonnet (Anthropic) — Opus for proposals only
 **Workers:** GPT-4o-mini (OpenAI)
 **Tools Available:** ${agent.TOOLS.length}
 **Agent Runs Today:** ${agentStatus.runsToday}/10
@@ -569,6 +648,12 @@ client.on("messageCreate", async (message) => {
     return
   }
 
+  // ========================================
+  // ARCHIVED COMMANDS — old agency model
+  // leads, outreach, followup, website, assets, chatbot, requests
+  // These modules still exist in the codebase but are not active
+  // Uncomment to restore if needed
+  if (false) { // ARCHIVED BLOCK START
   // ========================================
   // LEAD GENERATION
   // ========================================
@@ -1028,6 +1113,252 @@ client.on("messageCreate", async (message) => {
   }
 
   // ========================================
+  // NEWSLETTER COMMANDS
+  // ========================================
+
+  // !newsletter — publish today's entry now (or skip if already published)
+  if (content === "!newsletter" || content === "!newsletter run") {
+    await message.reply("📰 Running newsletter pipeline...")
+    try {
+      const result = await newsletter.runDailyNewsletter()
+      if (result.skipped) {
+        await message.reply(`✅ Already published today — skipping.\n\nUse \`!newsletter force\` to publish again.`)
+      } else if (result.success) {
+        await message.reply(
+          `✅ **Newsletter Published!**\n\n` +
+          `**Date:** ${result.date}\n` +
+          `**Worked On:** ${result.preview?.workedOn || ""}\n` +
+          `**Tip:** ${result.preview?.tipTitle || ""}\n\n` +
+          `Auto-runs daily at 8pm.`
+        )
+      } else {
+        await message.reply(`❌ Newsletter failed: ${result.error}`)
+      }
+    } catch (err) {
+      await message.reply(`❌ Error: ${err.message}`)
+    }
+    return
+  }
+
+  // !newsletter force — publish even if already published today
+  if (content === "!newsletter force") {
+    await message.reply("📰 Force-publishing newsletter entry...")
+    try {
+      const result = await newsletter.runDailyNewsletter(true)
+      if (result.success) {
+        await message.reply(
+          `✅ **Newsletter Force-Published!**\n\n` +
+          `**Date:** ${result.date}\n` +
+          `**Worked On:** ${result.preview?.workedOn || ""}\n` +
+          `**Tip:** ${result.preview?.tipTitle || ""}`
+        )
+      } else {
+        await message.reply(`❌ Newsletter failed: ${result.error}`)
+      }
+    } catch (err) {
+      await message.reply(`❌ Error: ${err.message}`)
+    }
+    return
+  }
+
+  // !newsletter status — check if published today
+  if (content === "!newsletter status") {
+    const publishedToday = newsletter.hasPublishedToday()
+    await message.reply(
+      `**📰 Newsletter Status**\n\n` +
+      `Published today: **${publishedToday ? "Yes ✅" : "No ❌"}**\n\n` +
+      `Auto-runs daily at 8pm. Use \`!newsletter\` to publish now.`
+    )
+    return
+  }
+
+  // ========================================
+  // X CRAWLER COMMANDS
+  // ========================================
+
+  // !x scan — run a full X crawl right now
+  if (content === "!x scan" || content === "!x") {
+    if (!xCrawler.isConfigured()) {
+      await message.reply(
+        "❌ **X Crawler not configured.**\n\n" +
+        "Add one of these to your `.env` file:\n" +
+        "• `RAPIDAPI_KEY=your_key` — subscribe to a Twitter API on rapidapi.com (free tiers available)\n" +
+        "• `TWITTER_BEARER_TOKEN=your_token` — Twitter/X developer portal (Basic $100/mo)"
+      )
+      return
+    }
+    await message.reply("🔍 Running X scan now... (takes ~2 minutes)")
+    try {
+      const report = await xCrawler.runScan()
+      const text   = xCrawler.formatDiscordReport(report)
+      await sendLongMessage(message.channel, text)
+    } catch (err) {
+      await message.reply(`❌ Scan failed: ${err.message}`)
+    }
+    return
+  }
+
+  // !x report — show the last saved report
+  if (content === "!x report") {
+    const report = xCrawler.loadLastReport()
+    if (!report) {
+      await message.reply("No report yet. Run `!x scan` first.")
+      return
+    }
+    await sendLongMessage(message.channel, xCrawler.formatDiscordReport(report))
+    return
+  }
+
+  // !x keywords — list current keywords
+  if (content === "!x keywords" || content === "!x keywords list") {
+    const kws = xCrawler.loadKeywords()
+    await message.reply(`**🔎 X Crawler Keywords (${kws.length})**\n${kws.map((k, i) => `${i + 1}. "${k}"`).join("\n")}`)
+    return
+  }
+
+  // !x keywords add "keyword" — add a keyword
+  if (content.startsWith("!x keywords add")) {
+    const match = content.match(/!x keywords add\s+"([^"]+)"/) || content.match(/!x keywords add\s+(.+)/)
+    if (!match) {
+      await message.reply('Usage: `!x keywords add "AI voice agent"`')
+      return
+    }
+    const result = xCrawler.addKeyword(match[1])
+    if (result.added) {
+      await message.reply(`✅ Added keyword: **"${result.keyword}"** — now tracking ${result.total} keywords`)
+    } else {
+      await message.reply(`⚠️ Already tracking that keyword.`)
+    }
+    return
+  }
+
+  // !x keywords remove "keyword" — remove a keyword
+  if (content.startsWith("!x keywords remove")) {
+    const match = content.match(/!x keywords remove\s+"([^"]+)"/) || content.match(/!x keywords remove\s+(.+)/)
+    if (!match) {
+      await message.reply('Usage: `!x keywords remove "AI automation"`')
+      return
+    }
+    const result = xCrawler.removeKeyword(match[1])
+    if (result.removed) {
+      await message.reply(`✅ Removed keyword: **"${result.keyword}"**`)
+    } else {
+      await message.reply(`❌ Keyword not found. Use \`!x keywords\` to see the list.`)
+    }
+    return
+  }
+
+  if (false) { // ARCHIVED: client requests + chatbot commands
+  // ========================================
+  // CLIENT REQUEST COMMANDS
+  // ========================================
+
+  // !requests check — check inbox now
+  if (content === "!requests check" || content === "!requests") {
+    if (!clientRequests.isConfigured()) {
+      await message.reply("❌ Email not configured. Set SMTP_USER and SMTP_PASS in .env")
+      return
+    }
+    await message.reply("📬 Checking client inbox...")
+    try {
+      const result = await clientRequests.runInboxCheck()
+      await message.reply(
+        `📬 **Inbox Check Done**\n` +
+        `• Processed: ${result.processed} request(s)\n` +
+        `• Skipped (not clients): ${result.skipped}\n` +
+        (result.errors.length ? `• Errors: ${result.errors.join(", ")}` : "• No errors")
+      )
+    } catch (err) {
+      await message.reply(`❌ Error: ${err.message}`)
+    }
+    return
+  }
+
+  // !requests process [slug] "request text"
+  if (content.startsWith("!requests process ")) {
+    const match = content.match(/!requests process\s+(\S+)\s+"([^"]+)"/)
+    if (!match) {
+      await message.reply('Usage: `!requests process [slug] "change phone to 555-1234"`')
+      return
+    }
+    const [, slug, requestText] = match
+    await message.reply(`🔧 Processing request for ${slug}...`)
+    try {
+      const result = await clientRequests.processRequest(slug, requestText, null)
+      if (result.success) {
+        await message.reply(
+          `✅ **Request processed for ${slug}**\n` +
+          `• Change: ${result.result?.description || "applied"}\n` +
+          `• Deployed: ${result.deployed ? "Yes ✅" : "No ⚠️"}`
+        )
+      } else {
+        await message.reply(`❌ Failed: ${result.error}`)
+      }
+    } catch (err) {
+      await message.reply(`❌ Error: ${err.message}`)
+    }
+    return
+  }
+
+  // !requests history [slug]
+  if (content.startsWith("!requests history")) {
+    const slug = content.split(" ")[2]
+    if (!slug) {
+      await message.reply("Usage: `!requests history [client-slug]`")
+      return
+    }
+    const history = clientRequests.getRequestHistory(slug)
+    if (history.length === 0) {
+      await message.reply(`No request history for ${slug} yet.`)
+      return
+    }
+    const lines = [`**📋 Request History — ${slug}**`]
+    for (const entry of history.slice(0, 5)) {
+      lines.push(`• **${entry.date?.split("T")[0] || "?"}** — ${entry.requestText?.substring(0, 60)}`)
+      lines.push(`  → ${entry.result?.description || entry.change?.type || "processed"}`)
+    }
+    if (history.length > 5) lines.push(`\n_...and ${history.length - 5} more_`)
+    await message.reply(lines.join("\n"))
+    return
+  }
+
+  // !requests sitemap [slug]
+  if (content.startsWith("!requests sitemap")) {
+    const slug = content.split(" ")[2]
+    if (!slug) {
+      await message.reply("Usage: `!requests sitemap [client-slug]`")
+      return
+    }
+    try {
+      const sitemap = clientRequests.generateSitemap(slug)
+      if (!sitemap) {
+        await message.reply(`❌ No index.html found for ${slug}`)
+        return
+      }
+      const sections = Object.entries(sitemap.sections).map(([k, v]) => `• **${k}** (lines ${v.line_start}–${v.line_end}): ${v.description}`).join("\n")
+      const editable = Object.entries(sitemap.editable).map(([k, v]) => `• **${k}**: \`${v.current}\` (${v.lines?.length || 0} locations)`).join("\n")
+      await message.reply(`📋 **Sitemap for ${slug}**\n\n**Sections:**\n${sections}\n\n**Editable fields:**\n${editable}`)
+    } catch (err) {
+      await message.reply(`❌ Error generating sitemap: ${err.message}`)
+    }
+    return
+  }
+
+  // !x help — show all x commands
+  if (content === "!x help") {
+    await message.reply(
+      "**🔍 X Crawler Commands**\n\n" +
+      "`!x scan` — Run a full X scan now (takes ~2 min)\n" +
+      "`!x report` — Show the last saved report\n" +
+      "`!x keywords` — List current search keywords\n" +
+      '`!x keywords add "keyword"` — Add a search keyword\n' +
+      '`!x keywords remove "keyword"` — Remove a keyword\n\n' +
+      "*Auto-runs daily at 9am and posts to reports channel.*"
+    )
+    return
+  }
+
+  // ========================================
   // CHATBOT COMMANDS
   // ========================================
 
@@ -1158,6 +1489,7 @@ client.on("messageCreate", async (message) => {
     await message.reply(lines.join("\n"))
     return
   }
+  } // ARCHIVED: client requests + chatbot commands END
 
   // !deploy - Deploy website (but NEVER overwrite index.html)
   if (content === "!deploy") {
@@ -1166,6 +1498,7 @@ client.on("messageCreate", async (message) => {
     await message.reply("✅ Deployed! Homepage was NOT overwritten.")
     return
   }
+  } // ARCHIVED BLOCK END
 
   // ========================================
   // WORDPRESS CLIENT MANAGEMENT
@@ -2556,6 +2889,14 @@ client.on("messageCreate", async (message) => {
     return
   }
 
+  // Stock/btcCharlie/tvImport commands moved to stockbot repo
+
+  // X POSTER COMMANDS — !xpost now/status/preview
+  if (xPoster.isXPostCommand(content)) {
+    await xPoster.handleXPostCommand(message)
+    return
+  }
+
   // !help
   if (content === "!help") {
     const crmStats = crm.getDashboardStats()
@@ -2597,10 +2938,13 @@ client.on("messageCreate", async (message) => {
 **Agent** (\`!agent help\`)
 \`!agent <goal>\` — Give Jordan a goal, watch it work autonomously
 
+**Stocks** (\`!rules show\`)
+\`!watchlist add/remove/show\` · \`!scan now\` · \`!alerts on/off\`
+
 **System**
 \`!status\` · \`!dashboard\` · \`!review\` · \`!trust\` · \`!remember\` · \`!deploy\`
 
-**AI:** CEO = Claude Opus (agent brain) | Workers = GPT-4o-mini
+**AI:** CEO = Claude Sonnet (Opus for proposals) | Workers = GPT-4o-mini
 
 **Pro tip:** You can also just talk to me normally.
 I'll use tools automatically when I need to.`
@@ -2714,23 +3058,26 @@ I'll use tools automatically when I need to.`
 
     const result = await agent.agentChat(chatContent, history)
 
-    if (result.success && result.response) {
+    if (result.success) {
       // Update conversation history
       history.push({ role: "user", content: chatContent })
-      history.push({ role: "assistant", content: result.response })
-      
+      history.push({ role: "assistant", content: result.response || "✅ Done." })
+
       // Show what tools were used
       let toolNote = ""
       if (result.toolsUsed.length > 0) {
-        const tools = result.toolsUsed.map(t => 
+        const tools = result.toolsUsed.map(t =>
           `${t.result === "success" ? "✅" : t.result === "needs_approval" ? "⚠️" : "❌"} ${t.tool}`
         ).join(", ")
         toolNote = `\n\n_Tools used: ${tools}_`
       }
-      
-      await sendLongMessage(message.channel, result.response + toolNote)
+
+      // Use fallback message if Claude finished via tools with no text response
+      const displayText = result.response || "✅ Done."
+      await sendLongMessage(message.channel, displayText + toolNote)
     } else {
-      await message.channel.send("I ran into an issue. Try again or use a specific !command.")
+      const errDetail = result.response ? ` — ${result.response.substring(0, 200)}` : ""
+      await message.channel.send(`I ran into an issue. Try again or use a specific !command.${errDetail}`)
     }
     
   } catch (err) {

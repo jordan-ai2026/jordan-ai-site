@@ -16,7 +16,7 @@
 //           TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET
 // ============================================
 
-require('dotenv').config()
+require('dotenv').config({override: true})
 const fs      = require('fs')
 const path    = require('path')
 const crypto  = require('crypto')
@@ -84,11 +84,12 @@ function getLatestIntel() {
 // ============================================
 
 const POST_TYPES = [
-  'thesis',       // core AI workforce belief
-  'thesis',       // weighted heavier
+  'displaced',    // speaking directly to at-risk workers
+  'displaced',    // weighted heaviest — biggest audience
+  'company',      // speaking to companies about upgrading workforce
   'building',     // building in public
-  'practical',    // tips for freelancers/marketers
-  'thesis',       // more thesis
+  'displaced',    // more displaced worker content
+  'practical',    // actionable tips
 ]
 
 // ============================================
@@ -100,20 +101,30 @@ async function generatePost(type) {
   const recentPosts = getRecentPosts(20)
   const intel       = getLatestIntel()
 
+  // Pick a specific role to speak to for displaced/practical posts
+  const ROLES = ['recruiter', 'marketing coordinator', 'customer service rep', 'data analyst', 'admin assistant', 'paralegal', 'inside sales rep', 'bookkeeper']
+  const role = ROLES[Math.floor(Math.random() * ROLES.length)]
+
   const typeInstructions = {
-    thesis: `Write a single tweet about the AI workforce future. 
-Core belief: employees who bring their own trained AI agents to jobs will dominate hiring, get paid more, and outperform everyone else.
-Be specific and contrarian. Example angle: "Your next employer won't ask for a resume. They'll ask for your AI's performance metrics."
-Do NOT say "AI is changing everything" — be specific about HOW and WHAT.`,
+    displaced: `Write a single tweet speaking DIRECTLY to a ${role} whose job is being affected by AI.
+Acknowledge the fear. Then give them hope and a path forward.
+The path: build your own AI agent that makes you worth more than anyone else in the room.
+Be specific to their role. Example for recruiter: "If you're a recruiter and you're not using AI to source candidates, you're competing against people who are. Here's the difference between surviving this and not."
+Be empathetic but direct. No hype. Real talk.`,
+
+    company: `Write a single tweet aimed at business owners, HR directors, or COOs thinking about AI and their workforce.
+Contrarian angle: cutting people for AI is short-sighted. Upgrading your people with AI is the real competitive advantage.
+Hit the ROI angle: a knowledge worker with their own AI agent produces 2-3x the output. Same salary. Better results.
+Example: "The companies replacing employees with AI will regret it in 3 years. The ones upgrading employees with AI will own their markets."`,
 
     building: `Write a single tweet about building Jordan AI — an autonomous AI business — in public.
 Share something real: a metric, a lesson, something that broke, something that worked.
 Be honest, specific, and slightly vulnerable. Numbers preferred.
 Example: "Week 3 of running Jordan AI autonomously. Blog loop posted 42 articles. 0 clients. Still figuring out distribution."`,
 
-    practical: `Write a single tweet with a practical tip for Fiverr/Upwork freelancers or social media managers.
-Focus on using AI to analyze ad performance, write better reports, manage more clients, or build their own AI tools.
-Make it actionable. One thing they can do today.
+    practical: `Write a single tweet with one specific, actionable tip for a ${role} who wants to use AI to stay ahead.
+Something they can actually do this week. Tool recommendation, prompt idea, workflow change.
+Be specific to their role. Make it immediately useful.
 ${intel ? `Current trending topics: ${intel.trends.join(', ')}` : ''}`,
   }
 
