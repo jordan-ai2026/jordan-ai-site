@@ -178,7 +178,7 @@ const TOOLS = [
   },
   {
     name: "wp_create_post",
-    description: "Write and publish a blog post to a client's WordPress site.",
+    description: "Write and publish a blog post to a CLIENT's WordPress site. NOT for jordan-ai.co (which is a static site — use create_blog_post for that).",
     input_schema: {
       type: "object",
       properties: {
@@ -191,7 +191,7 @@ const TOOLS = [
   },
   {
     name: "wp_create_page",
-    description: "Create a new page on a client's WordPress site.",
+    description: "Create a new page on a CLIENT's WordPress site. NOT for jordan-ai.co (static site).",
     input_schema: {
       type: "object",
       properties: {
@@ -203,7 +203,7 @@ const TOOLS = [
   },
   {
     name: "wp_publish_draft",
-    description: "Publish a draft post on a client's WordPress site.",
+    description: "Publish a draft post on a CLIENT's WordPress site. NOT for jordan-ai.co (static site).",
     input_schema: {
       type: "object",
       properties: {
@@ -215,7 +215,7 @@ const TOOLS = [
   },
   {
     name: "wp_list_drafts",
-    description: "List all draft posts on a client's WordPress site.",
+    description: "List draft posts on a CLIENT's WordPress site. NOT for jordan-ai.co (static site).",
     input_schema: {
       type: "object",
       properties: {
@@ -830,6 +830,11 @@ async function executeTool(toolName, toolInput) {
       }
       
       case "wp_create_post": {
+        // GUARDRAIL: WordPress tools are for CLIENT sites only.
+        // jordan-ai.co is a static site — use create_blog_post instead.
+        if (!toolInput.slug || toolInput.slug === "jordan-ai") {
+          return { error: "wp_create_post is only for client WordPress sites. To publish a blog post on jordan-ai.co, use the create_blog_post tool instead." }
+        }
         return await wp.writeAndPublish(toolInput.slug, toolInput.topic, openai, {
           type: "post",
           categories: toolInput.categories || ["Blog"]
@@ -837,14 +842,23 @@ async function executeTool(toolName, toolInput) {
       }
       
       case "wp_create_page": {
+        if (!toolInput.slug || toolInput.slug === "jordan-ai") {
+          return { error: "wp_create_page is only for client WordPress sites. jordan-ai.co is a static site — use the appropriate static site tool instead." }
+        }
         return await wp.writeAndPublish(toolInput.slug, toolInput.topic, openai, { type: "page" })
       }
       
       case "wp_publish_draft": {
+        if (!toolInput.slug || toolInput.slug === "jordan-ai") {
+          return { error: "wp_publish_draft is only for client WordPress sites. jordan-ai.co is a static site." }
+        }
         return await wp.publishDraft(toolInput.slug, toolInput.post_id)
       }
       
       case "wp_list_drafts": {
+        if (!toolInput.slug || toolInput.slug === "jordan-ai") {
+          return { error: "wp_list_drafts is only for client WordPress sites. jordan-ai.co is a static site." }
+        }
         const result = await wp.listPosts(toolInput.slug, { status: "draft" })
         if (result.success) {
           return { drafts: result.data.map(d => ({ id: d.id, title: d.title.rendered, date: d.date })) }

@@ -15,12 +15,15 @@
     "axios": "^1.13.6",
     "discord.js": "^14.25.1",
     "dotenv": "^17.3.1",
+    "imapflow": "^1.2.15",
     "node-cron": "^4.2.1",
     "nodemailer": "^8.0.2",
     "openai": "^6.29.0",
     "openclaw": "^2026.3.12",
+    "pdf-parse": "^2.4.5",
     "simple-git": "^3.33.0",
     "stripe": "^20.4.1",
+    "technicalindicators": "^3.1.0",
     "twitter-api-v2": "^1.29.0"
   }
 }

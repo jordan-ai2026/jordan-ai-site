@@ -17,7 +17,19 @@
       "Bash(node -e \"require\\(''''./index''''\\)\")",
       "Bash(node -e \"const wg = require\\(''''./websiteGenerator''''\\); console.log\\(Object.keys\\(wg\\)\\)\")",
       "Bash(node --check websiteGenerator.js)",
-      "Bash(node -e \"const wg = require\\(''''./websiteGenerator''''\\); console.log\\(''''exports:'''', Object.keys\\(wg\\).join\\('''', ''''\\)\\)\")"
+      "Bash(node -e \"const wg = require\\(''''./websiteGenerator''''\\); console.log\\(''''exports:'''', Object.keys\\(wg\\).join\\('''', ''''\\)\\)\")",
+      "Bash(git:*)",
+      "Bash(grep:*)",
+      "Bash(powershell -Command \"Get-WmiObject Win32_Process | Where-Object { $_.Name -eq 'node.exe' } | Select-Object ProcessId, CommandLine | Format-List\")",
+      "Bash(npm uninstall:*)",
+      "Bash(node -e \"require\\(''''./clientRequests''''\\)\")",
+      "Bash(curl:*)",
+      "WebFetch(domain:www.jordan-ai.co)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const s = require\\(''./stockScanner''\\); console.log\\(''OK — exports:'', Object.keys\\(s\\).join\\('', ''\\)\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/yahoo-finance2/package.json''\\); console.log\\(''main:'', p.main\\); console.log\\(''module:'', p.module\\); console.log\\(''exports keys:'', p.exports ? Object.keys\\(p.exports\\).slice\\(0,5\\).join\\('', ''\\) : ''none''\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/yahoo-finance2/package.json''\\); console.log\\(JSON.stringify\\(p.exports[''.''], null, 2\\)\\)\")",
+      "Bash(node -e \"const s = require\\(''./stockScanner''\\); console.log\\(''OK —'', Object.keys\\(s\\).join\\('', ''\\)\\)\")"
     ]
   }
 }

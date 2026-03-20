@@ -1,0 +1,51 @@
+{
+  "rsi": {
+    "period": 14,
+    "oversold": 30,
+    "overbought": 70
+  },
+  "ema": {
+    "periods": [20, 50, 200]
+  },
+  "macd": {
+    "fast": 12,
+    "slow": 26,
+    "signal": 9
+  },
+  "volume": {
+    "spikeMultiplier": 2.0,
+    "lookbackPeriod": 20
+  },
+  "gap": {
+    "minPct": 5.0
+  },
+  "breakout": {
+    "nearHighPct": 1.0,
+    "nearLowPct": 1.0
+  },
+  "swingTrading": {
+    "entry": {
+      "notes": "Look for RSI oversold + volume spike + EMA support as confluence. Minimum 2 confluent signals before entering.",
+      "minSignals": 2,
+      "preferredSetups": [
+        "RSI_OVERSOLD + VOLUME_SPIKE",
+        "EMA20_CROSS_ABOVE + VOLUME_SPIKE",
+        "MACD_BULLISH_CROSS + EMA20_CROSS_ABOVE",
+        "52W_HIGH + VOLUME_SPIKE (breakout momentum)"
+      ]
+    },
+    "exit": {
+      "stopLossPercent": 5,
+      "takeProfitRatio": 2,
+      "notes": "2:1 risk/reward minimum. Trail stop after 1R gain. Exit if daily close below entry EMA. Don't hold through earnings."
+    },
+    "positionSizing": {
+      "notes": "Risk 1-2% of account per trade. Size = (Account * RiskPct) / (Entry - Stop). Never size into a gap open."
+    },
+    "avoidList": [
+      "Penny stocks under $5",
+      "Stocks with earnings within 3 days",
+      "Stocks with average daily volume under 500k"
+    ]
+  }
+}

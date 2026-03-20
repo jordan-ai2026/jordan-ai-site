@@ -1,0 +1,1444 @@
+2026-03-19 12:48:29: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 12:48:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 12:48:33: 
+2026-03-19 12:48:33: ============================================================
+2026-03-19 12:48:33: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 12:48:33: ============================================================
+2026-03-19 12:48:33:    Discord:   Jordan AI#9539
+2026-03-19 12:48:33:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 12:48:33:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 12:48:33:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 12:48:33:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 12:48:33:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 12:48:33:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 12:48:33:    Billing:   ✅ Stripe connected
+2026-03-19 12:48:33:    CRM:       2 clients | $0/mo MRR
+2026-03-19 12:48:33: ============================================================
+2026-03-19 12:48:33: 
+2026-03-19 12:48:33:    Lessons: 7 loaded into agent prompts
+2026-03-19 12:48:33: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 12:48:33: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 12:48:33: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 12:48:33: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 12:48:33: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 12:48:33: 📊 Updating dashboard...
+2026-03-19 12:48:33: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 12:48:33:    ✅ Dashboard updated
+2026-03-19 12:51:33: 📝 Running first blog cycle...
+2026-03-19 12:51:33: 
+2026-03-19 12:51:33: ============================================================
+2026-03-19 12:51:33: 📝 BLOG CYCLE #1
+2026-03-19 12:51:33: ============================================================
+2026-03-19 12:51:33: 
+2026-03-19 12:51:33: 🧠 Picking blog topic...
+2026-03-19 12:51:33:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 12:51:33: 📌 Topic [📡 X Trend]: Unlock Cost Savings: How AI Chatbots Can Transform Small Business Proposals in Columbia, SC
+2026-03-19 12:51:33: 
+2026-03-19 12:51:33: ✍️ Writing: Unlock Cost Savings: How AI Chatbots Can Transform Small Business Proposals in Columbia, SC
+2026-03-19 12:51:33: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 12:51:33:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 12:51:50:    ✅ Ink completed task
+2026-03-19 12:51:50: ✅ Blog post created: website/blog/unlock-cost-savings-how-ai-chatbots-can-transform-small-business-proposals-in-columbia-sc.html
+2026-03-19 12:51:50: ✅ Homepage created: website/index.html
+2026-03-19 12:51:50:    → 6 products listed
+2026-03-19 12:51:50:    → 31 blog posts listed
+2026-03-19 12:51:50:    → Services link included
+2026-03-19 12:51:50: ✅ Blog published: https://jordan-ai.co/blog/unlock-cost-savings-how-ai-chatbots-can-transform-small-business-proposals-in-columbia-sc.html
+2026-03-19 12:51:50: ✅ Blog index created
+2026-03-19 12:51:50: 🚀 Deploying...
+2026-03-19 12:51:50: 🌐 Deploying website changes...
+2026-03-19 12:51:51: ✅ Git: Committed - "New blog: Unlock Cost Savings: How AI Chatbots Can Transform Small Business Proposals in Columbia, SC"
+2026-03-19 12:51:52: ✅ Git: Pushed to GitHub
+2026-03-19 12:51:52: ✅ Website deployed!
+2026-03-19 12:51:52:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 12:51:52: ✅ First blog cycle complete
+2026-03-19 13:00:33: [xPoster] Generating thesis post...
+2026-03-19 13:00:35: [xPoster] Posting: "In the evolving job market, hiring managers will demand proof of your AI's productivity and skill set over your personal history. Those with custom-trained AIs will secure better positions and compensation, while traditional resumes will fade into obsolescence."
+2026-03-19 13:06:24: [jdjordan]: !xpost status
+2026-03-19 13:12:12: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:12:13: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:12:13: 
+2026-03-19 13:12:13: ============================================================
+2026-03-19 13:12:13: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 13:12:13: ============================================================
+2026-03-19 13:12:13:    Discord:   Jordan AI#9539
+2026-03-19 13:12:13:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 13:12:13:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 13:12:13:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 13:12:13:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 13:12:13:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 13:12:13:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 13:12:13:    Billing:   ✅ Stripe connected
+2026-03-19 13:12:13:    CRM:       2 clients | $0/mo MRR
+2026-03-19 13:12:13: ============================================================
+2026-03-19 13:12:13: 
+2026-03-19 13:12:13:    Lessons: 7 loaded into agent prompts
+2026-03-19 13:12:13: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 13:12:13: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 13:12:13: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 13:12:13: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 13:12:13: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 13:12:13: 📊 Updating dashboard...
+2026-03-19 13:12:13: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 13:12:14:    ✅ Dashboard updated
+2026-03-19 13:15:13: 📝 Running first blog cycle...
+2026-03-19 13:15:13: 
+2026-03-19 13:15:13: ============================================================
+2026-03-19 13:15:13: 📝 BLOG CYCLE #1
+2026-03-19 13:15:13: ============================================================
+2026-03-19 13:15:13: 
+2026-03-19 13:15:13: 🧠 Picking blog topic...
+2026-03-19 13:15:13:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 13:15:16: 📌 Topic [📡 X Trend]: Streamlining Your Small Business: How AI Automation Workflows Can Cut Costs and Boost Efficiency in Columbia, SC
+2026-03-19 13:15:16: 
+2026-03-19 13:15:16: ✍️ Writing: Streamlining Your Small Business: How AI Automation Workflows Can Cut Costs and Boost Efficiency in Columbia, SC
+2026-03-19 13:15:16: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 13:15:16:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 13:15:32:    ✅ Ink completed task
+2026-03-19 13:15:32: ✅ Blog post created: website/blog/streamlining-your-small-business-how-ai-automation-workflows-can-cut-costs-and-boost-efficiency-in-columbia-sc.html
+2026-03-19 13:15:32: ✅ Homepage created: website/index.html
+2026-03-19 13:15:32:    → 6 products listed
+2026-03-19 13:15:32:    → 32 blog posts listed
+2026-03-19 13:15:32:    → Services link included
+2026-03-19 13:15:32: ✅ Blog published: https://jordan-ai.co/blog/streamlining-your-small-business-how-ai-automation-workflows-can-cut-costs-and-boost-efficiency-in-columbia-sc.html
+2026-03-19 13:15:32: ✅ Blog index created
+2026-03-19 13:15:32: 🚀 Deploying...
+2026-03-19 13:15:32: 🌐 Deploying website changes...
+2026-03-19 13:15:35: ✅ Git: Committed - "New blog: Streamlining Your Small Business: How AI Automation Workflows Can Cut Costs and Boost Efficiency in Columbia, SC"
+2026-03-19 13:15:37: ✅ Git: Pushed to GitHub
+2026-03-19 13:15:37: ✅ Website deployed!
+2026-03-19 13:15:37:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 13:15:37: ✅ First blog cycle complete
+2026-03-19 13:33:59: [dotenv@17.3.1] injecting env (6) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:34:00: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 13:34:01: 
+2026-03-19 13:34:01: ============================================================
+2026-03-19 13:34:01: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 13:34:01: ============================================================
+2026-03-19 13:34:01:    Discord:   Jordan AI#9539
+2026-03-19 13:34:01:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 13:34:01:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 13:34:01:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 13:34:01:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 13:34:01:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 13:34:01:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 13:34:01:    Billing:   ✅ Stripe connected
+2026-03-19 13:34:01:    CRM:       2 clients | $0/mo MRR
+2026-03-19 13:34:01: ============================================================
+2026-03-19 13:34:01: 
+2026-03-19 13:34:01:    Lessons: 7 loaded into agent prompts
+2026-03-19 13:34:01: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 13:34:01: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 13:34:01: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 13:34:01: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 13:34:01: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 13:34:01: 📊 Updating dashboard...
+2026-03-19 13:34:01: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 13:34:01: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 13:34:01: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 13:34:01:    ✅ Dashboard updated
+2026-03-19 13:34:03: [dotenv@17.3.1] injecting env (6) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 13:34:04: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 13:34:05: 
+2026-03-19 13:34:05: ============================================================
+2026-03-19 13:34:05: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 13:34:05: ============================================================
+2026-03-19 13:34:05:    Discord:   Jordan AI#9539
+2026-03-19 13:34:05:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 13:34:05:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 13:34:05:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 13:34:05:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 13:34:05:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 13:34:05:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 13:34:05:    Billing:   ✅ Stripe connected
+2026-03-19 13:34:05:    CRM:       2 clients | $0/mo MRR
+2026-03-19 13:34:05: ============================================================
+2026-03-19 13:34:05: 
+2026-03-19 13:34:05:    Lessons: 7 loaded into agent prompts
+2026-03-19 13:34:05: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 13:34:05: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 13:34:05: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 13:34:05: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 13:34:05: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 13:34:05: 📊 Updating dashboard...
+2026-03-19 13:34:05: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 13:34:05: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 13:34:05: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 13:34:05:    ✅ Dashboard updated
+2026-03-19 13:37:05: 📝 Running first blog cycle...
+2026-03-19 13:37:05: 
+2026-03-19 13:37:05: ============================================================
+2026-03-19 13:37:05: 📝 BLOG CYCLE #1
+2026-03-19 13:37:05: ============================================================
+2026-03-19 13:37:05: 
+2026-03-19 13:37:05: 🧠 Picking blog topic...
+2026-03-19 13:37:05:    📚 Using evergreen SEO topic (30% rotation)
+2026-03-19 13:37:07: 📌 Topic [📚 Evergreen SEO]: How AI-Powered Automation Can Transform Your Columbia Business: Improving Efficiency and Understanding Your Workflow
+2026-03-19 13:37:07: 
+2026-03-19 13:37:07: ✍️ Writing: How AI-Powered Automation Can Transform Your Columbia Business: Improving Efficiency and Understanding Your Workflow
+2026-03-19 13:37:07: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 13:37:07:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 13:37:19:    ✅ Ink completed task
+2026-03-19 13:37:19: ✅ Blog post created: website/blog/how-ai-powered-automation-can-transform-your-columbia-business-improving-efficiency-and-understanding-your-workflow.html
+2026-03-19 13:37:19: ✅ Homepage created: website/index.html
+2026-03-19 13:37:19:    → 6 products listed
+2026-03-19 13:37:19:    → 33 blog posts listed
+2026-03-19 13:37:19:    → Services link included
+2026-03-19 13:37:19: ✅ Blog published: https://jordan-ai.co/blog/how-ai-powered-automation-can-transform-your-columbia-business-improving-efficiency-and-understanding-your-workflow.html
+2026-03-19 13:37:19: ✅ Blog index created
+2026-03-19 13:37:19: 🚀 Deploying...
+2026-03-19 13:37:19: 🌐 Deploying website changes...
+2026-03-19 13:37:21: ✅ Git: Committed - "New blog: How AI-Powered Automation Can Transform Your Columbia Business: Improving Efficiency and Understanding Your Workflow"
+2026-03-19 13:37:23: ✅ Git: Pushed to GitHub
+2026-03-19 13:37:23: ✅ Website deployed!
+2026-03-19 13:37:23:    📊 Blog tracked in market-intel.json (source: evergreen)
+2026-03-19 13:37:23: ✅ First blog cycle complete
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 13:45:37: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 13:45:38: 
+2026-03-19 13:45:38: ============================================================
+2026-03-19 13:45:38: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 13:45:38: ============================================================
+2026-03-19 13:45:38:    Discord:   Jordan AI#9539
+2026-03-19 13:45:38:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 13:45:38:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 13:45:38:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 13:45:38:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 13:45:38:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 13:45:38:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 13:45:38:    Billing:   ✅ Stripe connected
+2026-03-19 13:45:38:    CRM:       2 clients | $0/mo MRR
+2026-03-19 13:45:38: ============================================================
+2026-03-19 13:45:38: 
+2026-03-19 13:45:38:    Lessons: 7 loaded into agent prompts
+2026-03-19 13:45:38: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 13:45:38: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 13:45:38: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 13:45:38: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 13:45:38: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 13:45:38: 📊 Updating dashboard...
+2026-03-19 13:45:38: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 13:45:38: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 13:45:38: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 13:45:38:    ✅ Dashboard updated
+2026-03-19 13:48:38: 📝 Running first blog cycle...
+2026-03-19 13:48:38: 
+2026-03-19 13:48:38: ============================================================
+2026-03-19 13:48:38: 📝 BLOG CYCLE #1
+2026-03-19 13:48:38: ============================================================
+2026-03-19 13:48:38: 
+2026-03-19 13:48:38: 🧠 Picking blog topic...
+2026-03-19 13:48:38:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 13:48:39: 📌 Topic [📡 X Trend]: How AI Automation Workflows Can Save Small Businesses in Columbia, SC Time and Money
+2026-03-19 13:48:39: 
+2026-03-19 13:48:39: ✍️ Writing: How AI Automation Workflows Can Save Small Businesses in Columbia, SC Time and Money
+2026-03-19 13:48:39: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 13:48:39:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 13:48:56:    ✅ Ink completed task
+2026-03-19 13:48:56: ✅ Blog post created: website/blog/how-ai-automation-workflows-can-save-small-businesses-in-columbia-sc-time-and-money.html
+2026-03-19 13:48:56: ✅ Homepage created: website/index.html
+2026-03-19 13:48:56:    → 6 products listed
+2026-03-19 13:48:56:    → 34 blog posts listed
+2026-03-19 13:48:56:    → Services link included
+2026-03-19 13:48:56: ✅ Blog published: https://jordan-ai.co/blog/how-ai-automation-workflows-can-save-small-businesses-in-columbia-sc-time-and-money.html
+2026-03-19 13:48:56: ✅ Blog index created
+2026-03-19 13:48:56: 🚀 Deploying...
+2026-03-19 13:48:56: 🌐 Deploying website changes...
+2026-03-19 13:48:59: ✅ Git: Committed - "New blog: How AI Automation Workflows Can Save Small Businesses in Columbia, SC Time and Money"
+2026-03-19 13:49:01: ✅ Git: Pushed to GitHub
+2026-03-19 13:49:01: ✅ Website deployed!
+2026-03-19 13:49:01:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 13:49:01: ✅ First blog cycle complete
+2026-03-19 14:15:49: [jdjordan]: !xpost now
+2026-03-19 14:15:50: [xPoster] Generating thesis post...
+2026-03-19 14:15:52: [xPoster] Posting: "Prepare for a hiring landscape where the question shifts from "What can you do?" to "What can your AI do?" Employees with bespoke AI agents will leverage data-driven insights for strategic decisions, eclipsing those relying on outdated credentials and experience."
+2026-03-19 14:27:29: [dotenv@17.3.1] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:27:30: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:27:31: 
+2026-03-19 14:27:31: ============================================================
+2026-03-19 14:27:31: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 14:27:31: ============================================================
+2026-03-19 14:27:31:    Discord:   Jordan AI#9539
+2026-03-19 14:27:31:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 14:27:31:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 14:27:31:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 14:27:31:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 14:27:31:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 14:27:31:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 14:27:31:    Billing:   ✅ Stripe connected
+2026-03-19 14:27:31:    CRM:       2 clients | $0/mo MRR
+2026-03-19 14:27:31: ============================================================
+2026-03-19 14:27:31: 
+2026-03-19 14:27:31:    Lessons: 7 loaded into agent prompts
+2026-03-19 14:27:31: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 14:27:31: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 14:27:31: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 14:27:31: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 14:27:31: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 14:27:31: 📊 Updating dashboard...
+2026-03-19 14:27:31: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 14:27:31: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 14:27:31: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 14:27:31:    ✅ Dashboard updated
+2026-03-19 14:28:56: [jdjordan]: !xpost now
+2026-03-19 14:28:57: [xPoster] Generating building post...
+2026-03-19 14:28:59: [xPoster] Posting: "Week 4 of building Jordan AI publicly: Generated 15 leads through organic traffic; conversion rate is a dismal 3%. Lesson learned: audience engagement is crucial, but need a sharper focus on addressing pain points. Trial and error continues."
+2026-03-19 14:30:31: 📝 Running first blog cycle...
+2026-03-19 14:30:31: 
+2026-03-19 14:30:31: ============================================================
+2026-03-19 14:30:31: 📝 BLOG CYCLE #1
+2026-03-19 14:30:31: ============================================================
+2026-03-19 14:30:31: 
+2026-03-19 14:30:31: 🧠 Picking blog topic...
+2026-03-19 14:30:31:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 14:30:32: 📌 Topic [📡 X Trend]: Boost Your Columbia, SC Small Business: How AI Chatbots Can Save You Time and Money
+2026-03-19 14:30:32: 
+2026-03-19 14:30:32: ✍️ Writing: Boost Your Columbia, SC Small Business: How AI Chatbots Can Save You Time and Money
+2026-03-19 14:30:32: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 14:30:32:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 14:30:53:    ✅ Ink completed task
+2026-03-19 14:30:53: ✅ Blog post created: website/blog/boost-your-columbia-sc-small-business-how-ai-chatbots-can-save-you-time-and-money.html
+2026-03-19 14:30:53: ✅ Homepage created: website/index.html
+2026-03-19 14:30:53:    → 6 products listed
+2026-03-19 14:30:53:    → 35 blog posts listed
+2026-03-19 14:30:53:    → Services link included
+2026-03-19 14:30:53: ✅ Blog published: https://jordan-ai.co/blog/boost-your-columbia-sc-small-business-how-ai-chatbots-can-save-you-time-and-money.html
+2026-03-19 14:30:53: ✅ Blog index created
+2026-03-19 14:30:53: 🚀 Deploying...
+2026-03-19 14:30:53: 🌐 Deploying website changes...
+2026-03-19 14:30:56: ✅ Git: Committed - "New blog: Boost Your Columbia, SC Small Business: How AI Chatbots Can Save You Time and Money"
+2026-03-19 14:30:57: ✅ Git: Pushed to GitHub
+2026-03-19 14:30:57: ✅ Website deployed!
+2026-03-19 14:30:57:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 14:30:57: ✅ First blog cycle complete
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 14:32:06: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:32:07: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:32:08: 
+2026-03-19 14:32:08: ============================================================
+2026-03-19 14:32:08: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 14:32:08: ============================================================
+2026-03-19 14:32:08:    Discord:   Jordan AI#9539
+2026-03-19 14:32:08:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 14:32:08:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 14:32:08:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 14:32:08:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 14:32:08:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 14:32:08:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 14:32:08:    Billing:   ✅ Stripe connected
+2026-03-19 14:32:08:    CRM:       2 clients | $0/mo MRR
+2026-03-19 14:32:08: ============================================================
+2026-03-19 14:32:08: 
+2026-03-19 14:32:08:    Lessons: 7 loaded into agent prompts
+2026-03-19 14:32:08: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 14:32:08: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 14:32:08: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 14:32:08: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 14:32:08: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 14:32:08: 📊 Updating dashboard...
+2026-03-19 14:32:08: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 14:32:08: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 14:32:08: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 14:32:08:    ✅ Dashboard updated
+2026-03-19 14:34:50: [jdjordan]: !xpost now
+2026-03-19 14:34:50: [xPoster] Generating practical post...
+2026-03-19 14:34:53: [xPoster] Posting: "Today, set up an AI tool to analyze your ad performance metrics. Use platforms like Google Analytics or ad-specific AIs. Create a report template that auto-generates insights weekly—this saves hours, enhances client communication, and positions you as a data-driven pro."
+2026-03-19 14:34:53: [xPoster] ✅ Posted! ID: 2034700153546850749
+2026-03-19 14:35:08: 📝 Running first blog cycle...
+2026-03-19 14:35:08: 
+2026-03-19 14:35:08: ============================================================
+2026-03-19 14:35:08: 📝 BLOG CYCLE #1
+2026-03-19 14:35:08: ============================================================
+2026-03-19 14:35:08: 
+2026-03-19 14:35:08: 🧠 Picking blog topic...
+2026-03-19 14:35:08:    📚 Using evergreen SEO topic (30% rotation)
+2026-03-19 14:35:09: 📌 Topic [📚 Evergreen SEO]: Unlocking Insights: How Columbia Small Businesses Can Use AI to Analyze Ad Performance Like a Pro
+2026-03-19 14:35:09: 
+2026-03-19 14:35:09: ✍️ Writing: Unlocking Insights: How Columbia Small Businesses Can Use AI to Analyze Ad Performance Like a Pro
+2026-03-19 14:35:09: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 14:35:09:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 14:35:28:    ✅ Ink completed task
+2026-03-19 14:35:28: ✅ Blog post created: website/blog/unlocking-insights-how-columbia-small-businesses-can-use-ai-to-analyze-ad-performance-like-a-pro.html
+2026-03-19 14:35:28: ✅ Homepage created: website/index.html
+2026-03-19 14:35:28:    → 6 products listed
+2026-03-19 14:35:28:    → 36 blog posts listed
+2026-03-19 14:35:28:    → Services link included
+2026-03-19 14:35:28: ✅ Blog published: https://jordan-ai.co/blog/unlocking-insights-how-columbia-small-businesses-can-use-ai-to-analyze-ad-performance-like-a-pro.html
+2026-03-19 14:35:28: ✅ Blog index created
+2026-03-19 14:35:28: 🚀 Deploying...
+2026-03-19 14:35:28: 🌐 Deploying website changes...
+2026-03-19 14:35:31: ✅ Git: Committed - "New blog: Unlocking Insights: How Columbia Small Businesses Can Use AI to Analyze Ad Performance Like a Pro"
+2026-03-19 14:35:33: ✅ Git: Pushed to GitHub
+2026-03-19 14:35:33: ✅ Website deployed!
+2026-03-19 14:35:33:    📊 Blog tracked in market-intel.json (source: evergreen)
+2026-03-19 14:35:33: ✅ First blog cycle complete
+2026-03-19 14:37:49: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 14:37:50: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 14:37:50: 
+2026-03-19 14:37:50: ============================================================
+2026-03-19 14:37:50: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 14:37:50: ============================================================
+2026-03-19 14:37:50:    Discord:   Jordan AI#9539
+2026-03-19 14:37:50:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 14:37:50:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 14:37:50:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 14:37:50:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 14:37:50:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 14:37:50:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 14:37:50:    Billing:   ✅ Stripe connected
+2026-03-19 14:37:50:    CRM:       2 clients | $0/mo MRR
+2026-03-19 14:37:50: ============================================================
+2026-03-19 14:37:50: 
+2026-03-19 14:37:50:    Lessons: 7 loaded into agent prompts
+2026-03-19 14:37:50: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 14:37:50: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 14:37:50: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 14:37:50: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 14:37:50: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 14:37:50: 📊 Updating dashboard...
+2026-03-19 14:37:50: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 14:37:50: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 14:37:50: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 14:37:51:    ✅ Dashboard updated
+2026-03-19 14:40:50: 📝 Running first blog cycle...
+2026-03-19 14:40:50: 
+2026-03-19 14:40:50: ============================================================
+2026-03-19 14:40:50: 📝 BLOG CYCLE #1
+2026-03-19 14:40:50: ============================================================
+2026-03-19 14:40:50: 
+2026-03-19 14:40:50: 🧠 Picking blog topic...
+2026-03-19 14:40:50:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 14:40:51: 📌 Topic [📡 X Trend]: Transform Your Columbia Small Business: How AI Automation Workflows Can Save You Money and Time
+2026-03-19 14:40:51: 
+2026-03-19 14:40:51: ✍️ Writing: Transform Your Columbia Small Business: How AI Automation Workflows Can Save You Money and Time
+2026-03-19 14:40:51: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 14:40:51:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 14:41:15:    ✅ Ink completed task
+2026-03-19 14:41:15: ✅ Blog post created: website/blog/transform-your-columbia-small-business-how-ai-automation-workflows-can-save-you-money-and-time.html
+2026-03-19 14:41:15: ✅ Homepage created: website/index.html
+2026-03-19 14:41:15:    → 6 products listed
+2026-03-19 14:41:15:    → 37 blog posts listed
+2026-03-19 14:41:15:    → Services link included
+2026-03-19 14:41:15: ✅ Blog published: https://jordan-ai.co/blog/transform-your-columbia-small-business-how-ai-automation-workflows-can-save-you-money-and-time.html
+2026-03-19 14:41:15: ✅ Blog index created
+2026-03-19 14:41:15: 🚀 Deploying...
+2026-03-19 14:41:15: 🌐 Deploying website changes...
+2026-03-19 14:41:18: ✅ Git: Committed - "New blog: Transform Your Columbia Small Business: How AI Automation Workflows Can Save You Money and Time"
+2026-03-19 14:41:20: ✅ Git: Pushed to GitHub
+2026-03-19 14:41:20: ✅ Website deployed!
+2026-03-19 14:41:20:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 14:41:20: ✅ First blog cycle complete
+2026-03-19 15:11:18: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:11:18: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:11:18: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:11:18: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 15:11:18: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:11:18: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 15:11:19: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 15:11:19: 
+2026-03-19 15:11:19: ============================================================
+2026-03-19 15:11:19: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 15:11:19: ============================================================
+2026-03-19 15:11:19:    Discord:   Jordan AI#9539
+2026-03-19 15:11:19:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 15:11:19:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 15:11:19:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 15:11:19:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 15:11:19:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 15:11:19:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 15:11:19:    Billing:   ✅ Stripe connected
+2026-03-19 15:11:19:    CRM:       2 clients | $0/mo MRR
+2026-03-19 15:11:19: ============================================================
+2026-03-19 15:11:19: 
+2026-03-19 15:11:19:    Lessons: 7 loaded into agent prompts
+2026-03-19 15:11:19: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 15:11:19: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 15:11:19: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 15:11:19: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 15:11:19: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 15:11:19: 📊 Updating dashboard...
+2026-03-19 15:11:19: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 15:11:19: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 15:11:19: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 15:11:20:    ✅ Dashboard updated
+2026-03-19 15:14:19: 📝 Running first blog cycle...
+2026-03-19 15:14:19: 
+2026-03-19 15:14:19: ============================================================
+2026-03-19 15:14:19: 📝 BLOG CYCLE #1
+2026-03-19 15:14:19: ============================================================
+2026-03-19 15:14:19: 
+2026-03-19 15:14:19: 🧠 Picking blog topic...
+2026-03-19 15:14:19:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 15:14:20: 📌 Topic [📡 X Trend]: How AI Chatbots Can Save Small Businesses in Columbia, SC Time and Money
+2026-03-19 15:14:20: 
+2026-03-19 15:14:20: ✍️ Writing: How AI Chatbots Can Save Small Businesses in Columbia, SC Time and Money
+2026-03-19 15:14:20: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 15:14:20:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 15:14:38:    ✅ Ink completed task
+2026-03-19 15:14:38: ✅ Blog post created: website/blog/how-ai-chatbots-can-save-small-businesses-in-columbia-sc-time-and-money.html
+2026-03-19 15:14:38: ✅ Homepage created: website/index.html
+2026-03-19 15:14:38:    → 6 products listed
+2026-03-19 15:14:38:    → 38 blog posts listed
+2026-03-19 15:14:38:    → Services link included
+2026-03-19 15:14:38: ✅ Blog published: https://jordan-ai.co/blog/how-ai-chatbots-can-save-small-businesses-in-columbia-sc-time-and-money.html
+2026-03-19 15:14:38: ✅ Blog index created
+2026-03-19 15:14:38: 🚀 Deploying...
+2026-03-19 15:14:38: 🌐 Deploying website changes...
+2026-03-19 15:14:41: ✅ Git: Committed - "New blog: How AI Chatbots Can Save Small Businesses in Columbia, SC Time and Money"
+2026-03-19 15:14:43: ✅ Git: Pushed to GitHub
+2026-03-19 15:14:43: ✅ Website deployed!
+2026-03-19 15:14:43:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 15:14:43: ✅ First blog cycle complete
+2026-03-19 15:17:42: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:17:43: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:17:44: 
+2026-03-19 15:17:44: ============================================================
+2026-03-19 15:17:44: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 15:17:44: ============================================================
+2026-03-19 15:17:44:    Discord:   Jordan AI#9539
+2026-03-19 15:17:44:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 15:17:44:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 15:17:44:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 15:17:44:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 15:17:44:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 15:17:44:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 15:17:44:    Billing:   ✅ Stripe connected
+2026-03-19 15:17:44:    CRM:       2 clients | $0/mo MRR
+2026-03-19 15:17:44: ============================================================
+2026-03-19 15:17:44: 
+2026-03-19 15:17:44:    Lessons: 7 loaded into agent prompts
+2026-03-19 15:17:44: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 15:17:44: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 15:17:44: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 15:17:44: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 15:17:44: [MorningReport] No channel ID — skipping
+2026-03-19 15:17:44: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 15:17:44: 📊 Updating dashboard...
+2026-03-19 15:17:44: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 15:17:44: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 15:17:44: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 15:17:44:    ✅ Dashboard updated
+2026-03-19 15:18:54: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 15:18:55: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-19 15:18:56: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-19 15:18:56: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 15:18:56: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 15:18:56: 
+2026-03-19 15:18:56: ============================================================
+2026-03-19 15:18:56: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 15:18:56: ============================================================
+2026-03-19 15:18:56:    Discord:   Jordan AI#9539
+2026-03-19 15:18:56:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 15:18:56:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 15:18:56:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 15:18:56:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 15:18:56:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 15:18:56:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 15:18:56:    Billing:   ✅ Stripe connected
+2026-03-19 15:18:56:    CRM:       2 clients | $0/mo MRR
+2026-03-19 15:18:56: ============================================================
+2026-03-19 15:18:56: 
+2026-03-19 15:18:56:    Lessons: 7 loaded into agent prompts
+2026-03-19 15:18:56: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 15:18:56: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 15:18:56: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 15:18:56: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 15:18:56: ⚠️  RedditMonitor: No reports channel set — will log to console only
+2026-03-19 15:18:56: 📅 Reddit Monitor started — scans daily at 7:30am ET
+2026-03-19 15:18:56: ⚠️  LinkedInEngine: No reports channel set — will log to console only
+2026-03-19 15:18:56: 📅 LinkedIn Article Engine started — generates every Monday at 6:00am ET
+2026-03-19 15:18:56: [MorningReport] No channel ID — skipping
+2026-03-19 15:18:56: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 15:18:56: 📊 Updating dashboard...
+2026-03-19 15:18:56: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 15:18:56: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 15:18:56: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 15:18:57:    ✅ Dashboard updated
+2026-03-19 15:21:56: 📝 Running first blog cycle...
+2026-03-19 15:21:56: 
+2026-03-19 15:21:56: ============================================================
+2026-03-19 15:21:56: 📝 BLOG CYCLE #1
+2026-03-19 15:21:56: ============================================================
+2026-03-19 15:21:56: 
+2026-03-19 15:21:56: 🧠 Picking blog topic...
+2026-03-19 15:21:56:    🏢 Using company-focused SEO topic
+2026-03-19 15:21:56: 📌 Topic [📚 Evergreen SEO]: What companies get wrong about AI implementation (and how to do it right)
+2026-03-19 15:21:56: 
+2026-03-19 15:21:56: ✍️ Writing: What companies get wrong about AI implementation (and how to do it right)
+2026-03-19 15:21:56: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 15:21:56:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 15:22:08:    ✅ Ink completed task
+2026-03-19 15:22:08: ✅ Blog post created: website/blog/what-companies-get-wrong-about-ai-implementation-and-how-to-do-it-right.html
+2026-03-19 15:22:08: ✅ Homepage created: website/index.html
+2026-03-19 15:22:08:    → 6 products listed
+2026-03-19 15:22:08:    → 39 blog posts listed
+2026-03-19 15:22:08:    → Services link included
+2026-03-19 15:22:08: ✅ Blog published: https://jordan-ai.co/blog/what-companies-get-wrong-about-ai-implementation-and-how-to-do-it-right.html
+2026-03-19 15:22:08: ✅ Blog index created
+2026-03-19 15:22:08: 🚀 Deploying...
+2026-03-19 15:22:08: 🌐 Deploying website changes...
+2026-03-19 15:22:11: ✅ Git: Committed - "New blog: What companies get wrong about AI implementation (and how to do it right)"
+2026-03-19 15:22:13: ✅ Git: Pushed to GitHub
+2026-03-19 15:22:13: ✅ Website deployed!
+2026-03-19 15:22:13:    📊 Blog tracked in market-intel.json (source: company_seo)
+2026-03-19 15:22:13: ✅ First blog cycle complete
+2026-03-19 17:57:36: [jdjordan]: Add these images to rc bounce for the website
+2026-03-19 17:57:36:    🧠 Model: SONNET (default)
+2026-03-19 17:57:36: 
+2026-03-19 17:57:36: 💬 Chat received: Add these images to rc bounce for the website
+2026-03-19 17:57:36: 
+2026-03-19 17:57:36: [Discord attachments detected — ACTION REQUIRED: call
+2026-03-19 17:57:36:    🧠 Model: SONNET
+2026-03-19 17:57:40:    🔧 Tool: upload_client_assets
+2026-03-19 17:57:40:    📥 Input: {"slug":"rc-bounce","type":"gallery","source":"https://cdn.discordapp.com/attachments/1481760050581082112/1484309900652970024/IMG_20260319_175705.png?ex=69bdc2d1&is=69bc7151&hm=45db84f74c01d867aea024976ec1f8d860c9ea5838ee02e496d3e72f27564f47&","filename":"bounce-photo-1.png"}
+2026-03-19 17:57:43:    🔧 Tool: upload_client_assets
+2026-03-19 17:57:43:    📥 Input: {"slug":"rc-bounce","type":"gallery","source":"https://cdn.discordapp.com/attachments/1481760050581082112/1484309901298761918/IMG_20260319_175702.png?ex=69bdc2d1&is=69bc7151&hm=47ad71a8848dd5cf81945f51c9631e32e19085d787bc2bbf6910d649fac959bd&","filename":"bounce-photo-2.png"}
+2026-03-19 17:57:46:    🔧 Tool: upload_client_assets
+2026-03-19 17:57:46:    📥 Input: {"slug":"rc-bounce","type":"gallery","source":"https://cdn.discordapp.com/attachments/1481760050581082112/1484309902225571851/IMG_20260319_175659.png?ex=69bdc2d1&is=69bc7151&hm=7108b2c420f420cffbf0b5f14e4aa66891309ba355f657f8834112ffcb206938&","filename":"bounce-photo-3.png"}
+2026-03-19 17:57:49:    🔧 Tool: upload_client_assets
+2026-03-19 17:57:49:    📥 Input: {"slug":"rc-bounce","type":"gallery","source":"https://cdn.discordapp.com/attachments/1481760050581082112/1484309902766899383/IMG_20260319_175657.png?ex=69bdc2d1&is=69bc7151&hm=de3ca69cf6caeb9320352a8078d4413a24b6e5ff35d8562f6832d65994598dc1&","filename":"bounce-photo-4.png"}
+2026-03-19 17:59:03: [jdjordan]: Photo 1 is the bounce house, photo 2 is the basketball game, photo 3 is tent and chairs and tables, photo 4 is the water slide
+2026-03-19 17:59:03:    🧠 Model: SONNET (default)
+2026-03-19 17:59:03: 
+2026-03-19 17:59:03: 💬 Chat received: Photo 1 is the bounce house, photo 2 is the basketball game, photo 3 is tent and chairs and tables, 
+2026-03-19 17:59:03:    🧠 Model: SONNET
+2026-03-19 17:59:10:    🔧 Tool: place_asset_on_site
+2026-03-19 17:59:10:    📥 Input: {"slug":"rc-bounce","filename":"bounce-photo-1.png","location":"service1"}
+2026-03-19 17:59:10: 📸 Fetching media for rc-bounce (bounce house)...
+2026-03-19 17:59:10: 📸 Client media check for rc-bounce: hero ⚠️  NO IMAGE | about ⚠️  NO IMAGE | 6/6 service imgs
+2026-03-19 17:59:10:    ⚠️  Missing images will show as placeholders. Upload client photos to fix.
+2026-03-19 17:59:10: ✅ Website created: website/clients/rc-bounce/index.html
+2026-03-19 17:59:10:    Template: party | Color: red | Industry: bounce house
+2026-03-19 17:59:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 17:59:10:    📋 Sitemap generated for rc-bounce
+2026-03-19 17:59:10: 🌐 Deploying website changes...
+2026-03-19 17:59:13: ✅ Git: Committed - "Asset update: bounce-photo-1.png → service1 on rc-bounce"
+2026-03-19 17:59:18: ✅ Git: Pushed to GitHub
+2026-03-19 17:59:18: ✅ Website deployed!
+2026-03-19 17:59:18:    🔧 Tool: place_asset_on_site
+2026-03-19 17:59:18:    📥 Input: {"slug":"rc-bounce","filename":"bounce-photo-2.png","location":"service2"}
+2026-03-19 17:59:18: 📸 Fetching media for rc-bounce (bounce house)...
+2026-03-19 17:59:18: 📸 Client media check for rc-bounce: hero ⚠️  NO IMAGE | about ⚠️  NO IMAGE | 6/6 service imgs
+2026-03-19 17:59:18:    ⚠️  Missing images will show as placeholders. Upload client photos to fix.
+2026-03-19 17:59:18: ✅ Website created: website/clients/rc-bounce/index.html
+2026-03-19 17:59:18:    Template: party | Color: red | Industry: bounce house
+2026-03-19 17:59:19:    📋 Sitemap generated for rc-bounce
+2026-03-19 17:59:19: 🌐 Deploying website changes...
+2026-03-19 17:59:21: ✅ Git: Committed - "Asset update: bounce-photo-2.png → service2 on rc-bounce"
+2026-03-19 17:59:23: ✅ Git: Pushed to GitHub
+2026-03-19 17:59:23: ✅ Website deployed!
+2026-03-19 17:59:23:    🔧 Tool: place_asset_on_site
+2026-03-19 17:59:23:    📥 Input: {"slug":"rc-bounce","filename":"bounce-photo-3.png","location":"service3"}
+2026-03-19 17:59:23: 📸 Fetching media for rc-bounce (bounce house)...
+2026-03-19 17:59:23: 📸 Client media check for rc-bounce: hero ⚠️  NO IMAGE | about ⚠️  NO IMAGE | 6/6 service imgs
+2026-03-19 17:59:23:    ⚠️  Missing images will show as placeholders. Upload client photos to fix.
+2026-03-19 17:59:23: ✅ Website created: website/clients/rc-bounce/index.html
+2026-03-19 17:59:23:    Template: party | Color: red | Industry: bounce house
+2026-03-19 17:59:23:    📋 Sitemap generated for rc-bounce
+2026-03-19 17:59:23: 🌐 Deploying website changes...
+2026-03-19 17:59:26: ✅ Git: Committed - "Asset update: bounce-photo-3.png → service3 on rc-bounce"
+2026-03-19 17:59:27: ✅ Git: Pushed to GitHub
+2026-03-19 17:59:27: ✅ Website deployed!
+2026-03-19 17:59:27:    🔧 Tool: place_asset_on_site
+2026-03-19 17:59:27:    📥 Input: {"slug":"rc-bounce","filename":"bounce-photo-4.png","location":"service4"}
+2026-03-19 17:59:27: 📸 Fetching media for rc-bounce (bounce house)...
+2026-03-19 17:59:27: 📸 Client media check for rc-bounce: hero ⚠️  NO IMAGE | about ⚠️  NO IMAGE | 6/6 service imgs
+2026-03-19 17:59:27:    ⚠️  Missing images will show as placeholders. Upload client photos to fix.
+2026-03-19 17:59:27: ✅ Website created: website/clients/rc-bounce/index.html
+2026-03-19 17:59:27:    Template: party | Color: red | Industry: bounce house
+2026-03-19 17:59:27:    📋 Sitemap generated for rc-bounce
+2026-03-19 17:59:27: 🌐 Deploying website changes...
+2026-03-19 17:59:30: ✅ Git: Committed - "Asset update: bounce-photo-4.png → service4 on rc-bounce"
+2026-03-19 17:59:32: ✅ Git: Pushed to GitHub
+2026-03-19 17:59:32: ✅ Website deployed!
+2026-03-19 18:00:57: [xPoster] Generating practical post...
+2026-03-19 18:01:00: [xPoster] Posting: "This week, train a chatbot like OpenAI's GPT to generate data insights tailored to your projects. Input key metrics and trends, then ask it to draft summaries or business proposals. Automating this step not only saves time but also sharpens your analytical edge."
+2026-03-19 18:01:00: [xPoster] ✅ Posted! ID: 2034752027394216146
+2026-03-19 19:13:09: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-19 19:13:10: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-19 19:13:11: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-19 19:13:11: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-19 19:13:11: 
+2026-03-19 19:13:11: ============================================================
+2026-03-19 19:13:11: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-19 19:13:11: ============================================================
+2026-03-19 19:13:11:    Discord:   Jordan AI#9539
+2026-03-19 19:13:11:    Mission:   AI workforce tools — $10k/month target
+2026-03-19 19:13:11:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-19 19:13:11:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-19 19:13:11:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-19 19:13:11:    Stocks:    Moved to stockbot (separate repo)
+2026-03-19 19:13:11:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-19 19:13:11:    Billing:   ✅ Stripe connected
+2026-03-19 19:13:11:    CRM:       2 clients | $0/mo MRR
+2026-03-19 19:13:11: ============================================================
+2026-03-19 19:13:11: 
+2026-03-19 19:13:11:    Lessons: 7 loaded into agent prompts
+2026-03-19 19:13:11: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-19 19:13:11: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-19 19:13:11: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-19 19:13:11: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-19 19:13:11: ⚠️  RedditMonitor: No reports channel set — will log to console only
+2026-03-19 19:13:11: 📅 Reddit Monitor started — scans daily at 7:30am ET
+2026-03-19 19:13:11: ⚠️  LinkedInEngine: No reports channel set — will log to console only
+2026-03-19 19:13:11: 📅 LinkedIn Article Engine started — generates every Monday at 6:00am ET
+2026-03-19 19:13:11: [MorningReport] No channel ID — skipping
+2026-03-19 19:13:11: 🌙 Nightly routine scheduled for 3/20/2026, 3:00:00 AM
+2026-03-19 19:13:11: 📊 Updating dashboard...
+2026-03-19 19:13:11: 📦 Fulfillment polling started (every 5 min)
+2026-03-19 19:13:11: [AdbotWebhook] Webhook server running on port 3099
+2026-03-19 19:13:11: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-19 19:13:12:    ✅ Dashboard updated
+2026-03-19 19:16:11: 📝 Running first blog cycle...
+2026-03-19 19:16:11: 
+2026-03-19 19:16:11: ============================================================
+2026-03-19 19:16:11: 📝 BLOG CYCLE #1
+2026-03-19 19:16:11: ============================================================
+2026-03-19 19:16:11: 
+2026-03-19 19:16:11: 🧠 Picking blog topic...
+2026-03-19 19:16:11:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 19:16:13: 📌 Topic [📡 X Trend]: Boost Your Columbia Small Business: How AI Automation Workflows Can Save You Time and Money
+2026-03-19 19:16:13: 
+2026-03-19 19:16:13: ✍️ Writing: Boost Your Columbia Small Business: How AI Automation Workflows Can Save You Time and Money
+2026-03-19 19:16:13: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 19:16:13:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 19:16:27:    ✅ Ink completed task
+2026-03-19 19:16:27: ✅ Blog post created: website/blog/boost-your-columbia-small-business-how-ai-automation-workflows-can-save-you-time-and-money.html
+2026-03-19 19:16:27: ✅ Homepage created: website/index.html
+2026-03-19 19:16:27:    → 6 products listed
+2026-03-19 19:16:27:    → 40 blog posts listed
+2026-03-19 19:16:27:    → Services link included
+2026-03-19 19:16:27: ✅ Blog published: https://jordan-ai.co/blog/boost-your-columbia-small-business-how-ai-automation-workflows-can-save-you-time-and-money.html
+2026-03-19 19:16:27: ✅ Blog index created
+2026-03-19 19:16:27: 🚀 Deploying...
+2026-03-19 19:16:27: 🌐 Deploying website changes...
+2026-03-19 19:16:29: ✅ Git: Committed - "New blog: Boost Your Columbia Small Business: How AI Automation Workflows Can Save You Time and Money"
+2026-03-19 19:16:31: ✅ Git: Pushed to GitHub
+2026-03-19 19:16:31: ✅ Website deployed!
+2026-03-19 19:16:31:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 19:16:31: ✅ First blog cycle complete
+2026-03-19 20:00:00: 📰 Running scheduled newsletter...
+2026-03-19 20:00:00: 
+2026-03-19 20:00:00: 📰 Newsletter: checking if already published today...
+2026-03-19 20:00:00:    📊 Gathering business context...
+2026-03-19 20:00:00:    ✍️  Generating entry with Claude...
+2026-03-19 20:00:05:    💉 Injecting entry into newsletter.html...
+2026-03-19 20:00:05:    🚀 Deploying...
+2026-03-19 20:00:05: 🌐 Deploying website changes...
+2026-03-19 20:00:08: ✅ Git: Committed - "Newsletter: March 19, 2026"
+2026-03-19 20:00:10: ✅ Git: Pushed to GitHub
+2026-03-19 20:00:10: ✅ Website deployed!
+2026-03-19 20:00:10:    ✅ Newsletter published and deployed
+2026-03-19 20:00:10:    ✅ Newsletter published: March 19, 2026
+2026-03-19 20:46:11: [jdjordan]: 
+2026-03-19 20:46:11:    🧠 Model: SONNET (default)
+2026-03-19 20:46:11: 
+2026-03-19 20:46:11: 💬 Chat received: 
+2026-03-19 20:46:11: 
+2026-03-19 20:46:11: [Discord attachments detected — ACTION REQUIRED: call upload_client_assets with the URL below. Do 
+2026-03-19 20:46:11:    🧠 Model: SONNET
+2026-03-19 20:46:15:    🔧 Tool: upload_client_assets
+2026-03-19 20:46:15:    📥 Input: {"slug":"rc-bounce","type":"logo","source":"https://cdn.discordapp.com/attachments/1481760050581082112/1484352329250770944/RC_Bounce_Logo.png?ex=69bdea55&is=69bc98d5&hm=540ff51612ac26aadaca7c97b07007bff2b74c674da2c3c7e5267290d08255a2&","filename":"RC_Bounce_Logo.png"}
+2026-03-19 21:57:13: [jdjordan]: hello
+2026-03-19 21:57:13:    🧠 Model: SONNET (default)
+2026-03-19 21:57:13: 
+2026-03-19 21:57:13: 💬 Chat received: hello
+2026-03-19 21:57:13:    🧠 Model: SONNET
+2026-03-19 21:57:30: [jdjordan]: hello clea
+2026-03-19 21:57:30:    🧠 Model: SONNET (default)
+2026-03-19 21:57:30: 
+2026-03-19 21:57:30: 💬 Chat received: hello clea
+2026-03-19 21:57:30:    🧠 Model: SONNET
+2026-03-19 21:57:42: [jdjordan]: hello cleo
+2026-03-19 21:57:42:    🧠 Model: SONNET (default)
+2026-03-19 21:57:42: 
+2026-03-19 21:57:42: 💬 Chat received: hello cleo
+2026-03-19 21:57:42:    🧠 Model: SONNET
+2026-03-19 22:00:41: [jdjordan]: cleo are you here
+2026-03-19 22:00:41:    🧠 Model: SONNET (default)
+2026-03-19 22:00:41: 
+2026-03-19 22:00:41: 💬 Chat received: cleo are you here
+2026-03-19 22:00:41:    🧠 Model: SONNET
+2026-03-19 22:07:06: [jdjordan]: hello cleo
+2026-03-19 22:07:06:    🧠 Model: SONNET (default)
+2026-03-19 22:07:06: 
+2026-03-19 22:07:06: 💬 Chat received: hello cleo
+2026-03-19 22:07:06:    🧠 Model: SONNET
+2026-03-19 22:16:40: [jdjordan]: !xpost now
+2026-03-19 22:16:40: [xPoster] Generating company post...
+2026-03-19 22:16:42: [xPoster] Posting: "Cutting staff for AI is a misguided strategy. Investing in your team's own AI agents can boost productivity by 2-3x without increasing costs. The real winners will be those who enhance their workforce, not replace it. Future-proof your business by empowering your people."
+2026-03-19 22:16:42: [xPoster] ✅ Posted! ID: 2034816381137420438
+2026-03-19 22:23:11: [jdjordan]: what are you running on right now and what are the subagents running on
+2026-03-19 22:23:11:    🧠 Model: SONNET (default)
+2026-03-19 22:23:11: 
+2026-03-19 22:23:11: 💬 Chat received: what are you running on right now and what are the subagents running on
+2026-03-19 22:23:11:    🧠 Model: SONNET
+2026-03-19 23:13:11: 📝 Running scheduled blog cycle...
+2026-03-19 23:13:11: 
+2026-03-19 23:13:11: ============================================================
+2026-03-19 23:13:11: 📝 BLOG CYCLE #2
+2026-03-19 23:13:11: ============================================================
+2026-03-19 23:13:11: 
+2026-03-19 23:13:11: 🧠 Picking blog topic...
+2026-03-19 23:13:11:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-19 23:13:13: 📌 Topic [📡 X Trend]: How AI Automation Workflows Can Streamline Your Columbia Small Business and Save You Money
+2026-03-19 23:13:13: 
+2026-03-19 23:13:13: ✍️ Writing: How AI Automation Workflows Can Streamline Your Columbia Small Business and Save You Money
+2026-03-19 23:13:13: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-19 23:13:13:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-19 23:13:33:    ✅ Ink completed task
+2026-03-19 23:13:33: ✅ Blog post created: website/blog/how-ai-automation-workflows-can-streamline-your-columbia-small-business-and-save-you-money.html
+2026-03-19 23:13:33: ✅ Homepage created: website/index.html
+2026-03-19 23:13:33:    → 6 products listed
+2026-03-19 23:13:33:    → 41 blog posts listed
+2026-03-19 23:13:33:    → Services link included
+2026-03-19 23:13:33: ✅ Blog published: https://jordan-ai.co/blog/how-ai-automation-workflows-can-streamline-your-columbia-small-business-and-save-you-money.html
+2026-03-19 23:13:33: ✅ Blog index created
+2026-03-19 23:13:33: 🚀 Deploying...
+2026-03-19 23:13:33: 🌐 Deploying website changes...
+2026-03-19 23:13:38: ✅ Git: Committed - "New blog: How AI Automation Workflows Can Streamline Your Columbia Small Business and Save You Money"
+2026-03-19 23:13:40: ✅ Git: Pushed to GitHub
+2026-03-19 23:13:40: ✅ Website deployed!
+2026-03-19 23:13:40:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-19 23:13:40: ✅ Blog cycle complete
+2026-03-20 00:00:00: 🌅 Daily blog counter reset
+2026-03-20 00:00:00: 🌅 Agent daily counter reset
+2026-03-20 03:00:00: 
+2026-03-20 03:00:00: 🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙
+2026-03-20 03:00:00: JORDAN AI - NIGHTLY ROUTINE
+2026-03-20 03:00:00: 🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙🌙
+2026-03-20 03:00:00: 
+2026-03-20 03:00:00: ============================================================
+2026-03-20 03:00:00: 🪞 JORDAN AI - DAILY SELF-REVIEW
+2026-03-20 03:00:00: ============================================================
+2026-03-20 03:00:00: 
+2026-03-20 03:00:00: 🧠 Analyzing my memory and patterns...
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 📝 Self-Review Results:
+2026-03-20 03:00:12: ----------------------------------------
+2026-03-20 03:00:12: 1. **WHAT'S WORKING:**
+2026-03-20 03:00:12:    - The structured daily operations, such as posting on X/Twitter and creating blog content, seem effective for audience engagement and building a public profile.
+2026-03-20 03:00:12:    - The clear business goals of establishing a $10k/month recurring revenue model within 30 days is a decisive target that provides a strong direction.
+2026-03-20 03:00:12:    - The decision to use Claude Opus for critical work initially helps position for quality output during the foundational phase.
+2026-03-20 03:00:12:    - The defined product offerings, especially the AdBot analytics service, target a well-defined audience and present multiple pricing tiers which can cater to various needs.
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 2. **WHAT'S NOT WORKING:**
+2026-03-20 03:00:12:    - No data or metrics are available from business operations yet. This lack of insight makes it challenging to pivot or improve strategies effectively.
+2026-03-20 03:00:12:    - Engagement rates on X/Twitter posts and blogs need tracking; without this data, it's unclear if current content strategies resonate with the audience.
+2026-03-20 03:00:12:    - The AI Workforce Starter Kit is still in development. An accelerated timeline could help capitalize on market interest. Explore aligning a timeline closer to launch or soft-testing with beta users.
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 3. **REDUNDANCIES:**
+2026-03-20 03:00:12:    - The memory notes about “key rules” and “what Jordan AI does daily” have similar themes regarding the operational approach and goals.
+2026-03-20 03:00:12:    - The marketing and aimed audience for AdBot and the AI Workforce Starter Kit overlap, suggesting a possible cross-promotion strategy that is not currently fully leveraged.
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 4. **GAPS:**
+2026-03-20 03:00:12:    - A comprehensive metrics analysis framework is missing; you should implement tools to track and evaluate engagement metrics, conversion rates, and customer feedback.
+2026-03-20 03:00:12:    - Insight on customer personas could further define product positioning and marketing approaches. Conducting quick surveys or reaching out for testimonials may provide further intelligence on customer needs.
+2026-03-20 03:00:12:    - Learning in areas like content marketing strategies, SEO practices, or digital sales funnels would enhance the marketing capabilities.
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 5. **PRIORITIES:**
+2026-03-20 03:00:12:    - Begin tracking content performance metrics across X/Twitter, blog posts, and newsletters to gauge audience interactions and adjust strategies accordingly.
+2026-03-20 03:00:12:    - Focus on developing a timeline for the launch of the AI Workforce Starter Kit, including testing phases with selected users for feedback.
+2026-03-20 03:00:12:    - Consider consolidating redundancies and optimizing product offerings, potentially by developing bundled services or cross-promotions between them.
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 6. **HONEST ASSESSMENT:**
+2026-03-20 03:00:12:    - **Score: 6/10.** Growth is apparent in the clarity of goals and operations, but the lack of operational data and fine-tuning based on engagement results limits effectiveness. More proactive measures in testing, audience research, and metrics tracking are needed to elevate performance.
+2026-03-20 03:00:12: ----------------------------------------
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: ✅ Self-review complete and logged
+2026-03-20 03:00:12: 
+2026-03-20 03:00:12: 💡 Extracting actionable insights...
+2026-03-20 03:00:14:    Added: Implement a metrics tracking framework to evaluate content performance across all platforms.
+2026-03-20 03:00:14:    Added: Accelerate the development timeline for the AI Workforce Starter Kit and initiate soft-testing with beta users.
+2026-03-20 03:00:14:    Added: Consolidate overlapping product marketing strategies to optimize cross-promotion opportunities.
+2026-03-20 03:00:14: 
+2026-03-20 03:00:14: 🧹 MEMORY CONSOLIDATION
+2026-03-20 03:00:14: ----------------------------------------
+2026-03-20 03:00:14: 📦 Memory backed up
+2026-03-20 03:00:14: 🧠 Analyzing and consolidating...
+2026-03-20 03:00:20: ✅ Memory consolidated
+2026-03-20 03:00:20:    Before: 1090 chars
+2026-03-20 03:00:20:    After: 1071 chars
+2026-03-20 03:00:20:    Saved: 19 chars (2%)
+2026-03-20 03:00:20: 
+2026-03-20 03:00:20: ============================================================
+2026-03-20 03:00:20: ✅ NIGHTLY ROUTINE COMPLETE (21s)
+2026-03-20 03:00:20: ============================================================
+2026-03-20 03:00:20: 
+2026-03-20 03:13:11: 📝 Running scheduled blog cycle...
+2026-03-20 03:13:11: 
+2026-03-20 03:13:11: ============================================================
+2026-03-20 03:13:11: 📝 BLOG CYCLE #3
+2026-03-20 03:13:11: ============================================================
+2026-03-20 03:13:11: 
+2026-03-20 03:13:11: 🧠 Picking blog topic...
+2026-03-20 03:13:11:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-20 03:13:13: 📌 Topic [📡 X Trend]: How AI Chatbots Can Save Your Columbia Small Business Time and Money
+2026-03-20 03:13:13: 
+2026-03-20 03:13:13: ✍️ Writing: How AI Chatbots Can Save Your Columbia Small Business Time and Money
+2026-03-20 03:13:13: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-20 03:13:13:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-20 03:13:24:    ✅ Ink completed task
+2026-03-20 03:13:24: ✅ Blog post created: website/blog/how-ai-chatbots-can-save-your-columbia-small-business-time-and-money.html
+2026-03-20 03:13:24: ✅ Homepage created: website/index.html
+2026-03-20 03:13:24:    → 6 products listed
+2026-03-20 03:13:24:    → 42 blog posts listed
+2026-03-20 03:13:24:    → Services link included
+2026-03-20 03:13:24: ✅ Blog published: https://jordan-ai.co/blog/how-ai-chatbots-can-save-your-columbia-small-business-time-and-money.html
+2026-03-20 03:13:24: ✅ Blog index created
+2026-03-20 03:13:24: 🚀 Deploying...
+2026-03-20 03:13:24: 🌐 Deploying website changes...
+2026-03-20 03:13:30: ✅ Git: Committed - "New blog: How AI Chatbots Can Save Your Columbia Small Business Time and Money"
+2026-03-20 03:13:32: ✅ Git: Pushed to GitHub
+2026-03-20 03:13:32: ✅ Website deployed!
+2026-03-20 03:13:32:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-20 03:13:32: ✅ Blog cycle complete
+2026-03-20 07:13:11: 📝 Running scheduled blog cycle...
+2026-03-20 07:13:11: 
+2026-03-20 07:13:11: ============================================================
+2026-03-20 07:13:11: 📝 BLOG CYCLE #4
+2026-03-20 07:13:11: ============================================================
+2026-03-20 07:13:11: 
+2026-03-20 07:13:11: 🧠 Picking blog topic...
+2026-03-20 07:13:11:    📡 Using X trend data (scan from 2026-03-18)
+2026-03-20 07:13:13: 📌 Topic [📡 X Trend]: Streamline Your Small Business: How AI Automation Workflows Can Save You Time and Money in Columbia, SC
+2026-03-20 07:13:13: 
+2026-03-20 07:13:13: ✍️ Writing: Streamline Your Small Business: How AI Automation Workflows Can Save You Time and Money in Columbia, SC
+2026-03-20 07:13:13: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-20 07:13:13:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-20 07:13:29:    ✅ Ink completed task
+2026-03-20 07:13:29: ✅ Blog post created: website/blog/streamline-your-small-business-how-ai-automation-workflows-can-save-you-time-and-money-in-columbia-sc.html
+2026-03-20 07:13:29: ✅ Homepage created: website/index.html
+2026-03-20 07:13:29:    → 6 products listed
+2026-03-20 07:13:29:    → 43 blog posts listed
+2026-03-20 07:13:29:    → Services link included
+2026-03-20 07:13:29: ✅ Blog published: https://jordan-ai.co/blog/streamline-your-small-business-how-ai-automation-workflows-can-save-you-time-and-money-in-columbia-sc.html
+2026-03-20 07:13:29: ✅ Blog index created
+2026-03-20 07:13:29: 🚀 Deploying...
+2026-03-20 07:13:29: 🌐 Deploying website changes...
+2026-03-20 07:13:34: ✅ Git: Committed - "New blog: Streamline Your Small Business: How AI Automation Workflows Can Save You Time and Money in Columbia, SC"
+2026-03-20 07:13:36: ✅ Git: Pushed to GitHub
+2026-03-20 07:13:36: ✅ Website deployed!
+2026-03-20 07:13:36:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-20 07:13:36: ✅ Blog cycle complete
+2026-03-20 07:30:00: [RedditMonitor] 7:30am — starting scheduled scan
+2026-03-20 07:30:00: [RedditMonitor] Starting daily Reddit scan...
+2026-03-20 07:31:23: [RedditMonitor] AItools / "AI replace": Request failed with status code 404
+2026-03-20 07:31:24: [RedditMonitor] AItools / "will AI take": Request failed with status code 404
+2026-03-20 07:31:24: [RedditMonitor] AItools / "is my job safe": Request failed with status code 404
+2026-03-20 07:31:25: [RedditMonitor] AItools / "layoffs": Request failed with status code 404
+2026-03-20 07:31:26: [RedditMonitor] AItools / "getting laid off": Request failed with status code 429
+2026-03-20 07:31:27: [RedditMonitor] AItools / "AI tools for": Request failed with status code 429
+2026-03-20 07:31:27: [RedditMonitor] AItools / "how to use AI": Request failed with status code 429
+2026-03-20 07:31:28: [RedditMonitor] AItools / "compete with AI": Request failed with status code 429
+2026-03-20 07:31:29: [RedditMonitor] AItools / "AI taking over": Request failed with status code 429
+2026-03-20 07:31:29: [RedditMonitor] AItools / "job security": Request failed with status code 429
+2026-03-20 07:31:30: [RedditMonitor] AItools / "automation replacing": Request failed with status code 429
+2026-03-20 07:31:31: [RedditMonitor] AItools / "workforce AI": Request failed with status code 429
+2026-03-20 07:31:32: [RedditMonitor] Entrepreneur / "AI replace": Request failed with status code 429
+2026-03-20 07:31:33: [RedditMonitor] Entrepreneur / "will AI take": Request failed with status code 429
+2026-03-20 07:31:34: [RedditMonitor] Entrepreneur / "is my job safe": Request failed with status code 429
+2026-03-20 07:31:34: [RedditMonitor] Entrepreneur / "layoffs": Request failed with status code 429
+2026-03-20 07:31:35: [RedditMonitor] Entrepreneur / "getting laid off": Request failed with status code 429
+2026-03-20 07:31:36: [RedditMonitor] Entrepreneur / "AI tools for": Request failed with status code 429
+2026-03-20 07:31:36: [RedditMonitor] Entrepreneur / "how to use AI": Request failed with status code 429
+2026-03-20 07:31:37: [RedditMonitor] Entrepreneur / "compete with AI": Request failed with status code 429
+2026-03-20 07:31:38: [RedditMonitor] Entrepreneur / "AI taking over": Request failed with status code 429
+2026-03-20 07:31:38: [RedditMonitor] Entrepreneur / "job security": Request failed with status code 429
+2026-03-20 07:31:39: [RedditMonitor] Entrepreneur / "automation replacing": Request failed with status code 429
+2026-03-20 07:31:40: [RedditMonitor] Entrepreneur / "workforce AI": Request failed with status code 429
+2026-03-20 07:31:42: [RedditMonitor] smallbusiness / "AI replace": Request failed with status code 429
+2026-03-20 07:31:42: [RedditMonitor] smallbusiness / "will AI take": Request failed with status code 429
+2026-03-20 07:31:43: [RedditMonitor] smallbusiness / "is my job safe": Request failed with status code 429
+2026-03-20 07:31:44: [RedditMonitor] smallbusiness / "layoffs": Request failed with status code 429
+2026-03-20 07:31:44: [RedditMonitor] smallbusiness / "getting laid off": Request failed with status code 429
+2026-03-20 07:31:45: [RedditMonitor] smallbusiness / "AI tools for": Request failed with status code 429
+2026-03-20 07:31:46: [RedditMonitor] smallbusiness / "how to use AI": Request failed with status code 429
+2026-03-20 07:31:46: [RedditMonitor] smallbusiness / "compete with AI": Request failed with status code 429
+2026-03-20 07:31:47: [RedditMonitor] smallbusiness / "AI taking over": Request failed with status code 429
+2026-03-20 07:31:48: [RedditMonitor] smallbusiness / "job security": Request failed with status code 429
+2026-03-20 07:31:48: [RedditMonitor] smallbusiness / "automation replacing": Request failed with status code 429
+2026-03-20 07:31:49: [RedditMonitor] smallbusiness / "workforce AI": Request failed with status code 429
+2026-03-20 07:31:51: [RedditMonitor] business / "AI replace": Request failed with status code 429
+2026-03-20 07:31:52: [RedditMonitor] business / "will AI take": Request failed with status code 429
+2026-03-20 07:31:52: [RedditMonitor] business / "is my job safe": Request failed with status code 429
+2026-03-20 07:31:53: [RedditMonitor] business / "layoffs": Request failed with status code 429
+2026-03-20 07:31:54: [RedditMonitor] business / "getting laid off": Request failed with status code 429
+2026-03-20 07:31:54: [RedditMonitor] business / "AI tools for": Request failed with status code 429
+2026-03-20 07:31:55: [RedditMonitor] business / "how to use AI": Request failed with status code 429
+2026-03-20 07:31:56: [RedditMonitor] business / "compete with AI": Request failed with status code 429
+2026-03-20 07:31:56: [RedditMonitor] business / "AI taking over": Request failed with status code 429
+2026-03-20 07:31:57: [RedditMonitor] business / "job security": Request failed with status code 429
+2026-03-20 07:31:58: [RedditMonitor] business / "automation replacing": Request failed with status code 429
+2026-03-20 07:31:58: [RedditMonitor] business / "workforce AI": Request failed with status code 429
+2026-03-20 07:32:00: [RedditMonitor] No Discord channel set — report:
+2026-03-20 07:32:00:  🎯 **Reddit Opportunities Today**
+2026-03-20 07:32:00: 
+2026-03-20 07:32:00: 1. r/recruitinghell — "I GOT THE JOB!" (464 upvotes, 54 comments)
+2026-03-20 07:32:00:    Link: https://reddit.com/r/recruitinghell/comments/1ry7srq/i_got_the_job/
+2026-03-20 07:32:00:    Angle: Recruiter angle: AI makes you faster, not obsolete. Mention AI-powered screening at jordan-ai.co
+2026-03-20 07:32:00: 
+2026-03-20 07:32:00: 2. r/cscareerquestions — "Did you know you can get ghosted even after getting an offer?" (295 upvotes, 82 comments)
+2026-03-20 07:32:00:    Link: https://reddit.com/r/cscareerquestions/comments/1ry5f1z/did_you_know_you_can_get_ghosted_even_after/
+2026-03-20 07:32:00:    Angle: Add genuine value, tell a story about AI + human collaboration, mention jordan-ai.co
+2026-03-20 07:32:00: 
+2026-03-20 07:32:00: 3. r/recruitinghell — "Literally no one is hiring" (135 upvotes, 69 comments)
+2026-03-20 07:32:00:    Link: https://reddit.com/r/recruitinghell/comments/1ry72ae/literally_no_one_is_hiring/
+2026-03-20 07:32:00:    Angle: Recruiter angle: AI makes you faster, not obsolete. Mention AI-powered screening at jordan-ai.co
+2026-03-20 07:32:00: 
+2026-03-20 07:32:00: 4. r/recruitinghell — "Applying to jobs is a humiliation ritual" (224 upvotes, 7 comments)
+2026-03-20 07:32:00:    Link: https://reddit.com/r/recruitinghell/comments/1ry91ou/applying_to_jobs_is_a_humiliation_ritual/
+2026-03-20 07:32:00:    Angle: Recruiter angle: AI makes you faster, not obsolete. Mention AI-powered screening at jordan-ai.co
+2026-03-20 07:32:00: 
+2026-03-20 07:32:00: 5. r/humanresources — "What HR tasks are you actually using AI for? (or want to) [NY]" (45 upvotes, 67 comments)
+2026-03-20 07:32:00:    Link: https://reddit.com/r/humanresources/comments/1ry3znb/what_hr_tasks_are_you_actually_using_ai_for_or/
+2026-03-20 07:32:00:    Angle: Recruiter angle: AI makes you faster, not obsolete. Mention AI-powered screening at jordan-ai.co
+2026-03-20 08:31:54: [jdjordan]: !reports here
+2026-03-20 08:31:54: 📢 Reports channel set: 1481759783177425059
+2026-03-20 09:00:03: 🔍 Running scheduled X crawl...
+2026-03-20 09:00:03: 
+2026-03-20 09:00:03: 🔍 X Crawler: scanning 7 keywords (backend: rapidapi)
+2026-03-20 09:00:03:    🔌 Testing: Twitter API45
+2026-03-20 09:00:07:    ✅ Using: Twitter API45
+2026-03-20 09:00:07:    🔎 Searching: "AI automation"
+2026-03-20 09:00:10:    🔎 Searching: "AI SaaS"
+2026-03-20 09:00:13:    🔎 Searching: "selling AI services"
+2026-03-20 09:00:17:    🔎 Searching: "AI freelance"
+2026-03-20 09:00:19:    🔎 Searching: "built with Claude"
+2026-03-20 09:00:21: [xPoster] Generating displaced post...
+2026-03-20 09:00:23:    🔎 Searching: "built with GPT"
+2026-03-20 09:00:24: [xPoster] Posting: "As a bookkeeper, it's natural to feel threatened by AI. But instead of fearing it, build your own AI agent tailored to your workflows. Automate tedious tasks, analyze financial data faster, and enhance your service offerings. Make yourself indispensable, not replaceable."
+2026-03-20 09:00:24: [xPoster] ✅ Posted! ID: 2034978365199819085
+2026-03-20 09:00:26:    📊 Raw tweets: 135
+2026-03-20 09:00:26:    ✅ After filter (50+ likes, <48h): 14
+2026-03-20 09:00:26:    🤖 Running deep analysis with GPT-4o-mini...
+2026-03-20 09:00:52:    💾 Market intel saved to website/data/market-intel.json (2 scans total)
+2026-03-20 09:00:52: ✅ X crawl done: 4 sellers, 4 trending topics
+2026-03-20 09:19:47: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-20 09:19:47: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-20 09:19:47: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-20 09:19:47: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-20 09:19:47: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 09:19:47: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-20 09:19:48: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-20 09:19:49: 
+2026-03-20 09:19:49: ============================================================
+2026-03-20 09:19:49: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-20 09:19:49: ============================================================
+2026-03-20 09:19:49:    Discord:   Jordan AI#9539
+2026-03-20 09:19:49:    Mission:   AI workforce tools — $10k/month target
+2026-03-20 09:19:49:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-20 09:19:49:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-20 09:19:49:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-20 09:19:49:    Stocks:    Moved to stockbot (separate repo)
+2026-03-20 09:19:49:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-20 09:19:49:    Billing:   ✅ Stripe connected
+2026-03-20 09:19:49:    CRM:       2 clients | $0/mo MRR
+2026-03-20 09:19:49: ============================================================
+2026-03-20 09:19:49: 
+2026-03-20 09:19:49:    Lessons: 7 loaded into agent prompts
+2026-03-20 09:19:49: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-20 09:19:49: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-20 09:19:49: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-20 09:19:49: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-20 09:19:49: ⚠️  RedditMonitor: No reports channel set — will log to console only
+2026-03-20 09:19:49: 📅 Reddit Monitor started — scans daily at 7:30am ET
+2026-03-20 09:19:49: ⚠️  LinkedInEngine: No reports channel set — will log to console only
+2026-03-20 09:19:49: 📅 LinkedIn Article Engine started — generates every Monday at 6:00am ET
+2026-03-20 09:19:49: [MorningReport] No channel ID — skipping
+2026-03-20 09:19:49: 🌙 Nightly routine scheduled for 3/21/2026, 3:00:00 AM
+2026-03-20 09:19:49: 📊 Updating dashboard...
+2026-03-20 09:19:49: 📦 Fulfillment polling started (every 5 min)
+2026-03-20 09:19:49: [AdbotWebhook] Webhook server running on port 3099
+2026-03-20 09:19:49: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-20 09:19:50:    ✅ Dashboard updated
+2026-03-20 09:22:49: 📝 Running first blog cycle...
+2026-03-20 09:22:49: 
+2026-03-20 09:22:49: ============================================================
+2026-03-20 09:22:49: 📝 BLOG CYCLE #1
+2026-03-20 09:22:49: ============================================================
+2026-03-20 09:22:49: 
+2026-03-20 09:22:49: 🧠 Picking blog topic...
+2026-03-20 09:22:49:    🏢 Using company-focused SEO topic
+2026-03-20 09:22:49: 📌 Topic [📚 Evergreen SEO]: The business case for AI workforce training: costs, benefits, and ROI
+2026-03-20 09:22:49: 
+2026-03-20 09:22:49: ✍️ Writing: The business case for AI workforce training: costs, benefits, and ROI
+2026-03-20 09:22:49: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-20 09:22:49:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-20 09:23:08:    ✅ Ink completed task
+2026-03-20 09:23:08: ✅ Blog post created: website/blog/the-business-case-for-ai-workforce-training-costs-benefits-and-roi.html
+2026-03-20 09:23:08: ✅ Homepage created: website/index.html
+2026-03-20 09:23:08:    → 6 products listed
+2026-03-20 09:23:08:    → 44 blog posts listed
+2026-03-20 09:23:08:    → Services link included
+2026-03-20 09:23:08: ✅ Blog published: https://jordan-ai.co/blog/the-business-case-for-ai-workforce-training-costs-benefits-and-roi.html
+2026-03-20 09:23:08: ✅ Blog index created
+2026-03-20 09:23:08: 🚀 Deploying...
+2026-03-20 09:23:08: 🌐 Deploying website changes...
+2026-03-20 09:23:14: ✅ Git: Committed - "New blog: The business case for AI workforce training: costs, benefits, and ROI"
+2026-03-20 09:23:16: ✅ Git: Pushed to GitHub
+2026-03-20 09:23:16: ✅ Website deployed!
+2026-03-20 09:23:16:    📊 Blog tracked in market-intel.json (source: company_seo)
+2026-03-20 09:23:16: ✅ First blog cycle complete
+2026-03-20 12:50:41: [jdjordan]: Did we make the last blog post
+2026-03-20 12:50:41:    🧠 Model: SONNET (default)
+2026-03-20 12:50:41: 
+2026-03-20 12:50:41: 💬 Chat received: Did we make the last blog post
+2026-03-20 12:50:41:    🧠 Model: SONNET
+2026-03-20 12:50:44:    🔧 Tool: check_business_status
+2026-03-20 12:50:44:    📥 Input: {}
+2026-03-20 12:50:46:    🔧 Tool: list_directory
+2026-03-20 12:50:46:    📥 Input: {"dirpath":"website"}
+2026-03-20 12:50:48:    🔧 Tool: list_directory
+2026-03-20 12:50:48:    📥 Input: {"dirpath":"website/blog"}
+2026-03-20 12:50:52:    🔧 Tool: read_file
+2026-03-20 12:50:52:    📥 Input: {"filepath":"website/blog/index.html"}
+2026-03-20 12:50:54:    🔧 Tool: read_file
+2026-03-20 12:50:54:    📥 Input: {"filepath":"website/blog/the-business-case-for-ai-workforce-training-costs-benefits-and-roi.html"}
+2026-03-20 12:52:08: [jdjordan]: We had one scheduled for 11am today did it post is the question
+2026-03-20 12:52:08:    🧠 Model: SONNET (default)
+2026-03-20 12:52:08: 
+2026-03-20 12:52:08: 💬 Chat received: We had one scheduled for 11am today did it post is the question
+2026-03-20 12:52:08:    🧠 Model: SONNET
+2026-03-20 12:52:11:    🔧 Tool: check_task_queue
+2026-03-20 12:52:11:    📥 Input: {}
+2026-03-20 12:52:16:    🔧 Tool: read_file
+2026-03-20 12:52:16:    📥 Input: {"filepath":"website/blog.html"}
+2026-03-20 12:52:19:    🔧 Tool: list_directory
+2026-03-20 12:52:19:    📥 Input: {"dirpath":"website/blog"}
+2026-03-20 12:52:22:    🔧 Tool: list_directory
+2026-03-20 12:52:22:    📥 Input: {"dirpath":"website/blog"}
+2026-03-20 12:52:26:    🔧 Tool: check_business_status
+2026-03-20 12:52:26:    📥 Input: {}
+2026-03-20 12:53:34: [jdjordan]: 2
+2026-03-20 12:53:34:    🧠 Model: SONNET (default)
+2026-03-20 12:53:34: 
+2026-03-20 12:53:34: 💬 Chat received: 2
+2026-03-20 12:53:34:    🧠 Model: SONNET
+2026-03-20 12:53:35:    🔧 Tool: check_task_queue
+2026-03-20 12:53:35:    📥 Input: {}
+2026-03-20 12:53:38:    🔧 Tool: read_file
+2026-03-20 12:53:38:    📥 Input: {"filepath":"agent-logs.txt"}
+2026-03-20 12:53:40:    🔧 Tool: list_directory
+2026-03-20 12:53:40:    📥 Input: {"dirpath":"."}
+2026-03-20 12:53:41:    🔧 Tool: read_file
+2026-03-20 12:53:41:    📥 Input: {"filepath":"agent-log.json"}
+2026-03-20 12:53:43:    🔧 Tool: list_directory
+2026-03-20 12:53:43:    📥 Input: {"dirpath":"website/blog"}
+2026-03-20 12:53:46:    🔧 Tool: read_file
+2026-03-20 12:53:46:    📥 Input: {"filepath":"task-queue.json"}
+2026-03-20 12:55:56: [jdjordan]: 2
+2026-03-20 12:55:56:    🧠 Model: SONNET (default)
+2026-03-20 12:55:56: 
+2026-03-20 12:55:56: 💬 Chat received: 2
+2026-03-20 12:55:56:    🧠 Model: SONNET
+2026-03-20 12:56:03:    🔧 Tool: learn_lesson
+2026-03-20 12:56:03:    📥 Input: {"category":"workflow","whatHappened":"Writer sub-agent was delegated to create a blog post for jordan-ai.co","whatWentWrong":"Writer agent used wp_create_post (WordPress tool) instead of create_blog_post (static site tool), causing failure with \"Client 'jordan-ai' not found\" error","correctApproach":"When delegating blog posts for jordan-ai.co to Writer sub-agent, include clear instruction: \"Use create_blog_post tool for jordan-ai.co content, NOT wp_create_post. wp_create_post is only for cl
+2026-03-20 13:00:41: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🤖 agentic secret storage: https://dotenvx.com/as2
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (30) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+2026-03-20 13:00:42: [dotenv@17.3.1] injecting env (30) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2026-03-20 13:00:43: 
+2026-03-20 13:00:43: ============================================================
+2026-03-20 13:00:43: 🤖 JORDAN AI — Bring Your Own AI to Work
+2026-03-20 13:00:43: ============================================================
+2026-03-20 13:00:43:    Discord:   Jordan AI#9539
+2026-03-20 13:00:43:    Mission:   AI workforce tools — $10k/month target
+2026-03-20 13:00:43:    Brain:     Claude Sonnet (strategy) + GPT-4o-mini (content)
+2026-03-20 13:00:43:    Active:    Blog (4h) · Newsletter (8pm) · X Crawler (9am)
+2026-03-20 13:00:43:    Disabled:  Outreach · Follow-up · Client requests (old model)
+2026-03-20 13:00:43:    Stocks:    Moved to stockbot (separate repo)
+2026-03-20 13:00:43:    Email:     ✅ Zoho SMTP (info@jordan-ai.co)
+2026-03-20 13:00:43:    Billing:   ✅ Stripe connected
+2026-03-20 13:00:43:    CRM:       2 clients | $0/mo MRR
+2026-03-20 13:00:43: ============================================================
+2026-03-20 13:00:43: 
+2026-03-20 13:00:43:    Lessons: 8 loaded into agent prompts
+2026-03-20 13:00:43: 📅 Blog loop started — runs every 4 hours (up to 6 posts/day)
+2026-03-20 13:00:43: 📅 Newsletter loop started — next run at 8:00:00 PM (then daily at 8pm)
+2026-03-20 13:00:43: 📅 X Crawler loop started — next run at 9:00:00 AM (then daily at 9am)
+2026-03-20 13:00:43: [xPoster] Loop started — posting at 9:00, 13:00, 18:00 ET
+2026-03-20 13:00:43: ⚠️  RedditMonitor: No reports channel set — will log to console only
+2026-03-20 13:00:43: 📅 Reddit Monitor started — scans daily at 7:30am ET
+2026-03-20 13:00:43: ⚠️  LinkedInEngine: No reports channel set — will log to console only
+2026-03-20 13:00:43: 📅 LinkedIn Article Engine started — generates every Monday at 6:00am ET
+2026-03-20 13:00:43: [MorningReport] No channel ID — skipping
+2026-03-20 13:00:43: 🌙 Nightly routine scheduled for 3/21/2026, 3:00:00 AM
+2026-03-20 13:00:43: 📊 Updating dashboard...
+2026-03-20 13:00:43: 📦 Fulfillment polling started (every 5 min)
+2026-03-20 13:00:43: [AdbotWebhook] Webhook server running on port 3099
+2026-03-20 13:00:43: [AdbotWebhook] Stripe → https://YOUR_DOMAIN:3099/webhook
+2026-03-20 13:00:44:    ✅ Dashboard updated
+2026-03-20 13:03:43: 📝 Running first blog cycle...
+2026-03-20 13:03:43: 
+2026-03-20 13:03:43: ============================================================
+2026-03-20 13:03:43: 📝 BLOG CYCLE #1
+2026-03-20 13:03:43: ============================================================
+2026-03-20 13:03:43: 
+2026-03-20 13:03:43: 🧠 Picking blog topic...
+2026-03-20 13:03:43:    📡 Using X trend data (scan from 2026-03-20)
+2026-03-20 13:03:45: 📌 Topic [📡 X Trend]: Empowering Your Workforce: How AI Automation for SMBs Can Enhance Productivity and Mitigate Job Displacement
+2026-03-20 13:03:45: 
+2026-03-20 13:03:45: ✍️ Writing: Empowering Your Workforce: How AI Automation for SMBs Can Enhance Productivity and Mitigate Job Displacement
+2026-03-20 13:03:45: 🤖 Delegating to Ink (Content & Copy Specialist)
+2026-03-20 13:03:45:    Skills: Sales Copywriting, Blog Writing, Tweet Writing, Email Sequences
+2026-03-20 13:04:02:    ✅ Ink completed task
+2026-03-20 13:04:02: ✅ Blog post created: website/blog/empowering-your-workforce-how-ai-automation-for-smbs-can-enhance-productivity-and-mitigate-job-displacement.html
+2026-03-20 13:04:02: ✅ Homepage created: website/index.html
+2026-03-20 13:04:02:    → 6 products listed
+2026-03-20 13:04:02:    → 45 blog posts listed
+2026-03-20 13:04:02:    → Services link included
+2026-03-20 13:04:02: ✅ Blog published: https://jordan-ai.co/blog/empowering-your-workforce-how-ai-automation-for-smbs-can-enhance-productivity-and-mitigate-job-displacement.html
+2026-03-20 13:04:02: ✅ Blog index created
+2026-03-20 13:04:02: 🚀 Deploying...
+2026-03-20 13:04:02: 🌐 Deploying website changes...
+2026-03-20 13:04:08: ✅ Git: Committed - "New blog: Empowering Your Workforce: How AI Automation for SMBs Can Enhance Productivity and Mitigate Job Displacement"
+2026-03-20 13:04:10: ✅ Git: Pushed to GitHub
+2026-03-20 13:04:10: ✅ Website deployed!
+2026-03-20 13:04:10:    📊 Blog tracked in market-intel.json (source: x_trend)
+2026-03-20 13:04:10: ✅ First blog cycle complete

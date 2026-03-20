@@ -1,0 +1,4 @@
+2026-03-19 13:00:35: [xPoster] Post failed: Your client app is not configured with the appropriate oauth1 app permissions for this endpoint.
+2026-03-19 13:00:35: [xPoster] Scheduled post failed: Request failed with status code 403
+2026-03-19 14:15:52: [xPoster] Post failed: Your client app is not configured with the appropriate oauth1 app permissions for this endpoint.
+2026-03-19 14:28:59: [xPoster] Post failed: Your client app is not configured with the appropriate oauth1 app permissions for this endpoint.

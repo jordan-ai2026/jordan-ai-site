@@ -20,6 +20,50 @@ const { trackBlogPublished } = require("./revenueDashboard")
 const { sendReport, getReportsChannel } = require("./reporter")
 
 const MARKET_INTEL_FILE = path.join(__dirname, "website", "data", "market-intel.json")
+const RECENT_TITLES_FILE = path.join(__dirname, "recent-blog-titles.json")
+
+// ============================================
+// DEDUP GUARD — Prevent near-duplicate titles
+// Keeps last 50 titles, blocks similarity > 60%
+// ============================================
+function loadRecentTitles() {
+  try {
+    if (!fs.existsSync(RECENT_TITLES_FILE)) return []
+    return JSON.parse(fs.readFileSync(RECENT_TITLES_FILE, "utf8"))
+  } catch { return [] }
+}
+
+function saveRecentTitles(titles) {
+  try {
+    fs.writeFileSync(RECENT_TITLES_FILE, JSON.stringify(titles.slice(-50), null, 2))
+  } catch {}
+}
+
+function titleSimilarity(a, b) {
+  const wordsA = new Set(a.toLowerCase().replace(/[^a-z0-9 ]/g, "").split(" ").filter(w => w.length > 3))
+  const wordsB = new Set(b.toLowerCase().replace(/[^a-z0-9 ]/g, "").split(" ").filter(w => w.length > 3))
+  if (wordsA.size === 0) return 0
+  let overlap = 0
+  for (const w of wordsA) { if (wordsB.has(w)) overlap++ }
+  return overlap / Math.max(wordsA.size, wordsB.size)
+}
+
+function isTitleDuplicate(title) {
+  const recent = loadRecentTitles()
+  for (const prev of recent) {
+    if (titleSimilarity(title, prev) > 0.6) {
+      console.log(`   ⚠️  Duplicate title detected (similar to: "${prev}") — skipping`)
+      return true
+    }
+  }
+  return false
+}
+
+function recordTitle(title) {
+  const recent = loadRecentTitles()
+  recent.push(title)
+  saveRecentTitles(recent)
+}
 
 // ============================================
 // STATE
@@ -188,9 +232,9 @@ async function pickTrendTopic(trendCtx) {
     ? trendCtx.ideas.map(i => `- ${i}`).join("\n")
     : ""
 
-  const prompt = `You are Jordan AI, writing blog content about AI for small businesses.
+  const prompt = `You are Jordan AI, writing blog content about AI, workforce automation, and business growth.
 
-Your website (jordan-ai.co) offers: AI chatbots, website management, SEO content.
+Your website (jordan-ai.co) helps workers and companies navigate the AI revolution.
 
 RIGHT NOW on X/Twitter, people are talking about:
 
@@ -203,10 +247,11 @@ ${sellingLines}
 ${ideasLines ? `ANGLES THAT ARE WORKING:\n${ideasLines}\n` : ""}
 Pick a specific, helpful blog post title that:
 - Taps into one of these trends or selling angles
-- Angles it for small business owners (not developers or tech people)
-- Includes a local angle when possible (South Carolina, Columbia area)
-- Is something a small business owner would actually search for
+- Speaks to workers worried about AI displacement OR companies looking to upgrade their teams with AI
+- Is global/national in scope — no specific city or state references
+- Is something a professional or business owner would actually search for
 - Is educational, not salesy
+- Feels timely and specific (not generic)
 
 Return ONLY the blog post title. Nothing else.`
 
@@ -223,20 +268,18 @@ Return ONLY the blog post title. Nothing else.`
 async function pickEvergreenTopic() {
   const seedTopic = EVERGREEN_TOPICS[Math.floor(Math.random() * EVERGREEN_TOPICS.length)]
 
-  const prompt = `You are Jordan AI, writing blog content about AI technology and how businesses can use it.
+  const prompt = `You are Jordan AI, writing blog content about AI, workforce automation, and business growth.
 
-Your website (jordan-ai.co) offers:
-- AI chatbot building for small businesses
-- WordPress website management
-- SEO content services
+Your website (jordan-ai.co) helps workers and companies navigate the AI revolution.
 
 INSPIRATION TOPIC: ${seedTopic}
 
-Pick a specific, helpful blog post topic. Requirements:
-- About AI, automation, or digital marketing for small businesses
+Pick a specific, helpful blog post title. Requirements:
+- About AI displacement, workforce upskilling, or how businesses can leverage AI
+- Speak to either: a professional worried about their job, or a business owner looking to upgrade their team
+- Global/national in scope — no specific city or state references
 - Practical and helpful (not salesy)
-- Something a small business owner would actually search for
-- Include a local angle when possible (South Carolina, Columbia area)
+- Something someone would actually search for
 - NOT about a specific product to sell — this is educational content
 
 Return ONLY the blog post title. Nothing else.`
@@ -274,11 +317,11 @@ Write an SEO blog post with this title: "${title}"
 Requirements:
 - 600-800 words
 - Helpful, practical, educational
-- Written for small business owners who aren't tech-savvy
+- Written for professionals or business owners — speak to them like a smart peer, not a textbook
+- Global/national in scope — no specific cities, states, or regions
 - Include specific examples and actionable advice
 - Natural tone — conversational, not corporate
-- Include a subtle mention of jordan-ai.co services at the end
-  (just one sentence, not a hard sell)
+- Include a subtle mention of jordan-ai.co at the end (one sentence, not a hard sell)
 - Break into sections with clear subheadings
 - End with a simple call to action
 ${trendSection}
@@ -286,6 +329,7 @@ DO NOT:
 - Make up statistics or cite fake studies
 - Promise unrealistic results
 - Sound like an AI wrote it (no "in today's digital landscape" or "leverage AI solutions")
+- Reference any specific city, state, or local area
 - Write about a specific product to buy
 - Use excessive buzzwords
 - Copy or paraphrase specific tweets or posts
@@ -383,8 +427,23 @@ async function runCycle() {
   report.push("")
 
   try {
-    // 1. Pick a topic (70% trend-based, 30% evergreen)
-    const { title, source, trendCtx } = await pickTopic()
+    // 1. Pick a topic — retry up to 3 times if duplicate detected
+    let title, source, trendCtx
+    let attempts = 0
+    while (attempts < 3) {
+      const picked = await pickTopic()
+      title = picked.title
+      source = picked.source
+      trendCtx = picked.trendCtx
+      attempts++
+      if (!isTitleDuplicate(title)) break
+      console.log(`   🔄 Retrying topic pick (attempt ${attempts}/3)`)
+      if (attempts === 3) {
+        console.log("❌ Could not find a unique topic after 3 attempts — skipping cycle")
+        blogLoopRunning = false
+        return { success: false, report: ["❌ Skipped — no unique topic found"] }
+      }
+    }
     const sourceLabel = source === "x_trend" ? "📡 X Trend" : "📚 Evergreen SEO"
     console.log(`📌 Topic [${sourceLabel}]: ${title}`)
     report.push(`**📌 Topic:** ${title}`)
@@ -419,6 +478,7 @@ async function runCycle() {
       // 6. Track it
       trackBlogPublished()
       trackBlogInMarketIntel(title, source, result.url)
+      recordTitle(title)
       blogsToday++
       addMemory(`Published blog [${source}]: "${title}"`, "Content")
 

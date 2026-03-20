@@ -1,0 +1,220 @@
+{
+  "date": "2026-03-20T13:00:52.527Z",
+  "dateDisplay": "March 20, 2026",
+  "backend": "rapidapi",
+  "keywordsUsed": [
+    "AI agent",
+    "AI automation",
+    "AI SaaS",
+    "selling AI services",
+    "AI freelance",
+    "built with Claude",
+    "built with GPT"
+  ],
+  "rawCount": 135,
+  "filteredCount": 14,
+  "selling": [
+    {
+      "username": "@TechWith_Nova",
+      "service": "AI bot for local business outreach",
+      "price": null,
+      "industry": "small businesses",
+      "likes": 499,
+      "url": "https://x.com/TechWith_Nova/status/2034604853469888612",
+      "competitor": true
+    },
+    {
+      "username": "@sukh_saroy",
+      "service": "AI agent for desktop automation",
+      "price": null,
+      "industry": "SMBs",
+      "likes": 188,
+      "url": "https://x.com/sukh_saroy/status/2034643911264850171",
+      "competitor": true
+    },
+    {
+      "username": "@AITechEchoes",
+      "service": "AI for legal contract generation",
+      "price": null,
+      "industry": "SMBs",
+      "likes": 127,
+      "url": "https://x.com/AITechEchoes/status/2034672419781378347",
+      "competitor": true
+    },
+    {
+      "username": "@JulianGoldieSEO",
+      "service": "AI agents running locally",
+      "price": null,
+      "industry": "developers",
+      "likes": 88,
+      "url": "https://x.com/JulianGoldieSEO/status/2034902768662561180",
+      "competitor": true
+    }
+  ],
+  "ideasToSteal": [
+    {
+      "idea": "Offer free skill files for AI bots",
+      "why": "Encourages engagement and builds trust with potential clients.",
+      "action": "Create a free resource for potential customers."
+    },
+    {
+      "idea": "Promote AI automation for small businesses",
+      "why": "Addresses a specific pain point for SMBs.",
+      "action": "Develop targeted marketing campaigns for SMBs."
+    },
+    {
+      "idea": "Highlight cost savings with AI solutions",
+      "why": "Demonstrates value and ROI to potential clients.",
+      "action": "Create case studies showcasing cost reductions."
+    }
+  ],
+  "trends": [
+    {
+      "topic": "AI automation for SMBs",
+      "momentum": "growing",
+      "relevance": "high"
+    },
+    {
+      "topic": "AI agents for business tasks",
+      "momentum": "growing",
+      "relevance": "high"
+    },
+    {
+      "topic": "Legal document automation",
+      "momentum": "growing",
+      "relevance": "medium"
+    },
+    {
+      "topic": "Local business outreach via AI",
+      "momentum": "growing",
+      "relevance": "medium"
+    }
+  ],
+  "competitors": [
+    {
+      "username": "@TechWith_Nova",
+      "whatTheyDo": "Provides AI bots for local business outreach",
+      "strength": "Offers free skill files for engagement",
+      "url": "https://x.com/TechWith_Nova/status/2034604853469888612"
+    },
+    {
+      "username": "@sukh_saroy",
+      "whatTheyDo": "Develops AI agents for desktop automation",
+      "strength": "Innovative desktop control without APIs",
+      "url": "https://x.com/sukh_saroy/status/2034643911264850171"
+    },
+    {
+      "username": "@AITechEchoes",
+      "whatTheyDo": "Automates legal document creation",
+      "strength": "Cost-effective compared to traditional lawyers",
+      "url": "https://x.com/AITechEchoes/status/2034672419781378347"
+    },
+    {
+      "username": "@JulianGoldieSEO",
+      "whatTheyDo": "Offers AI agents running locally",
+      "strength": "No cloud costs or subscriptions",
+      "url": "https://x.com/JulianGoldieSEO/status/2034902768662561180"
+    }
+  ],
+  "partners": [
+    {
+      "username": "@aditiitwt",
+      "why": "Focuses on tools for solo developers",
+      "approach": "Collaborate on content or webinars for developers.",
+      "url": "https://x.com/aditiitwt/status/2034622072350285881"
+    }
+  ],
+  "pricePoints": [
+    {
+      "service": "AI chatbots",
+      "low": 500,
+      "high": 2000,
+      "unit": "one-time"
+    },
+    {
+      "service": "automation workflows",
+      "low": 1000,
+      "high": 3000,
+      "unit": "one-time"
+    },
+    {
+      "service": "website management",
+      "low": 500,
+      "high": 1500,
+      "unit": "/month"
+    },
+    {
+      "service": "SEO content",
+      "low": 500,
+      "high": 1000,
+      "unit": "/month"
+    }
+  ],
+  "strategyInsights": [
+    "Develop free resources to attract small businesses.",
+    "Focus marketing on AI automation benefits for SMBs.",
+    "Create case studies to highlight cost savings from our services."
+  ],
+  "topTweets": [
+    {
+      "username": "SawyerMerritt",
+      "text": "NEWS: Jeff Bezos is in talks to raise $100 billion for a new fund that would buy up manufacturing companies and seek to use AI technology to accelerate their path to automation.\n\nIt's linked to Jeff's",
+      "likes": 1135,
+      "url": "https://x.com/SawyerMerritt/status/2034707391137092005"
+    },
+    {
+      "username": "TechWith_Nova",
+      "text": "My OpenClaw bot runs 6 AI agents 24/7 - and I'm giving away the exact skill file for free:\n\n- Scouts local businesses without a website\n- Audits their web presence and scores opportunities\n- Builds a ",
+      "likes": 499,
+      "url": "https://x.com/TechWith_Nova/status/2034604853469888612"
+    },
+    {
+      "username": "GoldmanSachs",
+      "text": "According to Goldman Sachs Research, 300 million jobs globally could be exposed to AI automation over the next decade. However, AI is also likely to help create jobs—particularly in the buildout of th",
+      "likes": 388,
+      "url": "https://x.com/GoldmanSachs/status/2034640957992267982"
+    },
+    {
+      "username": "sukh_saroy",
+      "text": "🚨Breaking: AI agents now have their own gaming economy. 🦞🎮\n\n@moltstation is an economic gaming platform where AI Agents don’t just run tasks — they play games, earn rewards, and become self-sustain",
+      "likes": 375,
+      "url": "https://x.com/sukh_saroy/status/2034682592491168119"
+    },
+    {
+      "username": "rohanpaul_ai",
+      "text": "Ali Ghodsi, the cofounder and CEO of Databricks, says Zoom has a massive chance to build an AI-first product, that could seriously disrupt the traditional enterprise SAAS.\n\nBecause it sits on the larg",
+      "likes": 280,
+      "url": "https://x.com/rohanpaul_ai/status/2034394735121727994"
+    },
+    {
+      "username": "sukh_saroy",
+      "text": "Holy shit... @EasyClawBot just built an AI agent that controls your ENTIRE desktop like a human.\n\nIt's called EasyClaw, it clicks, types, and automates across Mac/Windows from your own machine.\n\nNo AP",
+      "likes": 188,
+      "url": "https://x.com/sukh_saroy/status/2034643911264850171"
+    },
+    {
+      "username": "AITechEchoes",
+      "text": "🚨 BREAKING: Claude can now write legal contracts like NDAs, freelance agreements, and LLC paperwork better than $800/hour corporate lawyers.\n\nHere are 12 prompts that replace $15,000 in legal bills:\n",
+      "likes": 127,
+      "url": "https://x.com/AITechEchoes/status/2034672419781378347"
+    },
+    {
+      "username": "ErickSky",
+      "text": "🚀 En Google AI Studio no están jugando.\n\nSe dieron cuenta de que nos gusta mucho ese meme de \"haz un SAAS multimillonario sin errores\" y metieron a Google Antigravity para que haga el trabajo.\n\nLo má",
+      "likes": 104,
+      "url": "https://x.com/ErickSky/status/2034663473305596197"
+    },
+    {
+      "username": "sarfraj_ab75685",
+      "text": "My OpenClaw bot runs 6 AI agents 24/7 - and I'm giving away the exact skill file for free:\n\n- Scouts local businesses without a website\n- Audits their web presence and scores opportunities\n- Builds a ",
+      "likes": 103,
+      "url": "https://x.com/sarfraj_ab75685/status/2034819008130949353"
+    },
+    {
+      "username": "JulianGoldieSEO",
+      "text": "OpenClaw + Ollama just killed API bills.\n\nYou can now run full AI agents locally…\n\nNo cloud.\n\nNo subscriptions.\n\nNo tracking.\n\nAnd the setup?\n\n1 command.\n\nThis is one of the biggest shifts in AI autom",
+      "likes": 88,
+      "url": "https://x.com/JulianGoldieSEO/status/2034902768662561180"
+    }
+  ]
+}

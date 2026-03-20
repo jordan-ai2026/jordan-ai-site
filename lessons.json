@@ -90,8 +90,21 @@
     "whatWentWrong": "place_asset_on_site re-rendered the HTML locally but site.json stores deploy:false, so the update was never pushed to Vercel",
     "correctApproach": "place_asset_on_site now always deploys automatically after re-rendering. The mandatory order is: (1) create_client_website, (2) upload_client_assets, (3) place_asset_on_site. Never reverse this order.",
     "keywords": [
-      "image", "photo", "asset", "upload", "place", "site", "deploy", "vercel",
-      "hero", "logo", "client", "website", "render", "build", "create"
+      "image",
+      "photo",
+      "asset",
+      "upload",
+      "place",
+      "site",
+      "deploy",
+      "vercel",
+      "hero",
+      "logo",
+      "client",
+      "website",
+      "render",
+      "build",
+      "create"
     ],
     "source": "human",
     "learnedAt": "2026-03-18T12:00:00.000Z"
@@ -103,8 +116,20 @@
     "whatWentWrong": "mediaManager had Unsplash as a fallback whenever no client image existed, so random stock photos appeared on the live site",
     "correctApproach": "NEVER use Unsplash, Pexels, or any stock photos — not as fallbacks, not for anything. Only use images the client actually provides. If no client images exist, leave the image area empty or show a placeholder. When client sends images via Discord, call upload_client_assets with the URL as the VERY FIRST action.",
     "keywords": [
-      "image", "photo", "unsplash", "stock", "pexels", "asset", "upload",
-      "discord", "client", "hero", "about", "service", "website", "build"
+      "image",
+      "photo",
+      "unsplash",
+      "stock",
+      "pexels",
+      "asset",
+      "upload",
+      "discord",
+      "client",
+      "hero",
+      "about",
+      "service",
+      "website",
+      "build"
     ],
     "source": "human",
     "learnedAt": "2026-03-18T20:00:00.000Z"
@@ -116,10 +141,38 @@
     "whatWentWrong": "place_asset_on_site requires site.json which only exists after create_client_website runs",
     "correctApproach": "ALWAYS run create_client_website BEFORE upload_client_assets and place_asset_on_site. If site already exists, still call place_asset_on_site AFTER create_client_website, not before.",
     "keywords": [
-      "image", "photo", "asset", "place", "site.json", "create", "order",
-      "hero", "logo", "client", "website", "build", "first"
+      "image",
+      "photo",
+      "asset",
+      "place",
+      "site.json",
+      "create",
+      "order",
+      "hero",
+      "logo",
+      "client",
+      "website",
+      "build",
+      "first"
     ],
     "source": "human",
     "learnedAt": "2026-03-18T12:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "category": "workflow",
+    "whatHappened": "Writer sub-agent was delegated to create a blog post for jordan-ai.co",
+    "whatWentWrong": "Writer agent used wp_create_post (WordPress tool) instead of create_blog_post (static site tool), causing failure with \"Client 'jordan-ai' not found\" error",
+    "correctApproach": "When delegating blog posts for jordan-ai.co to Writer sub-agent, include clear instruction: \"Use create_blog_post tool for jordan-ai.co content, NOT wp_create_post. wp_create_post is only for client WordPress sites.\" Better yet, handle jordan-ai.co blog posts directly instead of delegating to avoid tool confusion.",
+    "keywords": [
+      "client",
+      "tool",
+      "error",
+      "fail",
+      "wordpress",
+      "create"
+    ],
+    "source": "jordan",
+    "learnedAt": "2026-03-20T16:56:03.771Z"
   }
 ]

@@ -22,5 +22,25 @@
       "local-rentals-now"
     ],
     "sentAt": "2026-03-17T21:14:47.406Z"
+  },
+  {
+    "to": "research-pending@example.com",
+    "subject": "Quick question about Local Restaurant Group (Research Target)'s website",
+    "tags": [
+      "outreach",
+      "cold",
+      "Food Service"
+    ],
+    "sentAt": "2026-03-18T13:00:05.447Z"
+  },
+  {
+    "to": "research-pending@example.com",
+    "subject": "Quick question about Local Restaurant Group (Research Target)'s website",
+    "tags": [
+      "outreach",
+      "cold",
+      "Food Service"
+    ],
+    "sentAt": "2026-03-18T13:00:05.825Z"
   }
 ]

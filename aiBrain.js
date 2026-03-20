@@ -1,6 +1,8 @@
 // ============================================
-// JORDAN AI - DUAL MODEL BRAIN
-// Opus for strategy, GPT-4o-mini for volume
+// JORDAN AI - BRAIN
+// GPT-4o-mini for everything — fast, cheap, always on.
+// Deep thinking and architecture = Cleo (OpenClaw).
+// Jordan AI is the execution layer, not the thinker.
 // ============================================
 
 require("dotenv").config()
@@ -44,69 +46,21 @@ async function withRetry(fn, label = "API call", maxRetries = 4) {
 }
 
 // ============================================
-// OPUS: Strategic Thinking
-// Use for: Research, validation, product design
+// thinkDeep — now routes to GPT-4o-mini
+// Deep architecture decisions go to Cleo (OpenClaw)
 // ============================================
 async function thinkDeep(prompt, context = "") {
-  try {
-    console.log("🧠 Opus thinking...")
-
-    return await withRetry(async () => {
-      const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4096,
-        messages: [
-          {
-            role: "user",
-            content: context ? `${context}\n\n${prompt}` : prompt
-          }
-        ]
-      })
-      return response.content[0].text
-    }, "thinkDeep")
-
-  } catch (err) {
-    console.log("❌ Opus error:", err.message)
-    return null
-  }
+  return quickWrite(
+    context ? `${context}\n\n${prompt}` : prompt,
+    "You are Jordan AI — an autonomous AI content and marketing engine. Be direct, specific, and action-oriented."
+  )
 }
 
-// ============================================
-// OPUS: Strategic JSON Response
-// Use for: Product research, validation
-// ============================================
 async function thinkDeepJSON(prompt, context = "") {
-  try {
-    console.log("🧠 Opus thinking (JSON)...")
-
-    const fullPrompt = `${context ? context + "\n\n" : ""}${prompt}
-
-IMPORTANT: Respond ONLY with valid JSON. No markdown, no explanation, just the JSON object.`
-
-    return await withRetry(async () => {
-      const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4096,
-        messages: [
-          {
-            role: "user",
-            content: fullPrompt
-          }
-        ]
-      })
-
-      const text = response.content[0].text.trim()
-      let jsonText = text
-      if (text.includes("```")) {
-        jsonText = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
-      }
-      return JSON.parse(jsonText)
-    }, "thinkDeepJSON")
-
-  } catch (err) {
-    console.log("❌ Opus JSON error:", err.message)
-    return null
-  }
+  return quickWriteJSON(
+    context ? `${context}\n\n${prompt}` : prompt,
+    "You are Jordan AI. Respond only with valid JSON."
+  )
 }
 
 // ============================================
