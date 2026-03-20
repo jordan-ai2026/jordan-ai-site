@@ -77,6 +77,153 @@
       ],
       "rawCount": 36,
       "filteredCount": 5
+    },
+    {
+      "date": "2026-03-20",
+      "selling": [
+        {
+          "username": "@TechWith_Nova",
+          "service": "AI bot for local business outreach",
+          "price": null,
+          "industry": "small businesses",
+          "likes": 499,
+          "url": "https://x.com/TechWith_Nova/status/2034604853469888612",
+          "competitor": true
+        },
+        {
+          "username": "@sukh_saroy",
+          "service": "AI agent for desktop automation",
+          "price": null,
+          "industry": "SMBs",
+          "likes": 188,
+          "url": "https://x.com/sukh_saroy/status/2034643911264850171",
+          "competitor": true
+        },
+        {
+          "username": "@AITechEchoes",
+          "service": "AI for legal contract generation",
+          "price": null,
+          "industry": "SMBs",
+          "likes": 127,
+          "url": "https://x.com/AITechEchoes/status/2034672419781378347",
+          "competitor": true
+        },
+        {
+          "username": "@JulianGoldieSEO",
+          "service": "AI agents running locally",
+          "price": null,
+          "industry": "developers",
+          "likes": 88,
+          "url": "https://x.com/JulianGoldieSEO/status/2034902768662561180",
+          "competitor": true
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Offer free skill files for AI bots",
+          "why": "Encourages engagement and builds trust with potential clients.",
+          "action": "Create a free resource for potential customers."
+        },
+        {
+          "idea": "Promote AI automation for small businesses",
+          "why": "Addresses a specific pain point for SMBs.",
+          "action": "Develop targeted marketing campaigns for SMBs."
+        },
+        {
+          "idea": "Highlight cost savings with AI solutions",
+          "why": "Demonstrates value and ROI to potential clients.",
+          "action": "Create case studies showcasing cost reductions."
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation for SMBs",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI agents for business tasks",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "Legal document automation",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "Local business outreach via AI",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@TechWith_Nova",
+          "whatTheyDo": "Provides AI bots for local business outreach",
+          "strength": "Offers free skill files for engagement",
+          "url": "https://x.com/TechWith_Nova/status/2034604853469888612"
+        },
+        {
+          "username": "@sukh_saroy",
+          "whatTheyDo": "Develops AI agents for desktop automation",
+          "strength": "Innovative desktop control without APIs",
+          "url": "https://x.com/sukh_saroy/status/2034643911264850171"
+        },
+        {
+          "username": "@AITechEchoes",
+          "whatTheyDo": "Automates legal document creation",
+          "strength": "Cost-effective compared to traditional lawyers",
+          "url": "https://x.com/AITechEchoes/status/2034672419781378347"
+        },
+        {
+          "username": "@JulianGoldieSEO",
+          "whatTheyDo": "Offers AI agents running locally",
+          "strength": "No cloud costs or subscriptions",
+          "url": "https://x.com/JulianGoldieSEO/status/2034902768662561180"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@aditiitwt",
+          "why": "Focuses on tools for solo developers",
+          "approach": "Collaborate on content or webinars for developers.",
+          "url": "https://x.com/aditiitwt/status/2034622072350285881"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop free resources to attract small businesses.",
+        "Focus marketing on AI automation benefits for SMBs.",
+        "Create case studies to highlight cost savings from our services."
+      ],
+      "rawCount": 135,
+      "filteredCount": 14
     }
   ],
   "trendHistory": {
@@ -103,12 +250,42 @@
         "date": "2026-03-18",
         "momentum": "stable"
       }
+    ],
+    "AI automation for SMBs": [
+      {
+        "date": "2026-03-20",
+        "momentum": "growing"
+      }
+    ],
+    "AI agents for business tasks": [
+      {
+        "date": "2026-03-20",
+        "momentum": "growing"
+      }
+    ],
+    "Legal document automation": [
+      {
+        "date": "2026-03-20",
+        "momentum": "growing"
+      }
+    ],
+    "Local business outreach via AI": [
+      {
+        "date": "2026-03-20",
+        "momentum": "growing"
+      }
     ]
   },
   "serviceHistory": {
     "AI chatbots": [
       {
         "date": "2026-03-18",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-20",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -120,6 +297,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-20",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -128,11 +311,23 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-20",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
       {
         "date": "2026-03-18",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-20",
         "low": 500,
         "high": 1000,
         "unit": "/month"
@@ -289,6 +484,12 @@
       "title": "How AI Chatbots Can Save Your Columbia Small Business Time and Money",
       "source": "x_trend",
       "url": "https://jordan-ai.co/blog/how-ai-chatbots-can-save-your-columbia-small-business-time-and-money.html"
+    },
+    {
+      "date": "2026-03-20",
+      "title": "Streamline Your Small Business: How AI Automation Workflows Can Save You Time and Money in Columbia, SC",
+      "source": "x_trend",
+      "url": "https://jordan-ai.co/blog/streamline-your-small-business-how-ai-automation-workflows-can-save-you-time-and-money-in-columbia-sc.html"
     }
   ]
 }
