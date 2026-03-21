@@ -171,16 +171,22 @@
   .cap-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
 
   /* PRICING */
-  .pricing-wrap { margin-top: 48px; display: flex; justify-content: center; }
+  .pricing-wrap { margin-top: 48px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
   .pricing-card {
     background: var(--bg-light);
-    border: 1px solid var(--accent);
+    border: 1px solid var(--border);
     border-radius: 16px; padding: 48px;
-    max-width: 480px; width: 100%; text-align: center;
+    max-width: 420px; width: 100%; text-align: center;
     position: relative;
   }
+  .pricing-card.purple-border { border-color: var(--purple); }
+  .pricing-card.accent-border { border-color: var(--accent); }
+  .pricing-step {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 12px;
+  }
   .pricing-badge {
-    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    position: absolute; top: -14px; right: 24px;
     background: linear-gradient(135deg, var(--accent), var(--purple));
     color: #0a0a0f; padding: 5px 20px; border-radius: 100px;
     font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
@@ -192,7 +198,7 @@
     margin-bottom: 4px;
   }
   .pricing-price span { font-size: 1.2rem; color: var(--text-muted); font-weight: 400; }
-  .pricing-note { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 32px; }
+  .pricing-note { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 32px; line-height: 1.6; }
   .pricing-features { list-style: none; text-align: left; margin-bottom: 36px; display: flex; flex-direction: column; gap: 14px; }
   .pricing-features li {
     display: flex; align-items: flex-start; gap: 12px;
@@ -208,6 +214,9 @@
     color: #0a0a0f; padding: 16px 28px; border-radius: 10px;
     font-weight: 700; font-size: 1.05rem; text-decoration: none;
     transition: opacity 0.2s;
+  }
+  .btn-pricing.btn-purple {
+    background: linear-gradient(135deg, var(--purple), #6d28d9);
   }
   .btn-pricing:hover { opacity: 0.85; }
 
@@ -291,7 +300,7 @@
     <p>Jordan AI builds you a custom AI employee — trained on your brand, your voice, your workflows. She handles customer inquiries, follow-ups, lead gen, and more. You just show up.</p>
     <div class="hero-ctas">
       <!-- Replace with your Stripe Payment Link URL -->
-      <a href="https://buy.stripe.com/cleo" class="btn-primary">Get Your Cleo — /mo</a>
+      <a href="https://buy.stripe.com/cleo" class="btn-primary">Get Your Cleo — From $</a>
       <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
   </div>
@@ -380,25 +389,38 @@
 <section class="section-border text-center">
   <div class="container">
     <div class="section-label">Pricing</div>
-    <h2 class="section-title">One plan. Everything included.</h2>
-    <p class="section-sub">No tiers. No add-ons. Just your Cleo, built and maintained for you.</p>
+    <h2 class="section-title">Two steps. One AI employee.</h2>
+    <p class="section-sub">We build your Cleo once, then keep her running. No tiers, no surprises.</p>
     <div class="pricing-wrap">
-      <div class="pricing-card">
-        <div class="pricing-badge">Most Popular</div>
-        <div class="pricing-name">Your Cleo</div>
-        <div class="pricing-price">/mo<span>/mo</span></div>
-        <div class="pricing-note">Everything included. Cancel anytime.</div>
-        <ul class="pricing-features">
-          <li>Custom AI employee built for your business</li>
-          <li>Trained on your brand voice and workflows</li>
-          <li>Handles customer inquiries 24/7</li>
-          <li>Lead follow-up and email sequences</li>
-          <li>Monthly check-in and optimization</li>
-          <li>Jordan AI maintains everything</li>
-        </ul>
-        <!-- Replace with your Stripe Payment Link URL -->
-        <a href="https://buy.stripe.com/cleo" class="btn-pricing">Get Started — /mo</a>
+
+      <!-- CARD 1: One-Time Build Fee -->
+      <div class="pricing-card purple-border">
+        <div class="pricing-step">Step 1</div>
+        <div class="pricing-name">One-Time Build Fee</div>
+        <div class="pricing-price">$<span> one-time setup</span></div>
+        <div class="pricing-note">We build your custom Cleo from scratch — trained on your business, voice, and workflows. Deployed and tested.</div>
+        <!-- Replace HREF with your Stripe one-time payment link -->
+        <a href="#" class="btn-pricing btn-purple">Get Started — $</a>
       </div>
+
+      <!-- CARD 2: Monthly Retainer -->
+      <div class="pricing-card accent-border">
+        <div class="pricing-badge">ONGOING</div>
+        <div class="pricing-step">Step 2</div>
+        <div class="pricing-name">Monthly Retainer</div>
+        <div class="pricing-price">$<span>/mo after setup</span></div>
+        <div class="pricing-note">Ongoing management, optimization, and support. Cleo keeps learning and improving every month.</div>
+        <ul class="pricing-features">
+          <li>24/7 AI employee handling your business</li>
+          <li>Monthly performance review and optimization</li>
+          <li>Unlimited conversations and follow-ups</li>
+          <li>Jordan AI support included</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <!-- Replace HREF with your Stripe subscription payment link -->
+        <a href="#" class="btn-pricing">Start Monthly Plan — $/mo</a>
+      </div>
+
     </div>
   </div>
 </section>
