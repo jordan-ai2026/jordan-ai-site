@@ -224,6 +224,156 @@
       ],
       "rawCount": 135,
       "filteredCount": 14
+    },
+    {
+      "date": "2026-03-21",
+      "selling": [
+        {
+          "username": "@AITechEchoes",
+          "service": "legal contract writing AI",
+          "price": "$800/hour",
+          "industry": "legal services",
+          "likes": 132,
+          "url": "https://x.com/AITechEchoes/status/2034672419781378347",
+          "competitor": true
+        },
+        {
+          "username": "@piyascode9",
+          "service": "paid courses on AI & Automation",
+          "price": "null",
+          "industry": "education/training",
+          "likes": 115,
+          "url": "https://x.com/piyascode9/status/2034977745059684866",
+          "competitor": false
+        },
+        {
+          "username": "@Suryanshti777",
+          "service": "AI courses on various topics",
+          "price": "null",
+          "industry": "education/training",
+          "likes": 71,
+          "url": "https://x.com/Suryanshti777/status/2035221186955669811",
+          "competitor": false
+        },
+        {
+          "username": "@NainsiDwiv50980",
+          "service": "AI courses on various topics",
+          "price": "null",
+          "industry": "education/training",
+          "likes": 68,
+          "url": "https://x.com/NainsiDwiv50980/status/2034962444154544274",
+          "competitor": false
+        },
+        {
+          "username": "@Tech_Marsha",
+          "service": "paid courses on AI & Automation",
+          "price": "null",
+          "industry": "education/training",
+          "likes": 60,
+          "url": "https://x.com/Tech_Marsha/status/2034993577701589106",
+          "competitor": false
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Offer AI-driven legal document services",
+          "why": "High demand for affordable legal solutions.",
+          "action": "Develop a chatbot for legal document generation."
+        },
+        {
+          "idea": "Create bundled AI courses for SMBs",
+          "why": "Education is a growing market in AI.",
+          "action": "Launch a series of online courses on AI applications."
+        },
+        {
+          "idea": "Highlight success stories of AI implementation",
+          "why": "Social proof boosts credibility and interest.",
+          "action": "Share case studies of clients benefiting from our services."
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI in legal services",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI education and training",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI automation tools",
+          "momentum": "stable",
+          "relevance": "medium"
+        },
+        {
+          "topic": "AI-driven content creation",
+          "momentum": "stable",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@GoogleAI",
+          "whatTheyDo": "full-stack coding experience and tools",
+          "strength": "Strong brand and extensive resources",
+          "url": "https://x.com/GoogleAI/status/2034655173256122580"
+        },
+        {
+          "username": "@nunchi",
+          "whatTheyDo": "autonomous AI trading research",
+          "strength": "Innovative approach to AI trading",
+          "url": "https://x.com/nunchi/status/2035024876520538256"
+        },
+        {
+          "username": "@rohanpaul_ai",
+          "whatTheyDo": "AI solutions for software optimization",
+          "strength": "Insights from a finance background",
+          "url": "https://x.com/rohanpaul_ai/status/2034652032817406068"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@genspark_ai",
+          "why": "Innovative AI workspace solutions",
+          "approach": "Collaborate on joint marketing efforts.",
+          "url": "https://x.com/AIFrontliner/status/2035026528661074338"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop a chatbot for legal document generation to attract SMBs.",
+        "Launch a series of online courses focused on AI applications for small businesses.",
+        "Share case studies showcasing successful AI implementations to build credibility."
+      ],
+      "rawCount": 134,
+      "filteredCount": 10
     }
   ],
   "trendHistory": {
@@ -274,6 +424,30 @@
         "date": "2026-03-20",
         "momentum": "growing"
       }
+    ],
+    "AI in legal services": [
+      {
+        "date": "2026-03-21",
+        "momentum": "growing"
+      }
+    ],
+    "AI education and training": [
+      {
+        "date": "2026-03-21",
+        "momentum": "growing"
+      }
+    ],
+    "AI automation tools": [
+      {
+        "date": "2026-03-21",
+        "momentum": "stable"
+      }
+    ],
+    "AI-driven content creation": [
+      {
+        "date": "2026-03-21",
+        "momentum": "stable"
+      }
     ]
   },
   "serviceHistory": {
@@ -286,6 +460,12 @@
       },
       {
         "date": "2026-03-20",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-21",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -303,6 +483,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-21",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -317,6 +503,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-21",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -328,6 +520,12 @@
       },
       {
         "date": "2026-03-20",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-21",
         "low": 500,
         "high": 1000,
         "unit": "/month"
@@ -526,6 +724,12 @@
       "title": "How a Marketing Coordinator Transformed Their Role with AI to Handle 5x the Workload: A Guide for Professionals Facing Displacement",
       "source": "evergreen",
       "url": "https://jordan-ai.co/blog/how-a-marketing-coordinator-transformed-their-role-with-ai-to-handle-5x-the-workload-a-guide-for-professionals-facing-displacement.html"
+    },
+    {
+      "date": "2026-03-21",
+      "title": "What every CEO needs to know about AI and their workforce in 2026",
+      "source": "company_seo",
+      "url": "https://jordan-ai.co/blog/what-every-ceo-needs-to-know-about-ai-and-their-workforce-in-2026.html"
     }
   ]
 }
