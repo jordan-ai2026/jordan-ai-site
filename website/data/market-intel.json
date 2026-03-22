@@ -374,6 +374,114 @@
       ],
       "rawCount": 134,
       "filteredCount": 10
+    },
+    {
+      "date": "2026-03-22",
+      "selling": [
+        {
+          "username": "@recap_david",
+          "service": "AI real estate listing videos",
+          "price": "$12 per video",
+          "industry": "real estate",
+          "likes": 1098,
+          "url": "https://x.com/recap_david/status/2035374413651247286",
+          "competitor": false
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Create low-cost video production for real estate",
+          "why": "High demand for affordable marketing tools",
+          "action": "Develop a similar service targeting real estate agents"
+        },
+        {
+          "idea": "Promote micro SaaS tools for non-tech users",
+          "why": "Encourages entrepreneurship among small business owners",
+          "action": "Create easy-to-use AI tools for SMBs"
+        },
+        {
+          "idea": "Highlight no-code automation solutions",
+          "why": "Appeals to users with limited technical skills",
+          "action": "Market automation workflows as no-code solutions"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in real estate marketing",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "Micro SaaS solutions",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "Local AI agents",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@heygurisingh",
+          "whatTheyDo": "Open-source AI Red Team for cybersecurity",
+          "strength": "Innovative approach to cybersecurity automation",
+          "url": "https://x.com/heygurisingh/status/2035307276022784402"
+        },
+        {
+          "username": "@JulianGoldieSEO",
+          "whatTheyDo": "Local AI automation tools",
+          "strength": "No cloud or subscription costs",
+          "url": "https://x.com/JulianGoldieSEO/status/2035476550187962435"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@gudanglifehack",
+          "why": "Focus on empowering non-tech users",
+          "approach": "Collaborate on educational content for SMBs",
+          "url": "https://x.com/gudanglifehack/status/2035115710121484345"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop affordable video marketing services for real estate agents.",
+        "Market automation workflows as no-code solutions for SMBs.",
+        "Create educational content to empower non-tech users in AI."
+      ],
+      "rawCount": 132,
+      "filteredCount": 5
     }
   ],
   "trendHistory": {
@@ -441,12 +549,34 @@
       {
         "date": "2026-03-21",
         "momentum": "stable"
+      },
+      {
+        "date": "2026-03-22",
+        "momentum": "growing"
       }
     ],
     "AI-driven content creation": [
       {
         "date": "2026-03-21",
         "momentum": "stable"
+      }
+    ],
+    "AI in real estate marketing": [
+      {
+        "date": "2026-03-22",
+        "momentum": "growing"
+      }
+    ],
+    "Micro SaaS solutions": [
+      {
+        "date": "2026-03-22",
+        "momentum": "growing"
+      }
+    ],
+    "Local AI agents": [
+      {
+        "date": "2026-03-22",
+        "momentum": "growing"
       }
     ]
   },
@@ -466,6 +596,12 @@
       },
       {
         "date": "2026-03-21",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-22",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -489,6 +625,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-22",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -509,6 +651,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-22",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -526,6 +674,12 @@
       },
       {
         "date": "2026-03-21",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-22",
         "low": 500,
         "high": 1000,
         "unit": "/month"
@@ -760,6 +914,12 @@
       "title": "How to Transition from Customer Service Rep to AI Manager: Upskilling for the Future Workforce",
       "source": "evergreen",
       "url": "https://jordan-ai.co/blog/how-to-transition-from-customer-service-rep-to-ai-manager-upskilling-for-the-future-workforce.html"
+    },
+    {
+      "date": "2026-03-22",
+      "title": "10 Essential Skills to Stay Relevant in the Age of AI Automation",
+      "source": "evergreen",
+      "url": "https://jordan-ai.co/blog/10-essential-skills-to-stay-relevant-in-the-age-of-ai-automation.html"
     }
   ]
 }
