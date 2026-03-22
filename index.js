@@ -3036,10 +3036,19 @@ I'll use tools automatically when I need to.`
 
   // ========================================
   // NATURAL CONVERSATION (Agent-powered)
-  // Jordan AI can now take ACTIONS during chat
-  // This is the brain — not just a chatbot
+  // COST GUARD: Only respond when directly mentioned or in DMs.
+  // Passive messages (no @mention, no DM) are ignored — no API call.
+  // To chat with Jordan AI: @mention the bot or use a !command.
   // ========================================
-  
+
+  const isMentioned = message.mentions.has(client.user)
+  const isDM = message.channel.type === 1 // DM channel type
+
+  if (!isMentioned && !isDM) {
+    // Not addressed to us — ignore, no API call
+    return
+  }
+
   try {
     // Store conversation history per channel
     if (!conversationHistory.has(message.channel.id)) {
@@ -3048,18 +3057,21 @@ I'll use tools automatically when I need to.`
 
     const history = conversationHistory.get(message.channel.id)
 
-    // Keep last 20 messages for context
-    if (history.length > 20) {
-      history.splice(0, history.length - 20)
+    // Keep last 10 messages for context (reduced from 20 to save tokens)
+    if (history.length > 10) {
+      history.splice(0, history.length - 10)
     }
 
+    // Strip the @mention from the message content
+    const cleanContent = content.replace(`<@${client.user.id}>`, "").replace(`<@!${client.user.id}>`, "").trim()
+
     // Append Discord attachments as direct instructions so Jordan uses the tool
-    let chatContent = content
+    let chatContent = cleanContent || content
     if (message.attachments.size > 0) {
       const urls = [...message.attachments.values()]
         .map(a => `  filename: "${a.name || "file"}", url: "${a.url}"`)
         .join("\n")
-      chatContent = content
+      chatContent = chatContent
         + `\n\n[Discord attachments detected — ACTION REQUIRED: call upload_client_assets with the URL below. Do NOT say you cannot see the image. The URL is a direct download link, not something you need to view visually.]\n`
         + urls
     }
