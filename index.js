@@ -3108,4 +3108,4 @@ I'll use tools automatically when I need to.`
 // ============================================
 // START
 // ============================================
-client.login(process.env.DISCORD_TOKEN)
+// client.login(process.env.DISCORD_TOKEN) // DISABLED - Discord causes token burn on reconnect replay
