@@ -482,6 +482,162 @@
       ],
       "rawCount": 132,
       "filteredCount": 5
+    },
+    {
+      "date": "2026-03-24",
+      "selling": [
+        {
+          "username": "@recap_david",
+          "service": "AI system for property videos",
+          "price": "$12 one-time",
+          "industry": "real estate",
+          "likes": 269,
+          "url": "https://x.com/recap_david/status/2036140854851887304",
+          "competitor": true
+        },
+        {
+          "username": "@xmayeth",
+          "service": "AI trading agent",
+          "price": "$200 one-time",
+          "industry": "finance",
+          "likes": 4974,
+          "url": "https://x.com/xmayeth/status/2035741298066325773",
+          "competitor": true
+        },
+        {
+          "username": "@om_patel5",
+          "service": "automated job application system",
+          "price": "null",
+          "industry": "employment",
+          "likes": 1122,
+          "url": "https://x.com/om_patel5/status/2035880075212493193",
+          "competitor": false
+        },
+        {
+          "username": "@mikefutia",
+          "service": "AI design agent for landing pages",
+          "price": "null",
+          "industry": "web design",
+          "likes": 978,
+          "url": "https://x.com/mikefutia/status/2036107642687647894",
+          "competitor": true
+        },
+        {
+          "username": "@ai_logician",
+          "service": "premium AI agents for agencies",
+          "price": "$2,000+ one-time",
+          "industry": "marketing",
+          "likes": 94,
+          "url": "https://x.com/ai_logician/status/2035777049038901346",
+          "competitor": true
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Automate job applications with AI",
+          "why": "Addresses a common pain point for job seekers",
+          "action": "Develop a similar automation tool for small businesses"
+        },
+        {
+          "idea": "Create AI-generated property videos",
+          "why": "Cost-effective solution for real estate agents",
+          "action": "Offer video creation as a service for realtors"
+        },
+        {
+          "idea": "AI design agent for landing pages",
+          "why": "Speeds up web design processes",
+          "action": "Integrate AI design tools into our website services"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in real estate",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI for job applications",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "AI design tools",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@claudeai",
+          "whatTheyDo": "AI assistant for task automation",
+          "strength": "Versatile task completion capabilities",
+          "url": "https://x.com/claudeai/status/2036195789601374705"
+        },
+        {
+          "username": "@renoiseai",
+          "whatTheyDo": "Video ad production automation",
+          "strength": "Scales video production significantly",
+          "url": "https://x.com/renoiseai/status/2036089896503529521"
+        },
+        {
+          "username": "@goyalshaliniuk",
+          "whatTheyDo": "Breakdown of AI agent types",
+          "strength": "Educational content on AI capabilities",
+          "url": "https://x.com/goyalshaliniuk/status/2036042776144708070"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@mikefutia",
+          "why": "Expert in AI design tools",
+          "approach": "Collaborate on design automation projects",
+          "url": "https://x.com/mikefutia/status/2036107642687647894"
+        },
+        {
+          "username": "@om_patel5",
+          "why": "Focus on job application automation",
+          "approach": "Explore partnership for job-seeking tools",
+          "url": "https://x.com/om_patel5/status/2035880075212493193"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop an AI job application automation tool for SMBs.",
+        "Create a service for AI-generated real estate videos.",
+        "Integrate AI design tools into website management offerings."
+      ],
+      "rawCount": 114,
+      "filteredCount": 12
     }
   ],
   "trendHistory": {
@@ -553,6 +709,10 @@
       {
         "date": "2026-03-22",
         "momentum": "growing"
+      },
+      {
+        "date": "2026-03-24",
+        "momentum": "growing"
       }
     ],
     "AI-driven content creation": [
@@ -576,6 +736,24 @@
     "Local AI agents": [
       {
         "date": "2026-03-22",
+        "momentum": "growing"
+      }
+    ],
+    "AI in real estate": [
+      {
+        "date": "2026-03-24",
+        "momentum": "growing"
+      }
+    ],
+    "AI for job applications": [
+      {
+        "date": "2026-03-24",
+        "momentum": "growing"
+      }
+    ],
+    "AI design tools": [
+      {
+        "date": "2026-03-24",
         "momentum": "growing"
       }
     ]
@@ -605,6 +783,12 @@
         "low": 500,
         "high": 2000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-24",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
       }
     ],
     "automation workflows": [
@@ -628,6 +812,12 @@
       },
       {
         "date": "2026-03-22",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-24",
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
@@ -657,6 +847,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-24",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -680,6 +876,12 @@
       },
       {
         "date": "2026-03-22",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-24",
         "low": 500,
         "high": 1000,
         "unit": "/month"
