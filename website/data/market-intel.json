@@ -638,6 +638,123 @@
       ],
       "rawCount": 114,
       "filteredCount": 12
+    },
+    {
+      "date": "2026-03-25",
+      "selling": [
+        {
+          "username": "@anvisha",
+          "service": "AI design agent with taste",
+          "price": "$7.5M funding",
+          "industry": "design agencies",
+          "likes": 6570,
+          "url": "https://x.com/anvisha/status/2036474296353411290",
+          "competitor": true
+        },
+        {
+          "username": "@figma",
+          "service": "AI agents for design",
+          "price": "null",
+          "industry": "design tools",
+          "likes": 8230,
+          "url": "https://x.com/figma/status/2036434766661296602",
+          "competitor": true
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Offer free design services for engagement",
+          "why": "Encourages sharing and increases visibility",
+          "action": "Run a campaign offering free chatbot design consultations"
+        },
+        {
+          "idea": "Create AI tools for specific industries",
+          "why": "Targets niche markets effectively",
+          "action": "Develop chatbots tailored for specific small business sectors"
+        },
+        {
+          "idea": "Highlight success stories with AI",
+          "why": "Builds trust and showcases effectiveness",
+          "action": "Share case studies of successful chatbot implementations"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI design tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI agents for automation",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "AI in video editing",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "AI for trading",
+          "momentum": "stable",
+          "relevance": "low"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@anvisha",
+          "whatTheyDo": "AI design agent with taste",
+          "strength": "Significant funding and innovative approach",
+          "url": "https://x.com/anvisha/status/2036474296353411290"
+        },
+        {
+          "username": "@figma",
+          "whatTheyDo": "AI agents for design",
+          "strength": "Established brand in design tools",
+          "url": "https://x.com/figma/status/2036434766661296602"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@Cloudflare",
+          "why": "Expertise in secure AI solutions",
+          "approach": "Collaborate on secure chatbot implementations",
+          "url": "https://x.com/Cloudflare/status/2036429081214886183"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Launch a targeted campaign for AI chatbots in specific industries.",
+        "Create engaging content showcasing the effectiveness of automation workflows.",
+        "Explore partnerships with established design tools to enhance service offerings."
+      ],
+      "rawCount": 134,
+      "filteredCount": 12
     }
   ],
   "trendHistory": {
@@ -755,6 +872,28 @@
       {
         "date": "2026-03-24",
         "momentum": "growing"
+      },
+      {
+        "date": "2026-03-25",
+        "momentum": "growing"
+      }
+    ],
+    "AI agents for automation": [
+      {
+        "date": "2026-03-25",
+        "momentum": "growing"
+      }
+    ],
+    "AI in video editing": [
+      {
+        "date": "2026-03-25",
+        "momentum": "growing"
+      }
+    ],
+    "AI for trading": [
+      {
+        "date": "2026-03-25",
+        "momentum": "stable"
       }
     ]
   },
@@ -786,6 +925,12 @@
       },
       {
         "date": "2026-03-24",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-25",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -821,6 +966,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-25",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -853,6 +1004,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-25",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -882,6 +1039,12 @@
       },
       {
         "date": "2026-03-24",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-25",
         "low": 500,
         "high": 1000,
         "unit": "/month"
