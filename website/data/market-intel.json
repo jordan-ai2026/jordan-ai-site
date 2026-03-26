@@ -755,12 +755,118 @@
       ],
       "rawCount": 134,
       "filteredCount": 12
+    },
+    {
+      "date": "2026-03-26",
+      "selling": [
+        {
+          "username": "@anvisha",
+          "service": "design agent for branding",
+          "price": "null",
+          "industry": "SMBs",
+          "likes": 7717,
+          "url": "https://x.com/anvisha/status/2036474296353411290",
+          "competitor": true
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Offer free design consultations to attract clients",
+          "why": "Engagement through free offers drives interest",
+          "action": "Create a limited-time free consultation campaign"
+        },
+        {
+          "idea": "Highlight speed of AI solutions in marketing",
+          "why": "Fast results resonate with small business needs",
+          "action": "Showcase quick turnaround times in promotional materials"
+        },
+        {
+          "idea": "Use engaging storytelling in posts",
+          "why": "Personal stories create relatability and connection",
+          "action": "Share client success stories and testimonials"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI design tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI automation workflows",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI chatbots for SMBs",
+          "momentum": "stable",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in SaaS strategy",
+          "momentum": "stable",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@anvisha",
+          "whatTheyDo": "AI design agent for branding",
+          "strength": "Unique offering with a focus on design quality",
+          "url": "https://x.com/anvisha/status/2036474296353411290"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@saranormous",
+          "why": "Expert in SaaS strategy and AI adaptation",
+          "approach": "Reach out for collaboration on AI workshops",
+          "url": "https://x.com/tbpn/status/2036604614561374606"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Implement free consultations to attract potential clients.",
+        "Emphasize quick results in marketing materials.",
+        "Utilize storytelling to connect with target audiences."
+      ],
+      "rawCount": 126,
+      "filteredCount": 6
     }
   ],
   "trendHistory": {
     "AI automation workflows": [
       {
         "date": "2026-03-18",
+        "momentum": "growing"
+      },
+      {
+        "date": "2026-03-26",
         "momentum": "growing"
       }
     ],
@@ -876,6 +982,10 @@
       {
         "date": "2026-03-25",
         "momentum": "growing"
+      },
+      {
+        "date": "2026-03-26",
+        "momentum": "growing"
       }
     ],
     "AI agents for automation": [
@@ -893,6 +1003,18 @@
     "AI for trading": [
       {
         "date": "2026-03-25",
+        "momentum": "stable"
+      }
+    ],
+    "AI chatbots for SMBs": [
+      {
+        "date": "2026-03-26",
+        "momentum": "stable"
+      }
+    ],
+    "AI in SaaS strategy": [
+      {
+        "date": "2026-03-26",
         "momentum": "stable"
       }
     ]
@@ -934,6 +1056,12 @@
         "low": 500,
         "high": 2000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-26",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
       }
     ],
     "automation workflows": [
@@ -969,6 +1097,12 @@
       },
       {
         "date": "2026-03-25",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-26",
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
@@ -1010,6 +1144,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-26",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1045,6 +1185,12 @@
       },
       {
         "date": "2026-03-25",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-26",
         "low": 500,
         "high": 1000,
         "unit": "/month"
