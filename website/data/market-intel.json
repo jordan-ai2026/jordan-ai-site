@@ -857,6 +857,121 @@
       ],
       "rawCount": 126,
       "filteredCount": 6
+    },
+    {
+      "date": "2026-03-27",
+      "selling": [
+        {
+          "username": "@advaitpaliwal",
+          "service": "AI research chatbot",
+          "price": null,
+          "industry": "research institutions",
+          "likes": 4630,
+          "url": "https://x.com/advaitpaliwal/status/2036900468056875332",
+          "competitor": false
+        },
+        {
+          "username": "@MilkRoadAI",
+          "service": "autonomous AI agent",
+          "price": null,
+          "industry": "technology enthusiasts",
+          "likes": 434,
+          "url": "https://x.com/MilkRoadAI/status/2036820969067524357",
+          "competitor": false
+        },
+        {
+          "username": "@sharbel",
+          "service": "YouTube monetization AI agent",
+          "price": null,
+          "industry": "content creators",
+          "likes": 374,
+          "url": "https://x.com/sharbel/status/2037183840402248174",
+          "competitor": false
+        },
+        {
+          "username": "@0x_Discover",
+          "service": "trading bot using Claude",
+          "price": null,
+          "industry": "traders",
+          "likes": 134,
+          "url": "https://x.com/0x_Discover/status/2037104485424578961",
+          "competitor": false
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Create a chatbot for research assistance",
+          "why": "High engagement shows demand for research tools",
+          "action": "Develop a chatbot that helps with academic queries"
+        },
+        {
+          "idea": "Offer automation for content monetization",
+          "why": "Content creators seek ways to monetize effectively",
+          "action": "Build automation workflows for YouTube monetization"
+        },
+        {
+          "idea": "Develop a trading bot for small investors",
+          "why": "Success stories attract interest from traders",
+          "action": "Create a simple trading bot for small businesses"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI agents for automation",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI for content creation",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in research",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "trading bots",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [],
+      "partners": [],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop a chatbot targeting research institutions to leverage high engagement.",
+        "Create automation solutions for content creators to tap into a growing market.",
+        "Explore trading bot development to attract small investors and traders."
+      ],
+      "rawCount": 135,
+      "filteredCount": 9
     }
   ],
   "trendHistory": {
@@ -992,6 +1107,10 @@
       {
         "date": "2026-03-25",
         "momentum": "growing"
+      },
+      {
+        "date": "2026-03-27",
+        "momentum": "growing"
       }
     ],
     "AI in video editing": [
@@ -1016,6 +1135,24 @@
       {
         "date": "2026-03-26",
         "momentum": "stable"
+      }
+    ],
+    "AI for content creation": [
+      {
+        "date": "2026-03-27",
+        "momentum": "growing"
+      }
+    ],
+    "AI in research": [
+      {
+        "date": "2026-03-27",
+        "momentum": "growing"
+      }
+    ],
+    "trading bots": [
+      {
+        "date": "2026-03-27",
+        "momentum": "growing"
       }
     ]
   },
@@ -1059,6 +1196,12 @@
       },
       {
         "date": "2026-03-26",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-27",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1106,6 +1249,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-27",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -1150,6 +1299,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-27",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1191,6 +1346,12 @@
       },
       {
         "date": "2026-03-26",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-27",
         "low": 500,
         "high": 1000,
         "unit": "/month"
