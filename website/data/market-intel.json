@@ -972,6 +972,84 @@
       ],
       "rawCount": 135,
       "filteredCount": 9
+    },
+    {
+      "date": "2026-03-28",
+      "selling": [],
+      "ideasToSteal": [
+        {
+          "idea": "Create simple guides for building AI agents",
+          "why": "Guides simplify complex topics and attract engagement.",
+          "action": "Develop easy-to-follow tutorials for potential clients."
+        },
+        {
+          "idea": "Showcase success stories with AI solutions",
+          "why": "Success stories build trust and demonstrate value.",
+          "action": "Share case studies of clients using our services."
+        },
+        {
+          "idea": "Highlight time-saving benefits of AI automation",
+          "why": "Emphasizing efficiency resonates with small businesses.",
+          "action": "Create content focusing on time savings from our services."
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI agent development",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "Automation in business",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in content creation",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "SaaS model evolution",
+          "momentum": "stable",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [],
+      "partners": [],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop educational content around AI agent creation.",
+        "Leverage success stories to build credibility.",
+        "Focus on the efficiency benefits of automation for small businesses."
+      ],
+      "rawCount": 135,
+      "filteredCount": 8
     }
   ],
   "trendHistory": {
@@ -1154,6 +1232,30 @@
         "date": "2026-03-27",
         "momentum": "growing"
       }
+    ],
+    "AI agent development": [
+      {
+        "date": "2026-03-28",
+        "momentum": "growing"
+      }
+    ],
+    "Automation in business": [
+      {
+        "date": "2026-03-28",
+        "momentum": "growing"
+      }
+    ],
+    "AI in content creation": [
+      {
+        "date": "2026-03-28",
+        "momentum": "growing"
+      }
+    ],
+    "SaaS model evolution": [
+      {
+        "date": "2026-03-28",
+        "momentum": "stable"
+      }
     ]
   },
   "serviceHistory": {
@@ -1202,6 +1304,12 @@
       },
       {
         "date": "2026-03-27",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-28",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1255,6 +1363,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-28",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -1305,6 +1419,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-28",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1352,6 +1472,12 @@
       },
       {
         "date": "2026-03-27",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-28",
         "low": 500,
         "high": 1000,
         "unit": "/month"
