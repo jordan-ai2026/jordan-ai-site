@@ -1050,6 +1050,126 @@
       ],
       "rawCount": 135,
       "filteredCount": 8
+    },
+    {
+      "date": "2026-03-29",
+      "selling": [
+        {
+          "username": "@OpenAIDevs",
+          "service": "voice agents for clinics",
+          "price": "$1-3k",
+          "industry": "healthcare",
+          "likes": 1260,
+          "url": "https://x.com/OpenAIDevs/status/2037658400004477278",
+          "competitor": true
+        },
+        {
+          "username": "@RoundtableSpace",
+          "service": "AI trading agent",
+          "price": null,
+          "industry": "finance",
+          "likes": 272,
+          "url": "https://x.com/RoundtableSpace/status/2037737694000787914",
+          "competitor": false
+        },
+        {
+          "username": "@RoundtableSpace",
+          "service": "autonomous browsing AI agent",
+          "price": null,
+          "industry": "technology",
+          "likes": 169,
+          "url": "https://x.com/RoundtableSpace/status/2038175579149922454",
+          "competitor": false
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Create a demo for a specific industry",
+          "why": "Demonstrates real-world application and engagement.",
+          "action": "Develop a chatbot demo for local businesses."
+        },
+        {
+          "idea": "Highlight real-time capabilities of services",
+          "why": "Real-time features attract attention and show value.",
+          "action": "Emphasize real-time automation in marketing."
+        },
+        {
+          "idea": "Use engaging visuals to showcase services",
+          "why": "Visuals increase engagement and interest.",
+          "action": "Create video content explaining our services."
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI agents for specific tasks",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "real-time automation solutions",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI in healthcare",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "autonomous trading systems",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@OpenAIDevs",
+          "whatTheyDo": "build voice agents for healthcare",
+          "strength": "Focus on real-time patient interaction",
+          "url": "https://x.com/OpenAIDevs/status/2037658400004477278"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@om_patel5",
+          "why": "Innovative tech developer with a strong following",
+          "approach": "Collaborate on AI-driven projects or webinars",
+          "url": "https://x.com/om_patel5/status/2038074044793155700"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop industry-specific demos to showcase our services.",
+        "Emphasize real-time capabilities in marketing materials.",
+        "Create engaging video content to explain service benefits."
+      ],
+      "rawCount": 135,
+      "filteredCount": 9
     }
   ],
   "trendHistory": {
@@ -1256,6 +1376,30 @@
         "date": "2026-03-28",
         "momentum": "stable"
       }
+    ],
+    "AI agents for specific tasks": [
+      {
+        "date": "2026-03-29",
+        "momentum": "growing"
+      }
+    ],
+    "real-time automation solutions": [
+      {
+        "date": "2026-03-29",
+        "momentum": "growing"
+      }
+    ],
+    "AI in healthcare": [
+      {
+        "date": "2026-03-29",
+        "momentum": "growing"
+      }
+    ],
+    "autonomous trading systems": [
+      {
+        "date": "2026-03-29",
+        "momentum": "growing"
+      }
     ]
   },
   "serviceHistory": {
@@ -1310,6 +1454,12 @@
       },
       {
         "date": "2026-03-28",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-29",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1369,6 +1519,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-29",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -1425,6 +1581,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-29",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1478,6 +1640,12 @@
       },
       {
         "date": "2026-03-28",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-29",
         "low": 500,
         "high": 1000,
         "unit": "/month"
