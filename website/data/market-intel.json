@@ -1170,6 +1170,127 @@
       ],
       "rawCount": 135,
       "filteredCount": 9
+    },
+    {
+      "date": "2026-03-30",
+      "selling": [
+        {
+          "username": "@coreyganim",
+          "service": "personalized AI agents for local businesses",
+          "price": "$3-5K one-time + $500/month",
+          "industry": "local businesses",
+          "likes": 141,
+          "url": "https://x.com/coreyganim/status/2038268395146088451",
+          "competitor": true
+        },
+        {
+          "username": "@Mike_Scully_",
+          "service": "digital services using AI tools",
+          "price": "null",
+          "industry": "various",
+          "likes": 229,
+          "url": "https://x.com/Mike_Scully_/status/2038275469800595652",
+          "competitor": true
+        },
+        {
+          "username": "@ErnestoSOFTWARE",
+          "service": "app promotion automation",
+          "price": "null",
+          "industry": "apps",
+          "likes": 793,
+          "url": "https://x.com/ErnestoSOFTWARE/status/2038256614042460479",
+          "competitor": false
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Automate client engagement through social media",
+          "why": "High engagement and conversion potential",
+          "action": "Develop a workflow for automated social media responses"
+        },
+        {
+          "idea": "Create niche-specific AI tools",
+          "why": "Targets specific industries effectively",
+          "action": "Identify key niches and develop tailored AI solutions"
+        },
+        {
+          "idea": "Offer maintenance packages for AI services",
+          "why": "Recurring revenue and client retention",
+          "action": "Introduce monthly maintenance plans for existing clients"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "personalized AI agents",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "digital services monetization",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@coreyganim",
+          "whatTheyDo": "set up personalized AI agents for businesses",
+          "strength": "focus on local business engagement",
+          "url": "https://x.com/coreyganim/status/2038268395146088451"
+        },
+        {
+          "username": "@Mike_Scully_",
+          "whatTheyDo": "selling digital services online",
+          "strength": "proven track record of high earnings",
+          "url": "https://x.com/Mike_Scully_/status/2038275469800595652"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@om_patel5",
+          "why": "expert in AI development and tools",
+          "approach": "Engage via direct message to discuss collaboration",
+          "url": "https://x.com/om_patel5/status/2038074044793155700"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop niche-specific AI solutions to attract targeted clients.",
+        "Implement automated engagement strategies to enhance client interaction.",
+        "Introduce maintenance packages to ensure recurring revenue."
+      ],
+      "rawCount": 135,
+      "filteredCount": 8
     }
   ],
   "trendHistory": {
@@ -1248,6 +1369,10 @@
       },
       {
         "date": "2026-03-24",
+        "momentum": "growing"
+      },
+      {
+        "date": "2026-03-30",
         "momentum": "growing"
       }
     ],
@@ -1400,6 +1525,18 @@
         "date": "2026-03-29",
         "momentum": "growing"
       }
+    ],
+    "personalized AI agents": [
+      {
+        "date": "2026-03-30",
+        "momentum": "growing"
+      }
+    ],
+    "digital services monetization": [
+      {
+        "date": "2026-03-30",
+        "momentum": "growing"
+      }
     ]
   },
   "serviceHistory": {
@@ -1460,6 +1597,12 @@
       },
       {
         "date": "2026-03-29",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-30",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1525,6 +1668,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-30",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -1587,6 +1736,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-30",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1646,6 +1801,12 @@
       },
       {
         "date": "2026-03-29",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-30",
         "low": 500,
         "high": 1000,
         "unit": "/month"
