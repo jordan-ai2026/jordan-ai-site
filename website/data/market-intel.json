@@ -1291,6 +1291,118 @@
       ],
       "rawCount": 135,
       "filteredCount": 8
+    },
+    {
+      "date": "2026-03-31",
+      "selling": [
+        {
+          "username": "@ErnestoSOFTWARE",
+          "service": "AI automation for user conversion",
+          "price": "$1-3k",
+          "industry": "app developers",
+          "likes": 934,
+          "url": "https://x.com/ErnestoSOFTWARE/status/2038256614042460479",
+          "competitor": true
+        },
+        {
+          "username": "@CreaoAI",
+          "service": "AI agent for automation tasks",
+          "price": null,
+          "industry": "SMBs and creative agencies",
+          "likes": 282,
+          "url": "https://x.com/CreaoAI/status/2038602159978123598",
+          "competitor": true
+        }
+      ],
+      "ideasToSteal": [
+        {
+          "idea": "Use AI to convert viewers into users",
+          "why": "High engagement and conversion potential",
+          "action": "Create a similar automation for our clients"
+        },
+        {
+          "idea": "Develop a live AI agent for task automation",
+          "why": "Saves time and enhances productivity",
+          "action": "Build a prototype for small business use"
+        },
+        {
+          "idea": "Promote AI services through viral content",
+          "why": "Generates significant views and interest",
+          "action": "Create shareable content showcasing our services"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI agents for task management",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "Vibe coding and no-code solutions",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [
+        {
+          "username": "@CreaoAI",
+          "whatTheyDo": "AI agent for automation tasks",
+          "strength": "Live building and scheduling capabilities",
+          "url": "https://x.com/CreaoAI/status/2038602159978123598"
+        },
+        {
+          "username": "@ErnestoSOFTWARE",
+          "whatTheyDo": "AI automation for user conversion",
+          "strength": "High engagement and conversion rates",
+          "url": "https://x.com/ErnestoSOFTWARE/status/2038256614042460479"
+        }
+      ],
+      "partners": [
+        {
+          "username": "@mikefutia",
+          "why": "Expert in creative AI solutions",
+          "approach": "Collaborate on content creation tools",
+          "url": "https://x.com/mikefutia/status/2038290633040011555"
+        }
+      ],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop a targeted marketing campaign for AI automation tools.",
+        "Create a demo showcasing our AI agent capabilities.",
+        "Leverage social media to share success stories and case studies."
+      ],
+      "rawCount": 134,
+      "filteredCount": 10
     }
   ],
   "trendHistory": {
@@ -1373,6 +1485,10 @@
       },
       {
         "date": "2026-03-30",
+        "momentum": "growing"
+      },
+      {
+        "date": "2026-03-31",
         "momentum": "growing"
       }
     ],
@@ -1537,6 +1653,18 @@
         "date": "2026-03-30",
         "momentum": "growing"
       }
+    ],
+    "AI agents for task management": [
+      {
+        "date": "2026-03-31",
+        "momentum": "growing"
+      }
+    ],
+    "Vibe coding and no-code solutions": [
+      {
+        "date": "2026-03-31",
+        "momentum": "growing"
+      }
     ]
   },
   "serviceHistory": {
@@ -1603,6 +1731,12 @@
       },
       {
         "date": "2026-03-30",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-03-31",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1674,6 +1808,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-03-31",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -1742,6 +1882,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-03-31",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1807,6 +1953,12 @@
       },
       {
         "date": "2026-03-30",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-03-31",
         "low": 500,
         "high": 1000,
         "unit": "/month"
