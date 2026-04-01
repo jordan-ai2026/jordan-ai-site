@@ -1403,6 +1403,84 @@
       ],
       "rawCount": 134,
       "filteredCount": 10
+    },
+    {
+      "date": "2026-04-01",
+      "selling": [],
+      "ideasToSteal": [
+        {
+          "idea": "Offer a breakdown of AI tools and their benefits",
+          "why": "Engages audience with practical insights and personal stories",
+          "action": "Create a blog series showcasing AI tools for small businesses"
+        },
+        {
+          "idea": "Highlight success stories with AI implementations",
+          "why": "Demonstrates real-world applications and results",
+          "action": "Share case studies of clients using our services"
+        },
+        {
+          "idea": "Create a full SEO audit service using AI",
+          "why": "Addresses current trends in AI-driven SEO",
+          "action": "Develop an AI-powered SEO audit tool for clients"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI-driven SaaS disruption",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "Automated SEO tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI chatbots for small businesses",
+          "momentum": "stable",
+          "relevance": "high"
+        },
+        {
+          "topic": "Automation workflows",
+          "momentum": "stable",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [],
+      "partners": [],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Develop educational content around AI tools for small businesses.",
+        "Implement case studies to showcase successful client outcomes.",
+        "Create an AI-driven SEO audit service to attract new clients."
+      ],
+      "rawCount": 135,
+      "filteredCount": 4
     }
   ],
   "trendHistory": {
@@ -1665,6 +1743,30 @@
         "date": "2026-03-31",
         "momentum": "growing"
       }
+    ],
+    "AI-driven SaaS disruption": [
+      {
+        "date": "2026-04-01",
+        "momentum": "growing"
+      }
+    ],
+    "Automated SEO tools": [
+      {
+        "date": "2026-04-01",
+        "momentum": "growing"
+      }
+    ],
+    "AI chatbots for small businesses": [
+      {
+        "date": "2026-04-01",
+        "momentum": "stable"
+      }
+    ],
+    "Automation workflows": [
+      {
+        "date": "2026-04-01",
+        "momentum": "stable"
+      }
     ]
   },
   "serviceHistory": {
@@ -1737,6 +1839,12 @@
       },
       {
         "date": "2026-03-31",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-04-01",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1814,6 +1922,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-04-01",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -1888,6 +2002,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-04-01",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -1959,6 +2079,12 @@
       },
       {
         "date": "2026-03-31",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-04-01",
         "low": 500,
         "high": 1000,
         "unit": "/month"
