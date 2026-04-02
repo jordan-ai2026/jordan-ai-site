@@ -1481,6 +1481,84 @@
       ],
       "rawCount": 135,
       "filteredCount": 4
+    },
+    {
+      "date": "2026-04-02",
+      "selling": [],
+      "ideasToSteal": [
+        {
+          "idea": "Build in public to showcase progress",
+          "why": "Engages audience and builds trust",
+          "action": "Share updates on projects and milestones regularly"
+        },
+        {
+          "idea": "Highlight competitive advantages of our services",
+          "why": "Differentiates us from free alternatives",
+          "action": "Create content comparing our services to competitors"
+        },
+        {
+          "idea": "Create tutorials for building AI agents",
+          "why": "Addresses common pain points for potential customers",
+          "action": "Develop a series of easy-to-follow guides"
+        }
+      ],
+      "trends": [
+        {
+          "topic": "AI automation tools",
+          "momentum": "growing",
+          "relevance": "high"
+        },
+        {
+          "topic": "AI agents for productivity",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "Open-source AI solutions",
+          "momentum": "growing",
+          "relevance": "medium"
+        },
+        {
+          "topic": "Building AI in public",
+          "momentum": "growing",
+          "relevance": "medium"
+        }
+      ],
+      "competitors": [],
+      "partners": [],
+      "pricePoints": [
+        {
+          "service": "AI chatbots",
+          "low": 500,
+          "high": 2000,
+          "unit": "one-time"
+        },
+        {
+          "service": "automation workflows",
+          "low": 1000,
+          "high": 3000,
+          "unit": "one-time"
+        },
+        {
+          "service": "website management",
+          "low": 500,
+          "high": 1500,
+          "unit": "/month"
+        },
+        {
+          "service": "SEO content",
+          "low": 500,
+          "high": 1000,
+          "unit": "/month"
+        }
+      ],
+      "strategyInsights": [
+        "Focus on creating engaging content that highlights our unique offerings.",
+        "Leverage the trend of building in public to increase transparency.",
+        "Develop educational resources that simplify AI implementation for small businesses."
+      ],
+      "rawCount": 135,
+      "filteredCount": 8
     }
   ],
   "trendHistory": {
@@ -1567,6 +1645,10 @@
       },
       {
         "date": "2026-03-31",
+        "momentum": "growing"
+      },
+      {
+        "date": "2026-04-02",
         "momentum": "growing"
       }
     ],
@@ -1767,6 +1849,24 @@
         "date": "2026-04-01",
         "momentum": "stable"
       }
+    ],
+    "AI agents for productivity": [
+      {
+        "date": "2026-04-02",
+        "momentum": "growing"
+      }
+    ],
+    "Open-source AI solutions": [
+      {
+        "date": "2026-04-02",
+        "momentum": "growing"
+      }
+    ],
+    "Building AI in public": [
+      {
+        "date": "2026-04-02",
+        "momentum": "growing"
+      }
     ]
   },
   "serviceHistory": {
@@ -1845,6 +1945,12 @@
       },
       {
         "date": "2026-04-01",
+        "low": 500,
+        "high": 2000,
+        "unit": "one-time"
+      },
+      {
+        "date": "2026-04-02",
         "low": 500,
         "high": 2000,
         "unit": "one-time"
@@ -1928,6 +2034,12 @@
         "low": 1000,
         "high": 3000,
         "unit": "one-time"
+      },
+      {
+        "date": "2026-04-02",
+        "low": 1000,
+        "high": 3000,
+        "unit": "one-time"
       }
     ],
     "website management": [
@@ -2008,6 +2120,12 @@
         "low": 500,
         "high": 1500,
         "unit": "/month"
+      },
+      {
+        "date": "2026-04-02",
+        "low": 500,
+        "high": 1500,
+        "unit": "/month"
       }
     ],
     "SEO content": [
@@ -2085,6 +2203,12 @@
       },
       {
         "date": "2026-04-01",
+        "low": 500,
+        "high": 1000,
+        "unit": "/month"
+      },
+      {
+        "date": "2026-04-02",
         "low": 500,
         "high": 1000,
         "unit": "/month"
